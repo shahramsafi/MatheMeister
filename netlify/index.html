@@ -1,0 +1,2074 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b18">
+<meta name="description" content="MatheMeister Pro – trainieren, live spielen und eigene Quiz-, Puzzle- und Wortspiele ohne Programmieren bauen.">
+<title>MatheMeister Pro v10.4 · Classroom Privacy & Results 🚀</title>
+
+<style>
+:root {
+  color-scheme:dark;
+  --bg:#080b18;
+  --panel:#11182b;
+  --panel2:#171f38;
+  --line:#293858;
+  --text:#f6f7ff;
+  --muted:#aab6d1;
+  --cyan:#48e4ef;
+  --blue:#549aff;
+  --purple:#a866ff;
+  --pink:#ff579b;
+  --green:#39dfa0;
+  --yellow:#ffd05a;
+  --orange:#ff964f;
+  --red:#ff5f76;
+  --shadow:0 24px 70px #0006
+}
+* {
+  box-sizing:border-box
+}
+body {
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(ellipse at 10% 0%,#182651 0,transparent 34%),radial-gradient(ellipse at 95% 75%,#21133e 0,transparent 30%),var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif
+}
+button,input,select {
+  font:inherit
+}
+button {
+  cursor:pointer
+}
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:3px solid var(--cyan);
+  outline-offset:3px
+}
+.wrap {
+  width:min(1160px,100%);
+  margin:auto;
+  padding:26px 20px 40px
+}
+.top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:28px
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+.logo {
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  font-size:27px;
+  background:linear-gradient(135deg,#27d6c8,#7d69ff 75%);
+  box-shadow:0 8px 30px #5f5cff45
+}
+.brand strong {
+  display:block;
+  font-size:19px;
+  letter-spacing:-.5px
+}
+.brand small {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  margin-top:3px
+}
+.pill {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:#ffffff09;
+  border:1px solid var(--line);
+  padding:8px 12px;
+  border-radius:999px;
+  color:#dbe5ff;
+  font-size:12px;
+  font-weight:750
+}
+.dot {
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green)
+}
+.profile {
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+.avatar {
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#2f9cff,#a866ff);
+  font-size:21px
+}
+.small-btn {
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  background:#ffffff08;
+  color:var(--text);
+  font-weight:750
+}
+.hero {
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:20px;
+  align-items:stretch
+}
+.panel {
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:linear-gradient(145deg,#141d34ee,#0d1326f5);
+  box-shadow:var(--shadow);
+  padding:clamp(20px,3.5vw,34px);
+  position:relative;
+  overflow:hidden
+}
+.hero-copy {
+  padding:clamp(24px,4vw,44px)
+}
+.hero-copy:after {
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  right:-150px;
+  top:-140px;
+  border-radius:50%;
+  background:#4d69ff22;
+  filter:blur(4px)
+}
+h1 {
+  font-size:clamp(40px,6vw,67px);
+  line-height:1;
+  letter-spacing:-2.6px;
+  margin:22px 0 16px;
+  position:relative;
+  z-index:1
+}
+h2 {
+  font-size:clamp(26px,3.5vw,36px);
+  letter-spacing:-1px;
+  margin:0 0 10px
+}
+h3 {
+  margin:0 0 8px
+}
+.gradient {
+  background:linear-gradient(90deg,#fff 0,#83e6ff 45%,#68ffc4 100%);
+  color:transparent;
+  background-clip:text
+}
+.lead {
+  color:#bac8e3;
+  line-height:1.7;
+  max-width:560px;
+  margin:0 0 22px;
+  position:relative;
+  z-index:1
+}
+.row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap
+}
+.btn {
+  border:1px solid transparent;
+  border-radius:14px;
+  padding:13px 17px;
+  font-weight:850;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:transform .18s,filter .18s;
+  min-height:46px
+}
+.btn:hover {
+  transform:translateY(-2px);
+  filter:brightness(1.08)
+}
+.primary {
+  background:linear-gradient(110deg,#22d5a0,#6df0d0);
+  color:#042219;
+  box-shadow:0 10px 28px #2ae0b027
+}
+.secondary {
+  background:#ffffff0b;
+  border-color:var(--line);
+  color:var(--text)
+}
+.blue {
+  background:linear-gradient(110deg,#4097ff,#4dd3f0);
+  color:#05172c
+}
+.purple {
+  background:linear-gradient(110deg,#7652ff,#c35cff);
+  color:white
+}
+.orange {
+  background:linear-gradient(110deg,#ff883c,#ffc05b);
+  color:#301300
+}
+.pink {
+  background:linear-gradient(110deg,#ff4d91,#ff7877);
+  color:#35051a
+}
+.full {
+  width:100%
+}
+.visual {
+  min-height:290px;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(ellipse at center,#294a8a44,transparent 68%),linear-gradient(150deg,#111b32,#0b1020);
+  border-radius:22px;
+  border:1px solid #ffffff12;
+  position:relative;
+  overflow:hidden
+}
+.visual:before,.visual:after {
+  content:"";
+  position:absolute;
+  border:1px solid #7dc8ff30;
+  border-radius:50%;
+  width:240px;
+  height:130px;
+  transform:rotate(-28deg)
+}
+.visual:after {
+  width:300px;
+  height:175px;
+  border-color:#56f1c32b;
+  transform:rotate(35deg)
+}
+.num {
+  position:absolute;
+  font-size:clamp(48px,7vw,84px);
+  font-weight:1000;
+  line-height:1;
+  user-select:none;
+  pointer-events:none;
+  text-shadow:0 5px 0 #0003,0 12px 24px #0005;
+  filter:drop-shadow(0 5px 8px #0004);
+  will-change:translate;
+  animation:float 18s ease-in-out infinite;
+  backface-visibility:hidden
+}
+.n1 {
+  top:12%;
+  left:12%;
+  color:#ff766e;
+  rotate:-12deg;
+  animation-delay:-.7s
+}
+.n2 {
+  top:9%;
+  left:43%;
+  color:#4fe6a3;
+  animation-delay:-2.4s
+}
+.n3 {
+  right:12%;
+  top:23%;
+  color:#ffcc5b;
+  rotate:9deg;
+  animation-delay:-4.1s
+}
+.n4 {
+  bottom:13%;
+  left:17%;
+  color:#54b8ff;
+  rotate:7deg;
+  animation-delay:-3.2s
+}
+.n5 {
+  bottom:10%;
+  right:19%;
+  color:#c08bff;
+  rotate:-8deg;
+  animation-delay:-1.6s
+}
+.gem {
+  position:relative;
+  z-index:2;
+  width:90px;
+  height:90px;
+  display:grid;
+  place-items:center;
+  border:1px solid #ffffff3b;
+  border-radius:28px;
+  background:linear-gradient(145deg,#ffffff22,#ffffff09);
+  box-shadow:0 18px 40px #0005;
+  font-size:42px;
+  rotate:-8deg;
+  animation:gemBob 18s ease-in-out infinite
+}
+.num:nth-child(even) {
+  text-shadow:0 4px 0 #0002,0 0 22px currentColor
+}
+@keyframes float {
+  0%,100% {
+    translate:0 0
+  }
+  50% {
+    translate:0 -2px
+  }
+}
+@keyframes gemBob {
+  0%,100% {
+    translate:0 0;
+    rotate:-8deg
+  }
+  50% {
+    translate:0 -1px;
+    rotate:-7.5deg
+  }
+}
+.mini-stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:20px 0 28px
+}
+.stat {
+  border:1px solid var(--line);
+  background:#ffffff06;
+  border-radius:17px;
+  padding:15px
+}
+.stat span {
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  font-weight:800
+}
+.stat strong {
+  display:block;
+  font-size:26px;
+  margin-top:6px;
+  letter-spacing:-.7px
+}
+.stat .g {
+  color:var(--green)
+}
+.stat .y {
+  color:var(--yellow)
+}
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin:30px 0 16px
+}
+.section-head p {
+  margin:0;
+  color:var(--muted);
+  line-height:1.5
+}
+.tiles {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px
+}
+.tile {
+  min-height:185px;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:21px;
+  color:var(--text);
+  background:linear-gradient(145deg,#192440,#11182b);
+  transition:.2s;
+  position:relative;
+  overflow:hidden
+}
+.tile:hover {
+  transform:translateY(-3px);
+  border-color:#8198ff88;
+  box-shadow:0 15px 32px #0003
+}
+.tile:after {
+  content:"";
+  position:absolute;
+  right:-46px;
+  top:-57px;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  background:var(--tint,#4b9aff17);
+  filter:blur(2px)
+}
+.tile .ico {
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:var(--tint,#4b9aff19);
+  font-size:23px;
+  margin-bottom:15px
+}
+.tile h3 {
+  font-size:18px;
+  position:relative;
+  z-index:1
+}
+.tile p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+  margin:0 0 14px
+}
+.tile b {
+  margin-top:auto;
+  font-size:12px;
+  color:#c7d8ff
+}
+.two {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px
+}
+.subpanel {
+  border:1px solid var(--line);
+  background:#ffffff04;
+  border-radius:20px;
+  padding:20px
+}
+.section {
+  margin-top:26px
+}
+.screen {
+  display:none
+}
+.screen.active {
+  display:block;
+  animation:rise .3s ease
+}
+@keyframes rise {
+  from {
+    opacity:0;
+    transform:translateY(6px)
+  }
+  to {
+    opacity:1;
+    transform:none
+  }
+}
+.back {
+  margin-bottom:24px
+}
+.muted {
+  color:var(--muted)
+}
+.kicker {
+  color:var(--cyan);
+  text-transform:uppercase;
+  letter-spacing:1.6px;
+  font-size:11px;
+  font-weight:900
+}
+.level-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:22px
+}
+.level {
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:22px;
+  background:#ffffff06;
+  color:var(--text);
+  text-align:left;
+  min-height:190px
+}
+.level h3 {
+  font-size:22px;
+  margin:17px 0 8px
+}
+.level p {
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.5
+}
+.level em {
+  font-style:normal;
+  color:var(--cyan);
+  font-weight:850;
+  font-size:12px
+}
+.game-panel {
+  max-width:850px;
+  margin:auto
+}
+.game-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+.game-metrics {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:20px 0
+}
+.metric {
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px;
+  background:#ffffff05
+}
+.metric small {
+  display:block;
+  color:var(--muted);
+  font-weight:800;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.7px
+}
+.metric strong {
+  display:block;
+  font-size:23px;
+  margin-top:5px
+}
+.track {
+  height:9px;
+  border-radius:99px;
+  background:#25314b;
+  overflow:hidden;
+  margin-top:12px
+}
+.track>div {
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--green));
+  transition:width .2s
+}
+.questionbox {
+  margin:20px 0 15px;
+  border:1px solid #536dbd45;
+  border-radius:22px;
+  padding:30px 15px;
+  text-align:center;
+  background:radial-gradient(ellipse at top,#3e5cb62e,transparent 70%),#070d1c
+}
+.q-label {
+  font-size:11px;
+  font-weight:850;
+  color:var(--muted);
+  letter-spacing:1.4px;
+  text-transform:uppercase
+}
+.question {
+  font-size:clamp(43px,8vw,70px);
+  font-weight:1000;
+  letter-spacing:-2px;
+  margin:15px 0
+}
+.answers {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px
+}
+.answer {
+  min-height:78px;
+  border-radius:16px;
+  border:1px solid #ffffff18;
+  color:white;
+  background:linear-gradient(145deg,#2a3d62,#1b2946);
+  font-size:clamp(20px,3vw,27px);
+  font-weight:900
+}
+.answer.correct {
+  outline:3px solid #67ffb6;
+  filter:brightness(1.15)
+}
+.answer.wrong {
+  outline:3px solid #ff708c;
+  filter:brightness(.8)
+}
+.answer:disabled {
+  cursor:default
+}
+.feedback {
+  min-height:26px;
+  text-align:center;
+  font-weight:850;
+  margin:14px 0 8px
+}
+.progress-line {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  margin-top:18px
+}
+.result {
+  text-align:center;
+  max-width:800px;
+  margin:auto
+}
+.result-icon {
+  font-size:56px;
+  margin:8px
+}
+.result-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:22px 0
+}
+.result-card {
+  padding:19px 8px;
+  background:#ffffff06;
+  border:1px solid var(--line);
+  border-radius:17px
+}
+.result-card strong {
+  display:block;
+  font-size:32px
+}
+.result-card small {
+  color:var(--muted)
+}
+.badges {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+.badge {
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:#ffffff05;
+  padding:15px 8px;
+  text-align:center;
+  opacity:.4
+}
+.badge.earned {
+  opacity:1;
+  border-color:#ffc94d6b;
+  background:#ffd35b0b
+}
+.badge span {
+  display:block;
+  font-size:30px;
+  margin-bottom:8px
+}
+.badge b {
+  font-size:12px;
+  display:block
+}
+.badge small {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px
+}
+.barlist {
+  display:grid;
+  gap:12px
+}
+.barrow {
+  display:grid;
+  grid-template-columns:64px 1fr 34px;
+  gap:10px;
+  align-items:center;
+  font-size:12px
+}
+.bar {
+  height:10px;
+  background:#ffffff12;
+  border-radius:99px;
+  overflow:hidden
+}
+.bar i {
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+  border-radius:99px
+}
+.list {
+  display:grid;
+  gap:9px
+}
+.mistake-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px;
+  border-radius:13px;
+  background:#ffffff06;
+  border:1px solid var(--line)
+}
+.formrow {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:16px 0
+}
+.field label {
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:7px
+}
+.field input,.field select {
+  width:100%;
+  min-height:44px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#0b1122;
+  color:var(--text);
+  padding:10px 12px
+}
+.notice {
+  padding:14px 16px;
+  border:1px solid #ffd05a3d;
+  background:#ffd05a0c;
+  border-radius:14px;
+  color:#ffe3a2;
+  line-height:1.55;
+  font-size:13px
+}
+.live-question {
+  padding:20px;
+  border-radius:20px;
+  background:#ffffff06;
+  border:1px solid var(--line);
+  margin:16px 0
+}
+.live-code {
+  font-size:35px;
+  letter-spacing:7px;
+  font-weight:1000;
+  color:var(--cyan)
+}
+.player-list {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:14px
+}
+.player {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid var(--line);
+  background:#ffffff06;
+  padding:11px 13px;
+  border-radius:12px
+}
+.hidden {
+  display:none!important
+}
+.foot {
+  color:#7787a5;
+  text-align:center;
+  font-size:11px;
+  margin:30px 0 0
+}
+.toast {
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  background:#eef3ff;
+  color:#10172c;
+  border-radius:13px;
+  padding:12px 18px;
+  font-weight:850;
+  box-shadow:var(--shadow);
+  transition:.25s;
+  z-index:30;
+  max-width:calc(100vw - 24px);
+  text-align:center
+}
+.toast.show {
+  transform:translate(-50%,0);
+  opacity:1
+}
+.xpbar {
+  height:8px;
+  background:#ffffff12;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:8px
+}
+.xpbar div {
+  height:100%;
+  background:linear-gradient(90deg,#ffd34e,#ff8d55);
+  width:0
+}
+.rule {
+  height:1px;
+  background:var(--line);
+  margin:18px 0
+}
+@media(max-width:850px) {
+  .hero {
+    grid-template-columns:1fr
+  }
+  .visual {
+    min-height:240px
+  }
+  .tiles {
+    grid-template-columns:repeat(2,1fr)
+  }
+  .badges {
+    grid-template-columns:repeat(3,1fr)
+  }
+}
+@media(max-width:570px) {
+  .wrap {
+    padding:16px 11px 28px
+  }
+  .top {
+    align-items:flex-start
+  }
+  .profile .pill {
+    display:none
+  }
+  .hero-copy {
+    padding:25px 20px
+  }
+  .mini-stats {
+    gap:7px
+  }
+  .stat {
+    padding:12px 9px
+  }
+  .stat strong {
+    font-size:22px
+  }
+  .tiles {
+    grid-template-columns:1fr
+  }
+  .tile {
+    min-height:150px
+  }
+  .level-grid,.two {
+    grid-template-columns:1fr
+  }
+  .game-metrics {
+    gap:6px
+  }
+  .metric {
+    padding:10px 7px
+  }
+  .metric strong {
+    font-size:20px
+  }
+  .answers {
+    grid-template-columns:1fr
+  }
+  .answer {
+    min-height:60px
+  }
+  .result-grid {
+    gap:6px
+  }
+  .result-card {
+    padding:14px 4px
+  }
+  .result-card strong {
+    font-size:26px
+  }
+  .badges {
+    grid-template-columns:repeat(2,1fr)
+  }
+  .formrow {
+    grid-template-columns:1fr
+  }
+  .player-list {
+    grid-template-columns:1fr
+  }
+  .live-code {
+    font-size:28px;
+    letter-spacing:4px
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important
+  }
+}
+
+/* MatheMeister Team-Modus und Meisterschafts-Podium */
+.team-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
+.team-settings .field{margin:0}
+.team-mode-note{font-size:12px;color:var(--muted);margin:7px 0 0}
+.team-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;margin-left:6px;border:1px solid #ffffff20;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}
+.team-blue{background:#2563eb2a;color:#93c5fd}.team-red{background:#e11d482a;color:#fda4af}.team-green{background:#0596692a;color:#6ee7b7}.team-yellow{background:#ca8a042a;color:#fde68a}
+.team-score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.team-score-card{border:1px solid var(--line);background:linear-gradient(145deg,#ffffff0b,#ffffff03);border-radius:16px;padding:13px;text-align:center}
+.team-score-card .team-name{font-weight:850;font-size:14px}.team-score-card .team-points{font-size:25px;font-weight:950;margin:5px 0}.team-score-card .team-member-count{color:var(--muted);font-size:11px}
+.championship{position:relative;overflow:hidden;margin-top:10px;padding:24px 14px 20px;border:1px solid #f5d36b55;border-radius:22px;background:radial-gradient(ellipse at 50% 0%,#925bff3b,transparent 55%),linear-gradient(145deg,#151c35,#0b1020);text-align:center}
+.championship:before,.championship:after{content:'✦  ✧  ✦  ✧  ✦';position:absolute;left:-10%;right:-10%;top:7px;font-size:19px;letter-spacing:18px;color:#f8d66d88;pointer-events:none;animation:confettiFloat 3.5s ease-in-out infinite alternate}
+.championship:after{top:auto;bottom:5px;animation-delay:-1.7s;color:#8be9fd88}
+.championship h2{font-size:clamp(25px,5vw,40px);margin:5px 0 8px;background:linear-gradient(90deg,#fff2b0,#ffd15b,#fff4ba);-webkit-background-clip:text;background-clip:text;color:transparent}
+.championship .champion-subtitle{color:var(--muted);margin:0 0 18px}
+.podium-row{display:flex;align-items:flex-end;justify-content:center;gap:10px;max-width:760px;margin:22px auto 10px;position:relative;z-index:1}
+.podium-person{flex:1;min-width:0;max-width:210px;display:flex;flex-direction:column;align-items:center;animation:winnerPop .65s cubic-bezier(.2,.9,.2,1) both}
+.podium-person:nth-child(2){animation-delay:.15s}.podium-person:nth-child(3){animation-delay:.3s}
+.podium-medal{font-size:clamp(30px,6vw,54px);filter:drop-shadow(0 5px 12px #facc1555);line-height:1.05}
+.podium-avatar{font-size:30px;margin:4px 0 2px}
+.podium-name{font-weight:900;overflow-wrap:anywhere;font-size:clamp(12px,2.3vw,16px);max-width:100%}
+.podium-points{font-size:12px;color:var(--muted);margin:3px 0 8px}
+.podium-step{width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 5px 9px;background:linear-gradient(180deg,#ffffff25,#ffffff0b);border:1px solid #ffffff24;border-radius:12px 12px 3px 3px;font-size:12px;font-weight:950;box-shadow:0 12px 28px #0003}
+.podium-step.first{min-height:112px;background:linear-gradient(180deg,#facc1566,#b7791f30);border-color:#facc1588}
+.podium-step.second{min-height:80px;background:linear-gradient(180deg,#dbeafe44,#64748b20);border-color:#cbd5e177}
+.podium-step.third{min-height:59px;background:linear-gradient(180deg,#fb923c4c,#92400e20);border-color:#fdba7480}
+.podium-team-stage{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;position:relative;z-index:1;margin:18px auto 10px;max-width:900px}
+.podium-team-member{width:min(180px,calc(50% - 8px));padding:15px 10px 12px;border:1px solid #facc1580;border-radius:16px;background:linear-gradient(160deg,#facc1522,#ffffff07);animation:winnerPop .6s both}
+.podium-team-member:nth-child(2n){animation-delay:.12s}
+.podium-chair{font-size:34px;display:block;filter:drop-shadow(0 5px 6px #0006)}
+.podium-member-name{font-weight:900;overflow-wrap:anywhere;margin-top:4px}
+.podium-team-label{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:999px;background:#facc1520;color:#fde68a;font-size:11px;font-weight:900}
+.championship-ranking{position:relative;z-index:1;text-align:left;margin:18px auto 0;max-width:670px}
+.championship-ranking h3{text-align:center}
+@keyframes winnerPop{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes confettiFloat{from{transform:translateY(-2px) rotate(-3deg);opacity:.45}to{transform:translateY(7px) rotate(3deg);opacity:1}}
+@media(max-width:480px){.championship{padding:22px 8px 18px}.podium-row{gap:5px}.podium-step{padding-left:2px;padding-right:2px}.podium-name{font-size:12px}.team-score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.podium-team-member{width:calc(50% - 8px)}}
+@media(prefers-reduced-motion:reduce){.podium-person,.podium-team-member,.championship:before,.championship:after{animation:none!important}}
+
+/* Live-Spiel: getrennte Ansichten, Timer, Avatare und Reaktionen */
+.live-code-host{font-size:clamp(30px,5vw,48px);font-weight:1000;letter-spacing:7px;color:var(--cyan);line-height:1.2}
+.live-qr-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px}
+.live-qr{display:inline-flex;align-items:center;justify-content:center;min-width:112px;min-height:112px;padding:8px;border-radius:14px;background:#fff}
+.live-qr img,.live-qr canvas{display:block;max-width:140px;height:auto!important}
+.live-status-card{border:1px solid var(--line);background:#ffffff08;border-radius:16px;padding:16px;margin:12px 0}
+.live-self{display:flex;align-items:center;gap:10px;margin:10px 0 16px;padding:10px 12px;border:1px solid #67e8f944;background:#67e8f90b;border-radius:14px}
+.live-self-avatar{font-size:28px;line-height:1}
+.live-self-name{font-weight:900;font-size:16px}
+.live-self-meta{font-size:12px;color:var(--muted);margin-top:3px}
+.live-timer-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;font-weight:850;margin:14px 0 7px}
+.live-timer-track{height:11px;overflow:hidden;border-radius:999px;background:#ffffff15;border:1px solid #ffffff15}
+.live-timer-fill{height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,#34d399,#22d3ee);transition:width .25s linear,background .25s}
+.live-timer-fill.low{background:linear-gradient(90deg,#fb7185,#f97316)}
+.live-answer-feedback{padding:12px 14px;margin:12px 0;border:1px solid #34d39955;border-radius:14px;background:#34d39912;font-weight:750}
+.live-answer-feedback.wrong{border-color:#fb718555;background:#fb718512}
+.live-reactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.live-reaction-btn{min-width:46px;padding:9px 11px;border-radius:12px;border:1px solid var(--line);background:#ffffff0a;font-size:22px;cursor:pointer}
+.live-reaction-btn:active{transform:scale(.95)}
+.live-reaction-float{font-size:23px;margin-left:6px}
+.live-host-meter{font-size:13px;font-weight:800;color:var(--muted);margin:8px 0}
+.live-question .question{font-size:clamp(32px,8vw,56px);overflow-wrap:anywhere}
+@media(max-width:480px){.live-qr-wrap{align-items:flex-start}.live-qr{min-width:96px;min-height:96px}.live-code-host{letter-spacing:4px}.live-question .question{font-size:36px}.live-self{margin-top:8px}}
+
+
+/* v3: kompakter Live-Bildschirm, feste Gastgeber-Kontrolle, responsive Inhalte */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+.wrap{width:100%;max-width:1160px;min-width:0;padding:clamp(10px,2vw,24px) clamp(10px,2.2vw,20px) 28px}
+.screen,.panel,.subpanel,#liveRoom,.live-room-shell,.live-question,.questionbox,.player-list,.team-score-grid{min-width:0;max-width:100%}
+.two,.formrow{grid-template-columns:repeat(2,minmax(0,1fr))}
+.field,input,select,button{max-width:100%;min-width:0}
+body.live-room-active .top{display:none}
+body.live-room-active .wrap{padding-top:8px;padding-bottom:12px}
+body.live-room-active #live.panel{padding:clamp(10px,2vw,20px)}
+.live-room-shell{padding:clamp(10px,2vw,18px);overflow:visible}
+.live-room-shell>.row:first-child{flex-wrap:wrap}
+.live-host-codebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 12px;margin:12px 0;border:1px solid #48e4ef55;border-radius:14px;background:linear-gradient(100deg,#48e4ef12,#a866ff0d)}
+.live-host-codebar>div:first-child{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.live-host-code-label{font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:850}
+.live-host-codebar strong{font-size:clamp(22px,4vw,32px);letter-spacing:4px;color:var(--cyan);line-height:1}
+.live-host-code-actions{display:flex;gap:8px;flex-wrap:wrap}
+.live-host-code-actions .btn{padding:9px 12px}
+.live-qr-wrap{gap:14px}
+.live-qr{width:min(230px,100%);min-width:0;min-height:0;padding:10px;flex:0 0 auto}
+.live-qr img,.live-qr canvas{max-width:210px;width:100%;height:auto!important;image-rendering:pixelated}
+.live-question{padding:clamp(10px,2vw,18px);margin:10px 0}
+.live-question .q-label{letter-spacing:1px}
+.live-question .question{margin:8px 0 10px;font-size:clamp(30px,6vw,48px);line-height:1.12;letter-spacing:-1px}
+.live-self{padding:8px 10px;margin:8px 0 10px}
+.live-timer-head{margin:8px 0 6px}
+.live-timer-track{height:9px}
+.live-question .answers{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+.live-question .answer{min-height:clamp(54px,9vh,76px);padding:8px;overflow-wrap:anywhere}
+.live-answer-quiet{height:8px;min-height:8px;margin:2px 0;color:var(--muted);font-size:12px}
+.live-reactions{display:block;margin-top:8px}
+.live-reaction-toggle{display:inline-flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:#ffffff07;color:var(--muted);font-size:12px}
+.live-reaction-menu{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.live-reaction-btn{min-width:38px;padding:6px 8px;font-size:20px}
+.live-review-question{padding:12px 12px 10px;margin:10px 0 12px;border-radius:16px}
+.live-review-question .question{font-size:clamp(25px,5vw,38px);margin:6px 0}
+.live-review-question .live-answer-feedback{padding:8px 10px;margin:8px 0;font-size:14px}
+.live-review-question>p{margin:8px 0 0;font-size:12px}
+.live-rank-title{margin:12px 0 0;font-size:15px}
+.live-keyboard-hint{text-align:center;color:var(--muted);font-size:11px;margin:8px 0 0}
+.live-host-meter{margin:8px 0;font-size:12px}
+.live-room-shell.is-player .player-list,.live-room-shell.is-player .team-score-grid{margin-top:10px}
+.live-room-shell.is-player .live-question>p.muted{font-size:12px;margin:6px 0}
+@media(max-width:700px){
+  .wrap{padding:8px 8px 16px}
+  .panel{padding:12px;border-radius:18px}
+  .subpanel{padding:12px;border-radius:15px}
+  .two,.formrow{grid-template-columns:minmax(0,1fr)}
+  .live-host-codebar{align-items:flex-start;padding:9px;gap:8px}
+  .live-host-code-actions{width:100%}
+  .live-host-code-actions .btn{flex:1;font-size:12px}
+  .live-qr-wrap{align-items:center}
+  .live-qr{width:178px}
+  .live-qr img,.live-qr canvas{max-width:158px}
+  .live-question .answers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .live-question .answer{min-height:62px;font-size:21px}
+  .player-list{grid-template-columns:minmax(0,1fr)}
+  .team-score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:380px){
+  .live-question .answers{grid-template-columns:minmax(0,1fr)}
+  .live-host-codebar strong{letter-spacing:3px}
+  .live-qr{width:150px}
+}
+
+/* MatheMeister v4: two presentation modes, host player, profile cosmetics */
+.shop-wallet{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:18px 0}
+.shop-avatar-preview{width:78px;height:78px;display:grid;place-items:center;border-radius:24px;background:#121b31;font-size:42px;border:3px solid #4f46e5;box-shadow:0 0 0 4px #4f46e522}
+.shop-wallet-main{flex:1;min-width:140px}.shop-wallet-main strong{display:block;font-size:30px;color:var(--yellow);margin:3px 0}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:12px 0 24px}
+.shop-item{border:1px solid var(--line);border-radius:16px;padding:14px;background:#ffffff05;display:flex;flex-direction:column;gap:8px;min-width:0}
+.shop-item-preview{height:72px;display:grid;place-items:center;font-size:36px;border-radius:13px;background:#121b31}
+.shop-item strong{font-size:14px}.shop-item small{color:var(--muted);line-height:1.45;min-height:32px}.shop-item .btn{margin-top:auto;width:100%}
+.mission-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.mission-card{border:1px solid var(--line);border-radius:12px;padding:12px}.mission-track{height:6px;background:#ffffff14;border-radius:99px;overflow:hidden;margin:9px 0}.mission-track span{display:block;height:100%;background:linear-gradient(90deg,#48e4ef,#a866ff)}
+.cosmetic-frame{display:inline-grid;place-items:center;width:38px;height:38px;border:2px solid #475569;border-radius:13px;box-shadow:0 0 0 2px #ffffff08;vertical-align:middle}
+.frame-neon{border-color:#48e4ef;box-shadow:0 0 0 3px #48e4ef25,0 0 12px #48e4ef55}
+.frame-gold{border-color:#fbbf24;box-shadow:0 0 0 3px #fbbf242b,0 0 12px #fbbf244a}
+.frame-galaxy{border-color:#c084fc;box-shadow:0 0 0 3px #c084fc2b,0 0 12px #a855f755;background:linear-gradient(135deg,#111827,#4c1d95)}
+.frame-royal{border:3px double #fb7185;box-shadow:0 0 0 3px #fb718533,0 0 14px #fb718555;background:linear-gradient(135deg,#7f1d1d,#4c1d95)}
+.profile-title-tag{display:inline-block;border:1px solid #ffffff20;background:#ffffff0b;border-radius:7px;padding:2px 5px;margin-left:4px;font-size:10px;font-weight:800;white-space:nowrap}
+.live-host-qr-always{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid #48e4ef55;background:#48e4ef0a;padding:12px;border-radius:14px;margin:8px 0}
+.live-host-qr-always .live-qr{background:white}
+.live-host-tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.live-host-player-actions{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.live-host-player-actions button{font-size:10px;padding:5px 8px}
+.color-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(105px,1fr));gap:clamp(12px,3vw,22px);max-width:570px;margin:clamp(18px,5vh,48px) auto}
+.color-answer{aspect-ratio:1.55;min-height:clamp(110px,20vh,190px);border:0;border-radius:20px;box-shadow:0 7px 0 #0003,0 14px 30px #0002;transition:transform .12s,filter .12s;touch-action:manipulation}
+.color-answer:active{transform:translateY(4px) scale(.98);box-shadow:0 3px 0 #0003}
+.color-answer:disabled{filter:saturate(.45);opacity:.6}
+.color-answer.color-0{background:#e74c3c}.color-answer.color-1{background:#2980d9}.color-answer.color-2{background:#27ae60}.color-answer.color-3{background:#f1c40f}
+.classroom-phone-card{text-align:center;max-width:620px;margin:0 auto;padding:clamp(8px,2vw,18px)}
+.classroom-phone-card .classroom-title{font-size:12px;letter-spacing:1.4px;color:var(--muted);margin-top:6px}
+.classroom-phone-card .classroom-timer{height:7px;background:#ffffff18;border-radius:99px;overflow:hidden;margin:8px 0}
+.classroom-phone-card .classroom-timer span{display:block;height:100%;background:linear-gradient(90deg,#48e4ef,#a866ff);width:100%;transition:width .2s}
+.classroom-phone-card .classroom-result{font-size:clamp(25px,7vw,42px);font-weight:900;margin:22px auto}
+.live-answer-distribution{display:grid;gap:8px;margin:14px 0}
+.answer-distribution-row{display:grid;grid-template-columns:minmax(70px,100px) 1fr 32px;gap:10px;align-items:center;font-size:12px}
+.answer-distribution-track{height:14px;border-radius:99px;overflow:hidden;background:#ffffff12}
+.answer-distribution-track span{height:100%;display:block;background:linear-gradient(90deg,#48e4ef,#a866ff);border-radius:99px}
+.private-gap-card{padding:10px 12px;border:1px solid #48e4ef42;border-radius:12px;background:#48e4ef0b;font-size:13px;margin:10px 0}
+.player-inactive{opacity:.55;border-style:dashed}
+body.classroom-player .live-host-codebar,body.classroom-player .live-status-card{display:none}
+body.classroom-player #live.panel{min-height:80vh}
+.mm-confetti{pointer-events:none;position:absolute;inset:0;overflow:hidden;z-index:3}.mm-confetti i{position:absolute;top:-15px;width:8px;height:13px;border-radius:2px;background:var(--confetti-color,#facc15);animation:mm-confetti-fall 2.8s linear infinite;left:var(--confetti-left)}.mm-confetti i:nth-child(3n){--confetti-color:#48e4ef}.mm-confetti i:nth-child(3n+1){--confetti-color:#fb7185}.mm-confetti i:nth-child(3n+2){--confetti-color:#c084fc}@keyframes mm-confetti-fall{to{transform:translateY(105vh) rotate(740deg);opacity:.6}}
+@media(max-width:560px){.shop-wallet{align-items:flex-start}.shop-wallet .btn{width:100%}.color-answer-grid{gap:10px}.color-answer{min-height:120px;border-radius:16px}.live-host-qr-always .live-qr{width:130px}.answer-distribution-row{grid-template-columns:65px 1fr 25px}}
+
+
+/* v5: Hamburger-Menü, Hilfe und sichere Spieler-Verwaltung */
+.top{position:relative}
+.menu-area{position:relative;display:flex;align-items:center;gap:8px}
+.menu-toggle{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:#ffffff0a;color:var(--text);display:grid;place-items:center;font-size:25px;line-height:1;flex:0 0 auto}
+.menu-toggle:hover{border-color:var(--cyan);background:#48e4ef12}
+.site-menu-overlay{position:fixed;inset:0;background:#030611a8;backdrop-filter:blur(4px);z-index:80}
+.site-menu{position:fixed;z-index:81;right:max(12px,calc((100vw - 1160px)/2 + 12px));top:82px;width:min(330px,calc(100vw - 24px));max-height:calc(100dvh - 100px);overflow:auto;padding:14px;border:1px solid #43577e;border-radius:20px;background:linear-gradient(150deg,#17213b,#0b1020);box-shadow:0 24px 80px #000b}
+.site-menu.hidden,.site-menu-overlay.hidden{display:none}
+.site-menu-heading{display:flex;justify-content:space-between;align-items:center;padding:4px 4px 12px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.site-menu-heading strong{font-size:17px}
+.site-menu-close{border:1px solid var(--line);border-radius:10px;background:#ffffff0a;color:var(--text);font-size:20px;width:36px;height:36px}
+.site-menu button.menu-item{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:12px;border:1px solid transparent;border-radius:12px;color:var(--text);background:transparent;font-weight:750;margin:2px 0}
+.site-menu button.menu-item:hover{background:#ffffff0b;border-color:#344566}
+.site-menu .menu-icon{width:30px;text-align:center;font-size:21px;flex:0 0 30px}
+.site-menu .menu-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.site-menu .menu-copy small{font-size:11px;color:var(--muted);font-weight:500;line-height:1.3}
+.site-menu-note{padding:11px;margin-top:10px;border-radius:12px;background:#48e4ef0c;color:var(--muted);font-size:11px;line-height:1.5}
+.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.info-card{border:1px solid var(--line);background:#ffffff06;border-radius:16px;padding:16px;min-width:0}
+.info-card h3{margin-bottom:7px}
+.info-card p,.info-card li{color:var(--muted);font-size:13px;line-height:1.6}
+.info-card ul{padding-left:19px;margin-bottom:0}
+.host-action-stack{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.host-action-stack .btn{min-height:34px;padding:7px 9px;font-size:11px}
+.btn.danger{background:linear-gradient(110deg,#8f243f,#f35c73);border-color:#f35c7380;color:#fff}
+.player-removed-notice{padding:clamp(20px,5vw,42px);text-align:center;border:1px solid #fb718566;background:linear-gradient(145deg,#fb718516,#a866ff0b);border-radius:22px;margin-top:14px}
+.player-removed-notice .removed-icon{font-size:54px;margin-bottom:12px}
+.stats-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+@media(max-width:700px){.top{gap:9px;align-items:flex-start}.brand{gap:8px}.brand strong{font-size:16px}.brand small{font-size:9px;letter-spacing:1px}.logo{width:42px;height:42px;font-size:23px}.profile{gap:6px;flex-wrap:wrap;justify-content:flex-end}.profile .pill{display:none}.menu-toggle{width:42px;height:42px}.site-menu{top:66px;right:10px}.info-grid{grid-template-columns:minmax(0,1fr)}.host-action-stack{justify-content:flex-start}.host-action-stack .btn{flex:1}}
+
+
+/* v6: one shared classroom palette + immersive mobile classroom player */
+.answer.color-0,.color-answer.color-0{background:linear-gradient(145deg,#f05252,#c92d3a)!important;color:#fff}
+.answer.color-1,.color-answer.color-1{background:linear-gradient(145deg,#3b9cff,#2365c9)!important;color:#fff}
+.answer.color-2,.color-answer.color-2{background:linear-gradient(145deg,#f8d347,#d89b0b)!important;color:#271d00}
+.answer.color-3,.color-answer.color-3{background:linear-gradient(145deg,#31d18a,#0e9365)!important;color:#042318}
+.answer.color-0,.answer.color-1,.answer.color-2,.answer.color-3{border:1px solid #ffffff28;box-shadow:0 4px 0 #0004,0 10px 24px #0002}
+.answer.color-0:disabled,.answer.color-1:disabled,.answer.color-2:disabled,.answer.color-3:disabled{opacity:.78;filter:saturate(.86)}
+.color-answer.selected{outline:4px solid #fff;outline-offset:-7px;filter:brightness(1.12);transform:scale(.985)}
+.answer-distribution-label{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
+.answer-color-dot{display:inline-block;flex:0 0 13px;width:13px;height:13px;border-radius:4px;box-shadow:0 0 0 2px #ffffff25}
+.answer-color-dot.color-0{background:#f05252}.answer-color-dot.color-1{background:#3b9cff}.answer-color-dot.color-2{background:#f8d347}.answer-color-dot.color-3{background:#31d18a}
+.answer-distribution-track .distribution-fill.color-0{background:linear-gradient(90deg,#f05252,#c92d3a)}
+.answer-distribution-track .distribution-fill.color-1{background:linear-gradient(90deg,#3b9cff,#2365c9)}
+.answer-distribution-track .distribution-fill.color-2{background:linear-gradient(90deg,#f8d347,#d89b0b)}
+.answer-distribution-track .distribution-fill.color-3{background:linear-gradient(90deg,#31d18a,#0e9365)}
+.answer-distribution-row{grid-template-columns:minmax(110px,145px) 1fr 34px}
+.answer-distribution-label small{font-size:10px;color:var(--muted);font-weight:600}
+.live-distribution-card{border:1px solid var(--line);border-radius:16px;background:#ffffff05;padding:14px;margin:14px 0}
+.live-distribution-card h3{margin:0 0 6px}
+.live-distribution-card .distribution-note{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.45}
+.live-distribution-card .answer-distribution-row{margin-top:9px}
+.live-distribution-card .answer-distribution-track{height:13px}
+.distribution-no-answer{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.classroom-awaiting{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:0;text-align:center}
+.classroom-awaiting .wait-orbit{width:72px;height:72px;display:grid;place-items:center;border-radius:50%;border:1px solid #48e4ef55;background:radial-gradient(circle,#48e4ef1e,transparent 70%);font-size:36px;box-shadow:0 0 34px #48e4ef10}
+.classroom-awaiting h3{margin:0}
+.classroom-awaiting p{margin:0;max-width:320px;line-height:1.5}
+body.classroom-player{height:100vh;height:100dvh;min-height:0;overflow:hidden;overscroll-behavior:none}
+body.classroom-player .wrap{width:100%;max-width:none;height:100vh;height:100dvh;min-height:0;overflow:hidden;margin:0;padding:max(4px,env(safe-area-inset-top)) max(4px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left));display:flex;flex-direction:column}
+body.classroom-player .top,body.classroom-player .foot{display:none!important}
+body.classroom-player #live.panel{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-height:0;max-height:100%;margin:0;padding:clamp(4px,1.2vh,10px);border:0;border-radius:0;overflow:hidden;box-shadow:none}
+body.classroom-player #liveRoom{display:flex;flex:1 1 auto;min-height:0;height:100%;overflow:hidden}
+body.classroom-player .live-room-shell{display:flex;flex-direction:column;justify-content:center;width:100%;height:100%;min-height:0;overflow:hidden;margin:0;padding:clamp(8px,2.3vw,16px);border-radius:20px}
+body.classroom-player .classroom-phone-card{display:flex;flex:1 1 auto;flex-direction:column;justify-content:center;align-items:stretch;gap:clamp(10px,1.8vh,18px);width:100%;height:100%;min-height:0;max-width:600px;margin:0 auto;padding:clamp(5px,1.5vh,12px);text-align:center}
+body.classroom-player .classroom-phone-card .classroom-result{margin:0 auto;font-size:clamp(42px,11vw,72px);line-height:1.05}
+body.classroom-player .classroom-phone-card h3{margin:0;font-size:clamp(20px,5vw,27px)}
+body.classroom-player .classroom-phone-card p{margin:0;font-size:clamp(13px,3.6vw,16px);line-height:1.45}
+body.classroom-player .classroom-phone-card .btn{flex:0 0 auto;min-height:44px;margin-top:0!important}
+body.classroom-player .color-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(8px,2vw,14px);width:100%;height:min(78dvh,720px);max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);min-height:0;max-width:none;margin:0 auto;flex:0 1 auto}
+body.classroom-player .color-answer{position:relative;width:100%;height:100%;min-height:0;aspect-ratio:auto;overflow:hidden;border-radius:clamp(14px,3vw,24px);box-shadow:0 5px 0 #0005,0 12px 30px #0004;touch-action:manipulation}
+body.classroom-player .color-answer::after{content:"";position:absolute;inset:0;background:linear-gradient(145deg,#ffffff1b,transparent 48%);pointer-events:none}
+body.classroom-player .color-answer:disabled{opacity:.9;filter:saturate(.92)}
+body.classroom-player .color-answer.selected{outline:4px solid #fff;outline-offset:-7px;box-shadow:0 0 0 5px #ffffff16,0 6px 0 #0006,0 0 32px #ffffff25;transform:scale(.985)}
+body.classroom-player .classroom-timer{height:5px;min-height:5px;flex:0 0 5px;width:100%;margin:0;border-radius:99px;background:#ffffff18;overflow:hidden}
+body.classroom-player .classroom-timer span{display:block;height:100%;width:100%;background:linear-gradient(90deg,#48e4ef,#a866ff);border-radius:99px;transition:width .2s linear}
+body.classroom-player .classroom-timer span.low{background:linear-gradient(90deg,#fb7185,#f97316)}
+body.classroom-player .classroom-phone-card .live-self,body.classroom-player .classroom-phone-card .private-gap-card{display:none!important}
+@media(max-height:600px){body.classroom-player .color-answer-grid{height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 26px);width:min(88vw,860px)}body.classroom-player .classroom-phone-card{gap:6px;padding:3px}}
+@media(max-width:360px){body.classroom-player .color-answer-grid{gap:7px}body.classroom-player .color-answer{border-radius:13px}}
+@media(prefers-reduced-motion:reduce){.color-answer,.classroom-awaiting .wait-orbit{transition:none!important;animation:none!important}}
+
+
+/* v7: dialogs rendered in the site, not browser-native confirm/prompt boxes */
+.modal-overlay{position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;padding:18px;background:#030611c9;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:modalFade .16s ease}
+.modal-overlay.hidden{display:none!important}
+.modal-card{width:min(100%,470px);max-height:min(88dvh,760px);overflow:auto;border:1px solid #7487c555;border-radius:26px;padding:clamp(20px,5vw,30px);background:radial-gradient(ellipse at 10% 0%,#293969 0,transparent 45%),linear-gradient(150deg,#18223d,#10172a 68%,#17132d);box-shadow:0 30px 100px #000a,0 0 0 1px #ffffff08;animation:modalPop .22s cubic-bezier(.2,.8,.2,1)}
+.modal-icon{width:58px;height:58px;display:grid;place-items:center;font-size:29px;border-radius:18px;background:#ffffff0b;border:1px solid #ffffff17;margin-bottom:17px;box-shadow:inset 0 1px #ffffff12}
+.modal-icon.danger{background:#fb718516;border-color:#fb718544}.modal-icon.primary{background:#48e4ef12;border-color:#48e4ef44}
+.modal-card h2{font-size:clamp(21px,5vw,27px);line-height:1.2;letter-spacing:-.5px;margin:0 0 10px}
+.modal-copy{color:var(--muted);line-height:1.65;white-space:pre-line;margin:0 0 21px;font-size:14px}
+.modal-extra{margin:0 0 18px}.modal-extra:empty{display:none}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-actions .btn{min-height:48px;margin:0!important}
+.modal-actions .btn.danger{background:linear-gradient(135deg,#fb7185,#d83856);border:0;color:#fff;box-shadow:0 7px 20px #fb718522}
+.modal-actions .btn.primary{box-shadow:0 7px 24px #48e4ef19}
+.modal-close{float:right;width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:#ffffff07;color:var(--muted);font-size:22px;margin:-4px -4px 0 8px}
+.modal-link-input{width:100%;min-height:46px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#080d1b;color:var(--text);font-size:12px}
+body.modal-open{overflow:hidden}
+@keyframes modalFade{from{opacity:0}to{opacity:1}}
+@keyframes modalPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+/* v7: brighter, card-based creator and feedback pages */
+.studio-hero{position:relative;overflow:hidden;border-radius:24px;border:1px solid #a866ff55;padding:clamp(18px,4vw,28px);background:radial-gradient(ellipse at 90% 0%,#a866ff26,transparent 42%),linear-gradient(135deg,#1d2444,#11182b 70%);margin:16px 0 20px}
+.studio-hero:after{content:"✦";position:absolute;right:22px;top:9px;color:#b59cff;font-size:clamp(65px,12vw,110px);opacity:.14;transform:rotate(12deg);pointer-events:none}
+.studio-hero h2{margin:9px 0 8px}.studio-hero p{max-width:710px;color:var(--muted);line-height:1.65;margin:0}
+.studio-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.studio-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.studio-option{padding:14px;border:1px solid var(--line);border-radius:16px;background:#ffffff04;min-width:0}
+.studio-option h3{font-size:14px;margin:0 0 5px}.studio-option p{font-size:12px;line-height:1.5;color:var(--muted);margin:0}
+.studio-field-note{font-size:12px;line-height:1.5;color:var(--muted);margin:7px 0 0}
+.studio-question-area{width:100%;min-height:150px;resize:vertical;padding:13px 14px;border-radius:14px;border:1px solid var(--line);background:#0a1020;color:var(--text);line-height:1.6}
+.studio-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.studio-preview-item{border:1px solid var(--line);border-radius:14px;padding:12px;background:linear-gradient(145deg,#1a2541,#101629);min-width:0}
+.studio-preview-item strong{display:block;font-size:19px;margin-bottom:4px}.studio-preview-item small{color:var(--muted);font-size:11px}
+.studio-link-box{border:1px solid #48e4ef4d;background:#48e4ef09;border-radius:18px;padding:14px;margin-top:16px}
+.studio-link-row{display:flex;gap:8px;align-items:center}.studio-link-row input{flex:1;min-width:0}
+.feedback-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:16px;align-items:start}
+.feedback-form{display:grid;gap:14px}.feedback-form textarea{width:100%;min-height:160px;resize:vertical;border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:#0a1020;color:var(--text);font:inherit;line-height:1.6}
+.feedback-form input,.feedback-form select{width:100%}.feedback-side{display:grid;gap:12px}.feedback-side .info-card{min-height:0}
+.form-required{color:var(--pink)}.form-error{color:#ff9aa8;font-size:12px;min-height:16px;margin-top:6px}
+/* Friends-mode lobby uses a focused, full-screen waiting screen on phones */
+
+body.friends-player-playing{height:100vh;height:100dvh;min-height:0;overflow:hidden;overscroll-behavior:none}
+body.friends-player-playing .wrap{width:100%;max-width:none;height:100vh;height:100dvh;min-height:0;overflow:hidden;margin:0;padding:max(4px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left));display:flex;flex-direction:column}
+body.friends-player-playing .top,body.friends-player-playing .foot{display:none!important}
+body.friends-player-playing #live.panel{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-height:0;max-height:100%;margin:0;padding:clamp(4px,1vh,8px);border:0;border-radius:0;overflow:hidden;box-shadow:none}
+body.friends-player-playing #liveRoom{display:flex;flex:1 1 auto;min-height:0;height:100%;overflow:hidden}
+body.friends-player-playing .live-room-shell{display:flex;flex:1 1 auto;flex-direction:column;justify-content:center;width:100%;height:100%;min-height:0;overflow:hidden;margin:0;padding:clamp(8px,2vw,14px);border-radius:22px;background:radial-gradient(ellipse at 50% 6%,#48e4ef13,transparent 45%),linear-gradient(145deg,#141f3b,#0d1428 72%,#171330)}
+body.friends-player-playing .live-room-shell>.row:first-child{display:none!important}
+body.friends-player-playing .live-self{flex:0 0 auto;margin:0 0 7px;padding:6px 9px;min-height:0}
+body.friends-player-playing .live-self-avatar{font-size:23px}
+body.friends-player-playing .live-self-name{font-size:13px}
+body.friends-player-playing .live-self-meta{font-size:10px;margin-top:1px}
+body.friends-player-playing .live-question{display:flex;flex:1 1 auto;flex-direction:column;justify-content:flex-start;min-height:0;overflow:hidden;margin:3px 0;padding:clamp(8px,2vw,14px);border-radius:20px}
+body.friends-player-playing .live-question .q-label{font-size:10px;margin:0}
+body.friends-player-playing .live-question .question{font-size:clamp(36px,10vw,58px);line-height:1;margin:6px 0 8px}
+body.friends-player-playing .live-timer-head{font-size:11px;margin:5px 0 4px}
+body.friends-player-playing .live-timer-track{height:7px;min-height:7px}
+body.friends-player-playing .live-question>p.muted{font-size:11px;margin:5px 0}
+body.friends-player-playing .live-question .answers{flex:0 1 auto;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:8px;margin-top:6px}
+body.friends-player-playing .live-question .answer{min-height:clamp(48px,9vh,74px);height:100%;font-size:clamp(19px,5vw,28px);border-radius:15px}
+body.friends-player-playing .live-reactions{flex:0 0 auto;margin:5px 0 0}
+body.friends-player-playing .live-reaction-toggle{padding:5px 9px;font-size:11px}
+body.friends-player-playing .live-reaction-menu{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+body.friends-player-playing .live-reaction-btn{min-width:38px;padding:5px 8px;font-size:19px}
+body.friends-player-playing .private-gap-card{flex:0 0 auto;font-size:10px;line-height:1.35;margin:5px 0 0;padding:6px 8px}
+body.friends-player-playing .live-room-shell>.row:last-child{flex:0 0 auto;margin:5px 0 0!important;justify-content:center}
+body.friends-player-playing .live-room-shell>.row:last-child .btn{padding:5px 10px;min-height:30px;font-size:10px}
+@media(max-height:650px){body.friends-player-playing .live-self{margin-bottom:4px;padding:4px 7px}body.friends-player-playing .live-question{padding:6px;margin:2px 0}body.friends-player-playing .live-question .question{font-size:clamp(30px,8vh,45px)}body.friends-player-playing .live-question .answer{min-height:40px}body.friends-player-playing .live-reactions{margin-top:3px}}
+
+body.friends-player-lobby{height:100vh;height:100dvh;min-height:0;overflow:hidden;overscroll-behavior:none}
+body.friends-player-lobby .wrap{width:100%;max-width:none;height:100vh;height:100dvh;min-height:0;overflow:hidden;margin:0;padding:max(4px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left));display:flex;flex-direction:column}
+body.friends-player-lobby .top,body.friends-player-lobby .foot{display:none!important}
+body.friends-player-lobby #live.panel{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-height:0;max-height:100%;margin:0;padding:clamp(4px,1.2vh,10px);border:0;border-radius:0;overflow:hidden;box-shadow:none}
+body.friends-player-lobby #liveRoom{display:flex;flex:1 1 auto;min-height:0;height:100%;overflow:hidden}
+body.friends-player-lobby .live-room-shell{display:flex;flex:1 1 auto;flex-direction:column;justify-content:center;width:100%;height:100%;min-height:0;overflow:hidden;margin:0;padding:clamp(14px,4vw,28px);border-radius:26px;background:radial-gradient(ellipse at 50% 12%,#48e4ef14,transparent 45%),linear-gradient(145deg,#131e38,#0d1428 72%,#171330);text-align:center}
+body.friends-player-lobby .live-room-shell>.row:first-child{display:none!important}
+body.friends-player-lobby .live-self{justify-content:center;width:100%;max-width:400px;margin:0 auto 20px;padding:14px 16px;background:#ffffff07;border-color:#48e4ef2b}
+body.friends-player-lobby .live-self-avatar{font-size:34px}
+body.friends-player-lobby .live-self-name{font-size:18px}
+body.friends-player-lobby .live-status-card{width:100%;max-width:440px;margin:0 auto;padding:clamp(20px,6vw,34px);border-radius:24px;background:#ffffff05}
+body.friends-player-lobby .live-status-card>div:first-child{width:66px;height:66px;display:grid;place-items:center;margin:0 auto 12px;border-radius:22px;font-size:34px;background:#48e4ef12;box-shadow:0 0 35px #48e4ef0d}
+body.friends-player-lobby .live-status-card h3{font-size:clamp(23px,6vw,30px);margin:8px 0}
+body.friends-player-lobby .live-status-card p{max-width:300px;margin:0 auto;line-height:1.65}
+body.friends-player-lobby .live-room-shell>.row:not(:first-child){justify-content:center}
+@media(max-width:700px){.studio-form-grid,.studio-options,.feedback-grid{grid-template-columns:minmax(0,1fr)}.studio-preview{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-link-row{flex-direction:column;align-items:stretch}.studio-link-row .btn{width:100%}.studio-hero:after{right:12px;top:0}.feedback-side{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.modal-overlay{padding:10px}.modal-card{border-radius:21px}.modal-actions{grid-template-columns:1fr}.feedback-side{grid-template-columns:1fr}.studio-preview{grid-template-columns:1fr 1fr}.studio-preview-item strong{font-size:17px}}
+@media(max-height:640px){body.friends-player-lobby .live-self{margin-bottom:10px;padding:8px 12px}body.friends-player-lobby .live-status-card{padding:16px}body.friends-player-lobby .live-status-card>div:first-child{width:48px;height:48px;font-size:27px;margin-bottom:7px}}
+@media(prefers-reduced-motion:reduce){.modal-overlay,.modal-card{animation:none!important}}
+
+
+/* v10 — Security hardening for the no-code game creator */
+.creator-hero{position:relative;overflow:hidden;border:1px solid #8d7bff55;border-radius:26px;padding:clamp(20px,4vw,34px);margin:12px 0 20px;background:radial-gradient(ellipse at 88% 5%,#a866ff30,transparent 38%),radial-gradient(ellipse at 4% 100%,#48e4ef19,transparent 42%),linear-gradient(135deg,#20294c,#11182b 72%)}
+.creator-hero h2{font-size:clamp(26px,4vw,38px);letter-spacing:-.7px;margin:12px 0 8px}.creator-hero p{color:var(--muted);line-height:1.65;max-width:760px;margin:0}
+.creator-tagline{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.creator-tagline span{border:1px solid #ffffff1b;background:#ffffff08;border-radius:999px;padding:7px 10px;font-size:12px;color:#dbe5ff}
+.creator-section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:22px 0 12px}.creator-section-head h3{margin:0 0 5px;font-size:20px}.creator-section-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.creator-prompt-box{border:1px solid #48e4ef45;background:#48e4ef08;border-radius:20px;padding:16px;margin:16px 0}.creator-prompt-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:10px}.creator-prompt-row input{width:100%;min-width:0}
+.creator-template-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.creator-template{position:relative;text-align:left;color:var(--text);border:1px solid var(--line);border-radius:19px;padding:16px;background:linear-gradient(145deg,#1b2540,#101629);min-width:0;transition:transform .16s,border-color .16s,box-shadow .16s}.creator-template:hover{transform:translateY(-2px);border-color:#9b86ff;box-shadow:0 14px 35px #0003}.creator-template .template-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:#ffffff0c;font-size:27px;margin-bottom:12px}.creator-template strong{display:block;font-size:15px;margin-bottom:6px}.creator-template small{display:block;color:var(--muted);line-height:1.5;font-size:12px}.creator-template .template-label{position:absolute;right:10px;top:10px;font-size:10px;color:#d9ccff;background:#8d7bff1e;border:1px solid #a866ff30;border-radius:999px;padding:5px 7px}
+.creator-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.creator-draft-card{padding:15px;border:1px solid var(--line);border-radius:18px;background:#ffffff04;min-width:0}.creator-draft-top{display:flex;gap:10px;align-items:flex-start}.creator-draft-icon{display:grid;place-items:center;flex:0 0 43px;height:43px;border-radius:13px;background:#a866ff18;font-size:23px}.creator-draft-card h4{margin:0 0 5px;overflow-wrap:anywhere}.creator-draft-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.creator-draft-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.creator-draft-actions button{font-size:12px;padding:8px 10px}
+.creator-editor-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(250px,.6fr);gap:14px;align-items:start}.creator-pane{border:1px solid var(--line);border-radius:21px;padding:clamp(13px,2.5vw,20px);background:linear-gradient(155deg,#151d33,#101628)}.creator-pane h3{margin:0 0 8px}.creator-pane p.muted{line-height:1.55}.creator-stepbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:14px 0}.creator-step{padding:10px 8px;border:1px solid var(--line);border-radius:12px;background:#ffffff04;color:var(--muted);font-size:12px;text-align:center}.creator-step b{display:block;color:var(--text);font-size:14px;margin-bottom:4px}.creator-step.active{border-color:#a866ff80;background:#a866ff13}.creator-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.creator-field-grid .field{min-width:0}.creator-field-grid input,.creator-field-grid select,.creator-field-grid textarea,.creator-question-card input,.creator-question-card textarea,.creator-question-card select{width:100%;min-width:0}.creator-field-grid textarea,.creator-question-card textarea{resize:vertical;min-height:76px;background:#090f20;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;line-height:1.5;width:100%}.creator-question-list{display:grid;gap:12px;margin-top:13px}.creator-question-card{border:1px solid #ffffff17;border-radius:17px;padding:14px;background:#ffffff04;min-width:0}.creator-question-card .q-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.creator-question-card .q-head strong{font-size:13px}.creator-question-card .field{margin:9px 0 0}.creator-question-card label{font-size:12px}.creator-options-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.creator-option-field{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;padding:8px;min-width:0}.creator-option-field input[type=radio],.creator-option-field input[type=checkbox]{width:auto;flex:0 0 auto}.creator-option-field input[type=text]{border:0;background:transparent;box-shadow:none;padding:5px;min-width:0;width:100%}.creator-pair-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:8px;align-items:center;margin-top:9px}.creator-pair-row input{min-width:0;width:100%}.creator-rule-note{border:1px dashed #7f90bb70;border-radius:13px;padding:11px;color:var(--muted);font-size:12px;line-height:1.5;margin-top:12px}.creator-preview-sticky{position:sticky;top:12px}.creator-mini-screen{border:1px solid #8298d94d;border-radius:20px;padding:15px;background:radial-gradient(ellipse at 90% 0%,#4264b926,transparent 45%),#090f20}.creator-mini-screen .mini-top{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin-bottom:16px}.creator-mini-screen .mini-question{font-size:21px;font-weight:850;line-height:1.25;margin:13px 0}.creator-mini-answer{border:1px solid #ffffff18;background:#ffffff07;border-radius:12px;padding:10px;margin-top:8px;font-size:12px}.creator-progress-line{height:5px;background:#ffffff12;border-radius:999px;overflow:hidden;margin-top:13px}.creator-progress-line span{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:inherit}.creator-actions-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.creator-actions-row .btn{flex:0 1 auto}.creator-status{color:var(--muted);font-size:12px;line-height:1.5;margin-top:9px}.creator-codebox{border:1px solid #48e4ef40;background:#48e4ef08;border-radius:17px;padding:14px;margin-top:15px}.creator-codebox input{width:100%;min-width:0}.creator-code-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.creator-play-wrap{border:1px solid #a866ff40;border-radius:22px;padding:clamp(15px,3vw,24px);background:radial-gradient(ellipse at 95% 0%,#a866ff18,transparent 45%),#0e1528}.creator-play-header{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.creator-play-question{font-size:clamp(23px,4vw,36px);font-weight:900;line-height:1.22;letter-spacing:-.5px;margin:20px 0}.creator-play-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.creator-play-choice{min-height:60px;text-align:left;white-space:normal;border:1px solid #ffffff1d;border-radius:15px;padding:14px;color:var(--text);background:#ffffff08;font-weight:700;line-height:1.4}.creator-play-choice:hover{border-color:#8d7bff;background:#a866ff13}.creator-play-choice:disabled{cursor:default;opacity:.9}.creator-play-choice.correct{border-color:#39dfa0;background:#39dfa018}.creator-play-choice.wrong{border-color:#ff5f76;background:#ff5f7616}.creator-play-feedback{border-radius:13px;padding:12px;margin-top:12px;line-height:1.5;font-size:13px}.creator-play-feedback.good{border:1px solid #39dfa055;background:#39dfa00c}.creator-play-feedback.bad{border:1px solid #ff5f7655;background:#ff5f760c}.creator-play-input{width:100%;font-size:18px;padding:14px;border-radius:13px;background:#090f20;border:1px solid var(--line);color:var(--text)}.creator-match-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.creator-match-item{border:1px solid var(--line);border-radius:13px;padding:12px;min-height:58px;color:var(--text);background:#ffffff07;overflow-wrap:anywhere}.creator-match-item.selected{border-color:var(--cyan);background:#48e4ef13}.creator-match-item.matched{border-color:#39dfa080;background:#39dfa00e;opacity:.65}.creator-memory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.creator-memory-card{min-height:86px;border:1px solid #5d6c97;border-radius:15px;background:linear-gradient(145deg,#28355c,#151d37);font-size:22px;font-weight:800;color:var(--text);overflow-wrap:anywhere}.creator-memory-card.revealed{background:#ffffff10;border-color:#a866ff;color:#fff;font-size:14px;padding:8px}.creator-sort-item{display:flex;gap:8px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin-top:8px}.creator-sort-item span{flex:1;overflow-wrap:anywhere}.creator-sort-controls{display:flex;gap:5px}.creator-sort-controls button{padding:5px 9px}.creator-quick-actions{display:flex;gap:8px;flex-wrap:wrap}.creator-import-label{display:inline-flex;align-items:center;justify-content:center;gap:6px}.creator-empty{border:1px dashed #6b7da866;border-radius:17px;padding:22px;text-align:center;color:var(--muted);line-height:1.6}.creator-settings-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.creator-setting-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#ffffff04}.creator-setting-card label{font-size:12px}.creator-setting-card input,.creator-setting-card select{width:100%;min-width:0;margin-top:8px}
+@media(max-width:850px){.creator-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.creator-editor-layout{grid-template-columns:1fr}.creator-preview-sticky{position:static}.creator-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.creator-template-grid,.creator-library{grid-template-columns:1fr}.creator-prompt-row{grid-template-columns:1fr}.creator-field-grid{grid-template-columns:1fr}.creator-options-grid{grid-template-columns:1fr}.creator-pair-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.creator-pair-row .btn{grid-column:1/-1;width:100%}.creator-settings-grid{grid-template-columns:1fr}.creator-play-options{grid-template-columns:1fr}.creator-memory-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.creator-memory-card{min-height:74px;font-size:18px}.creator-actions-row .btn{width:100%}.creator-draft-actions button{flex:1}.creator-step{font-size:10px;padding:9px 4px}}
+@media(prefers-reduced-motion:reduce){.creator-template{transition:none}}
+
+
+/* v10.2: Mobile/Safari touch compatibility */
+button,
+[role="button"],
+a,
+label.btn,
+input[type="button"],
+input[type="submit"],
+select {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button,
+[role="button"],
+a,
+label.btn {
+  -webkit-user-select: none;
+  user-select: none;
+}
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+
+/* V10.5 group 1: shared reactions, live chat and mobile dock */
+.live-activity-area{display:grid;gap:10px;margin-top:12px}
+.live-reaction-feed{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:0}
+.live-reaction-bubble{display:inline-grid;place-items:center;min-width:34px;height:34px;padding:0 7px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff20;font-size:20px;animation:mm-reaction-pop .22s ease-out}
+@keyframes mm-reaction-pop{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
+.live-reactions{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.live-reaction-menu{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.live-chat{position:relative;margin-top:8px;z-index:15}
+.live-chat-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:#ffffff0a;color:var(--text);font-weight:750}
+.live-chat-toggle span{border-radius:99px;background:#48e4ef20;padding:2px 7px;font-size:11px}
+.live-chat-panel{display:grid;gap:9px;margin-top:8px;padding:10px;border:1px solid #48e4ef44;border-radius:15px;background:#101a30;box-shadow:0 12px 35px #0005}
+.live-chat-messages{display:grid;gap:8px;max-height:210px;overflow:auto;overscroll-behavior:contain}
+.live-chat-message{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;border-radius:10px;background:#ffffff08;overflow-wrap:anywhere}
+.live-chat-avatar{font-size:20px;flex:0 0 auto}.live-chat-message b{font-size:11px;color:var(--cyan)}.live-chat-message p{margin:2px 0 0;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.live-chat-quick{display:flex;flex-wrap:wrap;gap:6px}.live-chat-quick button{border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:#ffffff08;color:var(--text);font-size:11px}
+.live-chat-compose{display:flex;gap:7px}.live-chat-compose input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px;background:#080f20;color:var(--text)}.live-chat-compose button{border:0;border-radius:10px;padding:0 12px;background:linear-gradient(135deg,#48e4ef,#8b7cff);color:#091020;font-weight:850}
+.live-chat button:disabled{opacity:.5;cursor:not-allowed}
+.feedback-form button:disabled{opacity:.6;cursor:wait}
+@media(max-width:700px){.live-chat-panel{padding:8px}.live-chat-messages{max-height:160px}.live-chat-compose input{font-size:16px}.classroom-activity-dock{position:fixed;z-index:999;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));display:flex;justify-content:center;align-items:flex-end;gap:6px;pointer-events:none}.classroom-activity-dock>.live-reactions,.classroom-activity-dock>.live-chat{pointer-events:auto;margin:0}.classroom-activity-dock>.live-reaction-feed{position:fixed;left:8px;right:8px;bottom:64px;justify-content:center;pointer-events:none}.classroom-activity-dock .live-chat{position:static}.classroom-activity-dock .live-reactions{position:static}.classroom-activity-dock .live-chat-panel{position:absolute;left:0;right:0;bottom:48px;max-height:40dvh}.classroom-activity-dock .live-reaction-menu{position:absolute;left:0;bottom:48px;padding:8px;border-radius:12px;background:#101a30;border:1px solid var(--line)}.classroom-activity-dock .live-chat-toggle,.classroom-activity-dock .live-reaction-toggle{box-shadow:0 4px 20px #0008;background:#17223c}.classroom-activity-dock{flex-direction:row}body.friends-player-playing .live-activity-area{position:fixed;z-index:999;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));display:flex;justify-content:center;align-items:flex-end;gap:6px;pointer-events:none}body.friends-player-playing .live-activity-area>.live-reaction-feed{position:fixed;left:8px;right:8px;bottom:64px;justify-content:center;pointer-events:none}body.friends-player-playing .live-activity-area .live-chat,body.friends-player-playing .live-activity-area .live-reactions{position:static;pointer-events:auto}body.friends-player-playing .live-activity-area .live-chat-panel{position:absolute;left:0;right:0;bottom:48px;max-height:40dvh}body.friends-player-playing .live-activity-area .live-reaction-menu{position:absolute;left:0;bottom:48px;padding:8px;border-radius:12px;background:#101a30;border:1px solid var(--line)}}
+
+/* V10.5.1 usability fixes: sender-labelled floating activity, reply affordance and safe mobile exit. */
+.live-reaction-feed{align-items:flex-end}
+.live-reaction-bubble{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:52px;padding:5px 8px;border:1px solid #ffffff25;border-radius:16px;background:#111a30ee;box-shadow:0 8px 24px #0006;animation:mmActivityFloat 4.8s ease both}
+.live-reaction-bubble b{font-size:25px;line-height:1.1}
+.live-reaction-sender{font-size:9px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#dce8ff}
+@keyframes mmActivityFloat{0%{opacity:0;transform:translateY(14px) scale(.92)}12%{opacity:1;transform:translateY(0) scale(1)}78%{opacity:1}100%{opacity:0;transform:translateY(-22px) scale(.96)}}
+.live-chat-message-copy{min-width:0;flex:1}
+.live-chat-reply{margin-top:4px;padding:3px 7px;border:1px solid #ffffff20;border-radius:7px;background:#ffffff08;color:#b9d7ff;font-size:10px}
+.live-chat-replying{display:flex;align-items:center;gap:7px;padding:7px 9px;border-left:3px solid var(--cyan);border-radius:8px;background:#48e4ef12;font-size:11px}
+.live-chat-replying span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.live-chat-replying button{border:0;background:transparent;color:var(--text);font-size:19px}
+.live-chat-float{position:fixed;z-index:1002;left:12px;bottom:92px;display:flex;align-items:center;gap:9px;max-width:min(340px,calc(100vw - 24px));padding:9px 13px;border:1px solid #48e4ef55;border-radius:16px;background:#101a30f2;box-shadow:0 12px 35px #0008;pointer-events:none;animation:mmActivityFloat 5.5s ease both}
+.live-chat-float>span{font-size:26px}
+.live-chat-float b{font-size:11px;color:var(--cyan)}
+.live-chat-float p{margin:2px 0 0;font-size:12px;overflow-wrap:anywhere}
+@media(max-width:700px){
+ body.live-room-active .live-exit-row{position:fixed;z-index:1001;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom));margin:0!important;justify-content:center;pointer-events:none}
+ body.live-room-active .live-exit-button{width:100%;max-width:420px;min-height:44px;pointer-events:auto;box-shadow:0 5px 24px #0009;background:#192540f5}
+ body.live-room-active .live-room-shell{padding-bottom:90px}
+ .live-chat-float{bottom:104px}
+}
+
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<div class="brand">
+<div class="logo">🚀</div>
+<div>
+<strong>MatheMeister <span style="color:var(--cyan)">PRO</span>
+</strong>
+<small>Lernen · Üben · Meistern</small>
+</div>
+</div>
+<div class="profile">
+<span class="pill">
+<i class="dot">
+</i>
+<span id="statusText">Dein Lernabenteuer</span>
+</span>
+<div class="avatar" id="avatar">🧑‍🚀</div>
+<button class="small-btn" onclick="editProfile()" aria-label="Profil ändern">⚙️</button>
+</div>
+<div class="menu-area">
+<button id="siteMenuToggle" class="menu-toggle" type="button" onclick="toggleSiteMenu()" aria-label="Hauptmenü öffnen" aria-expanded="false" aria-controls="siteMenu">☰</button>
+</div>
+</header>
+<div id="siteMenuOverlay" class="site-menu-overlay hidden" onclick="toggleSiteMenu(false)" aria-hidden="true"></div>
+<nav id="siteMenu" class="site-menu hidden" aria-label="Hauptmenü" aria-hidden="true">
+  <div class="site-menu-heading"><strong>MatheMeister-Menü</strong><button class="site-menu-close" onclick="toggleSiteMenu(false)" aria-label="Menü schließen">×</button></div>
+  <button class="menu-item" onclick="menuNavigate('home')"><span class="menu-icon">🏠</span><span class="menu-copy">Startseite<small>Dein Lernabenteuer</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('modes')"><span class="menu-icon">🎯</span><span class="menu-copy">Training<small>Einfach, mittel, schwer und Fehlertraining</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('live')"><span class="menu-icon">👥</span><span class="menu-copy">Live-Spiel<small>Klassenmodus oder online mit Freunden</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('shop')"><span class="menu-icon">🪙</span><span class="menu-copy">Shop & Belohnungen<small>Münzen, Rahmen, Titel und Avatare</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('progress')"><span class="menu-icon">🏆</span><span class="menu-copy">Erfolge & Level<small>XP, Rekorde und Abzeichen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('stats')"><span class="menu-icon">📊</span><span class="menu-copy">Statistiken<small>Runden ansehen, exportieren oder löschen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('settings')"><span class="menu-icon">⚙️</span><span class="menu-copy">Profil & Einstellungen<small>Name, Avatar und lokale Daten</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('how')"><span class="menu-icon">📘</span><span class="menu-copy">So funktioniert MatheMeister<small>Spielregeln und Tipps</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('privacy')"><span class="menu-icon">🔐</span><span class="menu-copy">Datenschutz & Sicherheit<small>Was lokal und online gespeichert wird</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('about')"><span class="menu-icon">🚀</span><span class="menu-copy">Über MatheMeister<small>Ziel, Funktionen und Feedback</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('studio')"><span class="menu-icon">🧪</span><span class="menu-copy">Spielstudio<small>Eigene Mathe-Runde erstellen und teilen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('creator')"><span class="menu-icon">🎮</span><span class="menu-copy">Game Creator<small>Eigene Quizze, Puzzle und Spiele bauen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('feedbackScreen')"><span class="menu-icon">💡</span><span class="menu-copy">Feedback & Ideen<small>Probleme melden und Wünsche teilen</small></span></button>
+  <div class="site-menu-note">Gastmodus: Du kannst direkt spielen, ohne ein Konto anzulegen. Hinweis: Lokale Münzen und Käufe sind dadurch noch nicht zwischen Geräten synchronisiert.</div>
+</nav>
+<section id="home" class="screen active">
+<div class="hero">
+<div class="panel hero-copy">
+<span class="pill">✨ DEIN MATHE-LEVEL-UP</span>
+<h1>
+<span class="gradient">Rechnen.</span>
+<br>
+<span class="gradient">Meistern.</span>
+</h1>
+<p class="lead">Mach das Einmaleins zu deinem Spiel. Sammle XP, knacke Rekorde, trainiere deine Fehler und fordere deine Freunde heraus.</p>
+<div class="row">
+<button class="btn primary" onclick="show('modes')">Jetzt spielen <span>→</span>
+</button>
+<button class="btn secondary" onclick="show('live')">👥 Live-Spiel</button>
+</div>
+<div style="margin-top:25px;color:var(--muted);font-size:12px">🏆 Persönliche Bestleistung · ⚡ 60-Sekunden-Rush · 🎮 Multiplayer</div>
+</div>
+<div class="visual" aria-label="Bunte Zahlen und Mathe-Symbole">
+<span class="num n1">1</span>
+<span class="num n2">3</span>
+<span class="num n3">8</span>
+<span class="num n4">4</span>
+<span class="num n5">6</span>
+<div class="gem">✦</div>
+</div>
+</div>
+<div class="mini-stats">
+<div class="stat">
+<span>Dein Level</span>
+<strong id="homeLevel">Level 1</strong>
+</div>
+<div class="stat">
+<span>Gesamt-XP</span>
+<strong class="y" id="homeXP">0 XP</strong>
+</div>
+<div class="stat">
+<span>Beste Quote</span>
+<strong class="g" id="homeAccuracy">0%</strong>
+</div>
+</div>
+<div class="section-head">
+<div>
+<h2>Wähle dein Abenteuer</h2>
+<p>Alle deine Werkzeuge an einem Ort.</p>
+</div>
+</div>
+<div class="tiles">
+<button class="tile" style="--tint:#39dfa021" onclick="show('modes')">
+<span class="ico">🎯</span>
+<h3>Klassisches Training</h3>
+<p>Einfach, Mittel oder Schwer – in deinem Tempo.</p>
+<b>Training starten →</b>
+</button>
+<button class="tile" style="--tint:#a866ff2b" onclick="startRush()">
+<span class="ico">⚡</span>
+<h3>Math Rush</h3>
+<p>60 Sekunden. So viele richtige Antworten wie möglich.</p>
+<b>Bestwert: <span id="rushBest">0</span> →</b>
+</button>
+<button class="tile" style="--tint:#ff964f26" onclick="show('live')">
+<span class="ico">👥</span>
+<h3>Live-Modus</h3>
+<p>Erstelle einen Raum oder tritt mit Code bei.</p>
+<b>Wie Kahoot! spielen →</b>
+</button>
+<button class="tile" style="--tint:#549aff26" onclick="startDaily()">
+<span class="ico">📅</span>
+<h3>Tägliche Challenge</h3>
+<p>20 Aufgaben in 2 Minuten. Schaffst du es?</p>
+<b id="dailyCardLabel">Heutige Challenge →</b>
+</button>
+<button class="tile" style="--tint:#ffd05a26" onclick="show('progress')">
+<span class="ico">🏆</span>
+<h3>Meine Erfolge</h3>
+<p>XP, Level, Bestleistungen und freischaltbare Abzeichen.</p>
+<b>Fortschritt ansehen →</b>
+</button>
+<button class="tile" style="--tint:#ff579b26" onclick="show('stats')">
+<span class="ico">📊</span>
+<h3>Statistiken</h3>
+<p>Sieh deine Entwicklung und entdecke knifflige Reihen.</p>
+<b>Analyse öffnen →</b>
+</button>
+<button class="tile" style="--tint:#48e4ef26" onclick="startMistakes()">
+<span class="ico">🎯</span>
+<h3>Fehler-Training</h3>
+<p>Übe genau die Aufgaben, die dir schwerfallen.</p>
+<b id="mistakeCardLabel">0 offene Fehler →</b>
+</button>
+<button class="tile" style="--tint:#ff579b22" onclick="show('teacher')">
+<span class="ico">🧑‍🏫</span>
+<h3>Klassen-Modus</h3>
+<p>Bereite eine Runde für deine Klasse oder Freunde vor.</p>
+<b>Spiel erstellen →</b>
+</button>
+<button class="tile" style="--tint:#a866ff22" onclick="show('studio')">
+<span class="ico">🧪</span><h3>Spielstudio</h3><p>Gestalte deine eigene Runde und teile die Vorlage mit Freunden.</p><b>Spiel nach deinen Regeln →</b></button>
+<button class="tile" style="--tint:#48e4ef26" onclick="show('creator')"><span class="ico">🎮</span><h3>Game Creator</h3><p>Erstelle eigene Quizze, Wortspiele, Puzzle, Memory und Story-Spiele – ohne Programmieren.</p><b>Ein Spiel von Grund auf bauen →</b></button>
+<button class="tile" style="--tint:#48e4ef22" onclick="show('feedbackScreen')">
+<span class="ico">💡</span><h3>Feedback & Ideen</h3><p>Hast du einen Fehler entdeckt oder eine neue Idee?</p><b>Mit uns teilen →</b></button>
+<button class="tile" style="--tint:#a866ff22" onclick="show('settings')">
+<span class="ico">⚙️</span>
+<h3>Profil & Einstellungen</h3>
+<p>Name und persönliche Daten auf diesem Gerät verwalten.</p>
+<b>Anpassen →</b>
+</button>
+<button class="tile" style="--tint:#ffd05a28" onclick="show('shop')">
+<span class="ico">🪙</span>
+<h3>Profil-Shop</h3>
+<p>Sammle Spielmünzen und schalte Rahmen, Titel und Profil-Effekte frei.</p>
+<b><span id="homeCoins">250</span> Münzen · Shop öffnen →</b>
+</button>
+</div>
+<div class="section two">
+<div class="subpanel">
+<div class="section-head" style="margin:0 0 12px">
+<div>
+<h3>Dein Level-Aufstieg</h3>
+<p id="xpCaption">Sammle XP mit jeder Runde.</p>
+</div>
+<strong id="xpNumbers">0 / 100 XP</strong>
+</div>
+<div class="xpbar">
+<div id="xpFill">
+</div>
+</div>
+</div>
+<div class="subpanel">
+<h3>🔥 Deine Serie</h3>
+<p class="muted" style="margin:8px 0 0" id="streakCaption">Starte heute eine Runde, um deine tägliche Serie aufzubauen.</p>
+</div>
+</div>
+</section>
+<section id="modes" class="screen panel">
+<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<span class="kicker">TRAININGSZENTRUM</span>
+<h2>Wie möchtest du trainieren?</h2>
+<p class="muted">Wähle den Schwierigkeitsgrad für deinen nächsten Level-Aufstieg.</p>
+<div class="level-grid">
+<button class="level" onclick="startClassic('easy')" style="border-top:3px solid var(--green)">
+<span style="font-size:28px">🌱</span>
+<h3>Einfach</h3>
+<p>Zahlen von 1 bis 5. Perfekt zum Warmwerden.</p>
+<em>25 Aufgaben · 1×1 bis 5×5</em>
+</button>
+<button class="level" onclick="startClassic('medium')" style="border-top:3px solid var(--yellow)">
+<span style="font-size:28px">⚡</span>
+<h3>Mittel</h3>
+<p>Das Einmaleins von 1 bis 10.</p>
+<em>100 Aufgaben · 1×1 bis 10×10</em>
+</button>
+<button class="level" onclick="startClassic('hard')" style="border-top:3px solid var(--red)">
+<span style="font-size:28px">🔥</span>
+<h3>Schwer</h3>
+<p>Knifflige Aufgaben mit größeren Zahlen.</p>
+<em>100 Aufgaben · 1×1 bis 20×20</em>
+</button>
+</div>
+</section>
+<section id="game" class="screen panel game-panel">
+<div class="game-head">
+<button class="small-btn" onclick="quitGame()">← Beenden</button>
+<span class="pill" id="gameBadge">🎯 Klassisches Training</span>
+</div>
+<div class="game-metrics">
+<div class="metric">
+<small>Richtig</small>
+<strong id="gCorrect" style="color:var(--green)">0</strong>
+</div>
+<div class="metric">
+<small>Combo 🔥</small>
+<strong id="gStreak" style="color:var(--yellow)">0</strong>
+</div>
+<div class="metric">
+<small id="countTitle">Aufgabe</small>
+<strong id="gCount">1 / 25</strong>
+</div>
+</div>
+<div class="progress-line">
+<span id="progressLabel">Dein Fortschritt</span>
+<span id="progressText">0%</span>
+</div>
+<div class="track">
+<div id="progressBar">
+</div>
+</div>
+<div class="questionbox">
+<div class="q-label" id="qLabel">AUFGABE 1</div>
+<div class="question" id="question">2 × 3 = ?</div>
+<div class="muted" id="qHint">Wähle die richtige Antwort.</div>
+</div>
+<div id="answers" class="answers">
+</div>
+<div class="feedback" id="feedback" aria-live="polite">
+</div>
+<div class="row" style="justify-content:center">
+<button id="nextBtn" class="btn primary hidden" onclick="nextQuestion()">Nächste Aufgabe →</button>
+</div>
+</section>
+<section id="result" class="screen panel result">
+<div class="result-icon" id="resultIcon">🏆</div>
+<span class="pill">RUNDE ABGESCHLOSSEN</span>
+<h2 id="resultTitle" style="margin-top:14px">Stark gemacht!</h2>
+<p class="muted" id="resultSub">Du bist deinem Ziel einen Schritt näher.</p>
+<div class="result-grid">
+<div class="result-card">
+<strong id="resCorrect" style="color:var(--green)">0</strong>
+<small>Richtige Antworten</small>
+</div>
+<div class="result-card">
+<strong id="resWrong" style="color:var(--pink)">0</strong>
+<small>Falsche Antworten</small>
+</div>
+<div class="result-card">
+<strong id="resAccuracy" style="color:var(--cyan)">0%</strong>
+<small>Erfolgsquote</small>
+</div>
+</div>
+<div class="notice" id="xpEarned">✨ XP werden berechnet …</div>
+<p style="color:var(--green);font-weight:900" id="recordMsg">
+</p>
+<div class="row" style="justify-content:center;margin-top:20px">
+<button class="btn primary" onclick="replayGame()">↻ Noch einmal</button>
+<button class="btn secondary" onclick="show('home')">Zur Startseite</button>
+<button class="btn secondary" onclick="startMistakes()">Fehler üben 🎯</button>
+</div>
+</section>
+<section id="progress" class="screen panel">
+<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<span class="kicker">DEIN PROFIL</span>
+<h2>Level, XP & Abzeichen</h2>
+<p class="muted">Jede Runde zählt. Dein Fortschritt wird auf diesem Gerät gespeichert.</p>
+<div class="mini-stats">
+<div class="stat">
+<span>Aktuelles Level</span>
+<strong id="pLevel">1</strong>
+</div>
+<div class="stat">
+<span>Gesamt-XP</span>
+<strong class="y" id="pXP">0</strong>
+</div>
+<div class="stat">
+<span>Gespielte Runden</span>
+<strong id="pSessions">0</strong>
+</div>
+</div>
+<div class="subpanel">
+<div class="section-head" style="margin:0">
+<div>
+<h3 id="pNextTitle">Level 2</h3>
+<p id="pNextText">Noch 100 XP bis zum nächsten Level.</p>
+</div>
+<strong id="pXPTxt">0 / 100</strong>
+</div>
+<div class="xpbar">
+<div id="pXPFill">
+</div>
+</div>
+</div>
+<div class="section-head">
+<div>
+<h2>Deine Abzeichen</h2>
+<p>Spiele und verbessere deine Bestleistungen, um sie freizuschalten.</p>
+</div>
+</div>
+<div class="badges" id="badgeGrid">
+</div>
+</section>
+<section id="stats" class="screen panel">
+<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<span class="kicker">PERFORMANCE CENTER</span>
+<h2>Deine Statistiken</h2>
+<p class="muted">Deine persönliche Entwicklung auf diesem Gerät.</p>
+<div class="mini-stats">
+<div class="stat">
+<span>Gespielte Runden</span>
+<strong id="sSessions">0</strong>
+</div>
+<div class="stat">
+<span>Antworten richtig</span>
+<strong class="g" id="sAccuracy">0%</strong>
+</div>
+<div class="stat">
+<span>Math-Rush Rekord</span>
+<strong class="y" id="sRush">0</strong>
+</div>
+</div>
+<div class="two">
+<div class="subpanel">
+<h3>Letzte Runden</h3>
+<div id="sessionBars" class="barlist" style="margin-top:18px">
+</div>
+</div>
+<div class="subpanel">
+<h3>Das solltest du üben</h3>
+<p class="muted" style="font-size:12px">Die Aufgaben mit den meisten Fehlern stehen oben.</p>
+<div id="weakList" class="list">
+</div>
+</div>
+</div>
+<div class="section row">
+<button class="btn secondary" onclick="startMistakes()">Fehler gezielt trainieren →</button>
+</div>
+<div class="stats-actions">
+<button class="btn primary" onclick="downloadPersonalStats()">⬇️ Meine Statistiken exportieren (CSV)</button>
+<button class="btn secondary" onclick="clearStatsHistory()">🧹 Rundenverlauf & Fehlerliste löschen</button>
+</div>
+<p class="muted" style="font-size:12px;margin-top:10px">Der Export ist jederzeit möglich. Das Löschen entfernt nur den lokalen Rundenverlauf und die Fehlerliste – XP, Münzen, Abzeichen und dein Profil bleiben erhalten.</p>
+</section>
+<section id="live" class="screen panel">
+<button class="small-btn back" id="liveBackBtn" onclick="leaveLiveUI()">← Startseite</button>
+<span class="kicker" id="liveKicker">MULTIPLAYER ARENA</span>
+<h2 id="liveHeading">Live-Modus: Wer ist der Mathe-Champion?</h2>
+<p class="muted" id="liveIntro">Erstelle einen Spielraum, teile den Code und spiele mit Freunden auf getrennten Geräten.</p>
+<div class="notice" id="liveNotice">🎮 Live-Modus: Erstelle einen Spielraum oder tritt mit einem fünfstelligen Spielcode bei.</div>
+<div id="liveStart">
+<div class="two" style="margin-top:18px">
+<div class="subpanel">
+<span style="font-size:30px">🧑‍🏫</span>
+<h3 style="margin-top:12px">Spiel erstellen</h3>
+<p class="muted" style="font-size:13px">Du bist Spielleiter und kannst die Runde starten.</p>
+<div class="formrow">
+<div class="field">
+<label for="hostName">Dein Name</label>
+<input id="hostName" maxlength="18" placeholder="Meister">
+</div>
+<div class="field">
+<label for="liveCount">Fragen</label>
+<select id="liveCount">
+<option value="10">10 Fragen</option>
+<option value="15" selected>15 Fragen</option>
+<option value="20">20 Fragen</option>
+</select>
+</div>
+</div>
+<div class="field">
+<label for="liveSeconds">Zeit pro Frage</label>
+<select id="liveSeconds">
+<option value="10">10 Sekunden</option>
+<option value="15" selected>15 Sekunden</option>
+<option value="20">20 Sekunden</option>
+</select>
+</div>
+<div class="field" style="margin-top:14px">
+<label for="liveDifficulty">Schwierigkeitsgrad</label>
+<select id="liveDifficulty">
+<option value="easy">🟢 Einfach (1–5)</option>
+<option value="medium" selected>🟡 Mittel (1–10)</option>
+<option value="hard">🔴 Schwer (1–20)</option>
+</select>
+</div>
+<div class="field" style="margin-top:14px">
+<label for="liveDisplayMode">Anzeige-Modus</label>
+<select id="liveDisplayMode" onchange="updateLiveOptionsUI()">
+<option value="classroom">🏫 Klasse – Frage nur am Host-PC, Handy nur Farbfelder</option>
+<option value="friends" selected>🌐 Freunde online – Frage und Antworten auf jedem Handy</option>
+</select>
+</div>
+<div class="field" style="margin-top:14px">
+<label for="liveScoringMode">Wertung</label>
+<select id="liveScoringMode">
+<option value="classic" selected>🏁 Classic – richtig + schnell</option>
+<option value="streak">🔥 Streak Challenge – Serien bringen mehr Punkte</option>
+</select>
+</div>
+<div class="field" style="margin-top:14px">
+<label for="liveGameMode">Spielmodus</label>
+<select id="liveGameMode" onchange="updateTeamSetupUI()">
+<option value="solo" selected>👤 Einzelspieler – jeder für sich</option>
+<option value="team">👥 Team-Modus – gemeinsam gewinnen</option>
+</select>
+</div>
+<div id="teamOptions" class="team-settings hidden">
+<div class="field">
+<label for="liveTeamAssignment">Teamverteilung</label>
+<select id="liveTeamAssignment" onchange="updateTeamSetupUI()">
+<option value="random" selected>🎲 Zufällig aufteilen</option>
+<option value="choose">🧑 Spieler wählen ihr Team</option>
+</select>
+</div>
+<div class="field">
+<label for="liveTeamCount">Anzahl der Teams</label>
+<select id="liveTeamCount" onchange="updateTeamSetupUI()">
+<option value="2" selected>2 Teams</option>
+<option value="3">3 Teams</option>
+<option value="4">4 Teams</option>
+<option value="5">5 Teams</option>
+<option value="6">6 Teams</option>
+<option value="7">7 Teams</option>
+<option value="8">8 Teams</option>
+<option value="9">9 Teams</option>
+<option value="10">10 Teams</option>
+</select>
+</div>
+<div id="hostTeamWrap" class="field hidden" style="grid-column:1/-1">
+<label for="liveHostTeam">Dein eigenes Team (als mitspielender Host)</label>
+<select id="liveHostTeam"><option value="1">🔵 Team Blau</option><option value="2">🔴 Team Rot</option><option value="3">🟢 Team Grün</option><option value="4">🟡 Team Gelb</option><option value="5">🟣 Team Lila</option><option value="6">🟠 Team Orange</option><option value="7">🩵 Team Türkis</option><option value="8">🩷 Team Pink</option><option value="9">⚪ Team Weiß</option><option value="10">⚫ Team Schwarz</option></select>
+</div>
+<p class="team-mode-note" style="grid-column:1/-1">Im zufälligen Modus verteilt das Spiel die Spieler möglichst gleichmäßig. Beim freien Wählen entscheidet jeder Spieler selbst.</p>
+</div>
+<div class="field" id="hostPlayWrap" style="margin-top:14px">
+<label style="display:flex;gap:10px;align-items:flex-start;font-weight:800"><input type="checkbox" id="hostPlayToggle" style="width:auto;margin-top:3px" onchange="updateLiveOptionsUI()"><span>🎮 Ich spiele als Gastgeber mit</span></label>
+<p class="muted" style="font-size:12px;margin:6px 0 0">Nur im Freunde-Modus. Du behältst deinen Gastgeber-Bildschirm mit QR-Code, Spielsteuerung und vollständigen Ergebnissen.</p>
+</div>
+<button class="btn purple full" style="margin-top:16px" onclick="createLiveRoom()">🎮 Raum erstellen</button>
+</div>
+<div class="subpanel">
+<span style="font-size:30px">📲</span>
+<h3 style="margin-top:12px">Mit Code beitreten</h3>
+<p class="muted" style="font-size:13px">Gib den Code ein, den dein Freund oder Lehrer dir gegeben hat.</p>
+<div class="field" style="margin:17px 0">
+<label for="joinCode">5-stelliger Spielcode</label>
+<input id="joinCode" inputmode="numeric" maxlength="5" placeholder="12345" onblur="checkJoinRoomSettings()">
+</div>
+<div class="field">
+<label for="joinName">Dein Spielername</label>
+<input id="joinName" maxlength="18" placeholder="Dein Name">
+</div>
+<div id="joinTeamWrap" class="field hidden" style="margin-top:14px">
+<label for="joinTeam">Dein Team auswählen</label>
+<select id="joinTeam">
+<option value="1">🔵 Team Blau</option>
+<option value="2">🔴 Team Rot</option>
+<option value="3">🟢 Team Grün</option>
+<option value="4">🟡 Team Gelb</option>
+<option value="5">🟣 Team Lila</option>
+<option value="6">🟠 Team Orange</option>
+<option value="7">🩵 Team Türkis</option>
+<option value="8">🩷 Team Pink</option>
+<option value="9">⚪ Team Weiß</option>
+<option value="10">⚫ Team Schwarz</option>
+</select>
+</div>
+<p id="joinTeamNote" class="team-mode-note">Gib den Spielcode ein, um die Team-Einstellungen zu sehen.</p>
+<button class="btn blue full" style="margin-top:16px" onclick="joinLiveRoom()">Beitreten →</button>
+</div>
+</div>
+</div>
+<div id="liveRoom" class="hidden">
+</div>
+</section>
+<section id="teacher" class="screen panel">
+<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<span class="kicker">KLASSEN-MODUS</span>
+<h2>Erstelle deine Quiz-Runde</h2>
+<p class="muted">Wähle den Fragentyp, die Anzahl und das Tempo. Anschließend kannst du im Live-Modus einen Raum eröffnen.</p>
+<div class="subpanel" style="margin-top:20px">
+<div class="formrow">
+<div class="field">
+<label for="teacherDifficulty">Fragentyp</label>
+<select id="teacherDifficulty">
+<option value="easy">Einfach (1–5)</option>
+<option value="medium" selected>Mittel (1–10)</option>
+<option value="hard">Schwer (1–20)</option>
+</select>
+</div>
+<div class="field">
+<label for="teacherCount">Anzahl der Fragen</label>
+<select id="teacherCount">
+<option>10</option>
+<option selected>15</option>
+<option>20</option>
+</select>
+</div>
+<div class="field">
+<label for="teacherTime">Zeit pro Frage</label>
+<select id="teacherTime">
+<option>10</option>
+<option selected>15</option>
+<option>20</option>
+</select>
+</div>
+<div class="field">
+<label>Antworten</label>
+<div class="pill" style="width:100%;justify-content:center">🔀 Zufällige Reihenfolge</div>
+</div>
+</div>
+<button class="btn purple" onclick="applyTeacherSettings()">Einstellungen übernehmen →</button>
+</div>
+<div class="notice" style="margin-top:16px">Hinweis: Für echte Live-Runden müssen Host und Spieler online sein. Im Einzelspieler-Modus können alle anderen Trainings- und Fortschrittsfunktionen sofort verwendet werden.</div>
+</section>
+<section id="settings" class="screen panel">
+<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<span class="kicker">EINSTELLUNGEN</span>
+<h2>Dein Profil</h2>
+<p class="muted">Dein Name und deine Lernstatistik werden nur lokal in diesem Browser gespeichert.</p>
+<div class="subpanel" style="margin-top:18px">
+<div class="field">
+<label for="profileName">Spielername</label>
+<input id="profileName" maxlength="18" placeholder="Meister">
+</div>
+<div class="field" style="margin-top:14px">
+<label for="profileAvatar">Dein Tier-Avatar</label>
+<select id="profileAvatar">
+<option value="🦊">🦊 Fuchs</option><option value="🐼">🐼 Panda</option><option value="🐯">🐯 Tiger</option><option value="🐸">🐸 Frosch</option><option value="🦉">🦉 Eule</option><option value="🐙">🐙 Oktopus</option><option value="🐲">🐲 Drache</option><option value="🦄">🦄 Einhorn</option><option value="🐵">🐵 Affe</option><option value="🐧">🐧 Pinguin</option><option value="🐨">🐨 Koala</option><option value="🦁">🦁 Löwe</option><option value="🐺">🐺 Wolf</option><option value="🦈">🦈 Hai</option><option value="🦅">🦅 Adler</option><option value="🦝">🦝 Waschbär</option>
+</select>
+</div>
+<div class="row" style="margin-top:14px">
+<button class="btn primary" onclick="saveProfile()">Speichern</button>
+<button class="btn secondary" onclick="resetData()">Lokale Daten zurücksetzen</button>
+</div>
+</div>
+<p class="muted" style="font-size:12px;margin-top:18px">Achtung: Ein Zurücksetzen löscht lokal gespeicherte XP, Rekorde, Statistiken und Fehlerlisten auf diesem Gerät.</p>
+</section>
+<section id="shop" class="screen panel">
+<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<span class="kicker">PROFIL & BELONUNGEN</span>
+<h2>Dein Profil-Shop 🪙</h2>
+<p class="muted">Verdiene Münzen durch Training und Live-Runden. Kaufe kosmetische Extras – sie verändern nur dein Profil, nicht die Spielchancen.</p>
+<div class="shop-wallet subpanel"><div class="shop-avatar-preview" id="shopAvatarPreview">🦊</div><div class="shop-wallet-main"><div class="muted">Dein Guthaben</div><strong><span id="shopCoins">250</span> 🪙</strong><div class="muted" id="shopProfileSummary">Level 1 · Einsteiger</div></div><button class="btn secondary" onclick="show('settings')">Profil bearbeiten</button></div>
+<div class="shop-missions subpanel"><div class="section-head" style="margin:0 0 12px"><div><h3>🎯 Tägliche Missionen</h3><p class="muted">Jeden Tag neue Ziele und Münzbelohnungen.</p></div></div><div id="missionList" class="mission-list"></div></div>
+<div class="section-head"><div><h3>✨ Profilrahmen</h3><p class="muted">Dein Avatar bekommt einen unverwechselbaren Look.</p></div></div><div id="frameShop" class="shop-grid"></div>
+<div class="section-head"><div><h3>🏷️ Titel neben deinem Namen</h3><p class="muted">Zeige deinen Stil in der Spieler-Liste.</p></div></div><div id="titleShop" class="shop-grid"></div>
+<div class="section-head"><div><h3>🐺 Seltene Avatare</h3><p class="muted">Schalte neue Spielfiguren frei.</p></div></div><div id="avatarShop" class="shop-grid"></div>
+<div class="section-head"><div><h3>🎉 Feier-Effekte</h3><p class="muted">Ein visueller Effekt für deine eigene Siegeransicht.</p></div></div><div id="effectShop" class="shop-grid"></div>
+<div class="notice" style="margin-top:18px">ℹ️ Dein Münzestand und deine gekauften Extras werden aktuell auf diesem Gerät gespeichert. Für ein geräteübergreifendes, fälschungssicheres Konto braucht MatheMeister später eine richtige Anmeldung.</div>
+</section>
+
+<section id="studio" class="screen panel">
+  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <div class="studio-hero"><span class="pill">🧪 MATHEMEISTER SPIELSTUDIO</span><h2>Dein Spiel. Deine Regeln.</h2><p>Gestalte eine eigene Mathe-Runde, wähle Tempo und Spielweise, schreibe deine eigenen Aufgaben und teile die Vorlage mit Freunden. Alle können ohne Pflichtkonto mitmachen.</p></div>
+  <div class="subpanel">
+    <div class="field"><label for="studioName">Name deines Spiels</label><input id="studioName" maxlength="42" placeholder="z. B. 7er-Reihe-Challenge" value="Meine Mathe-Challenge"></div>
+    <div class="studio-form-grid" style="margin-top:14px">
+      <div class="field"><label for="studioQuestionMode">Aufgaben-Art</label><select id="studioQuestionMode" onchange="toggleStudioCustomQuestions()"><option value="random" selected>Zufällige Malaufgaben</option><option value="custom">Meine eigenen Malaufgaben</option></select><p class="studio-field-note">Eigene Aufgaben werden in der eingegebenen Reihenfolge gestellt oder optional gemischt.</p></div>
+      <div class="field"><label for="studioDifficulty">Schwierigkeit</label><select id="studioDifficulty"><option value="easy">🟢 Einfach · 1 bis 5</option><option value="medium" selected>🟡 Mittel · 1 bis 10</option><option value="hard">🔴 Schwer · 1 bis 20</option></select></div>
+      <div class="field"><label for="studioCount">Anzahl der Fragen</label><select id="studioCount"><option value="5">5 Fragen</option><option value="10">10 Fragen</option><option value="15" selected>15 Fragen</option><option value="20">20 Fragen</option><option value="30">30 Fragen</option><option value="50">50 Fragen</option><option value="100">100 Fragen</option></select><p id="studioCountNote" class="studio-field-note">Wähle zwischen 5 und 100 Fragen.</p></div>
+      <div class="field"><label for="studioSeconds">Zeit pro Frage</label><select id="studioSeconds"><option value="5">5 Sekunden · Blitzrunde</option><option value="10">10 Sekunden</option><option value="15" selected>15 Sekunden</option><option value="20">20 Sekunden</option><option value="30">30 Sekunden</option><option value="45">45 Sekunden</option><option value="60">60 Sekunden · entspannt</option></select></div>
+      <div class="field"><label for="studioDisplay">Spielort</label><select id="studioDisplay" onchange="toggleStudioTeamOptions()"><option value="classroom">🏫 Klasse · Handy zeigt nur Farben</option><option value="friends" selected>🌐 Freunde · Frage auf jedem Handy</option></select></div>
+      <div class="field"><label for="studioScoring">Wertung</label><select id="studioScoring"><option value="classic">🏁 Classic · richtig und schnell</option><option value="streak">🔥 Streak · Serien-Bonus</option></select></div>
+      <div class="field"><label for="studioTeams">Teams</label><select id="studioTeams" onchange="toggleStudioTeamOptions()"><option value="solo" selected>👤 Jeder für sich</option><option value="team">👥 Teamkampf</option></select></div>
+      <div class="field"><label for="studioTeamCount">Anzahl Teams</label><select id="studioTeamCount"><option value="2">2 Teams</option><option value="3">3 Teams</option><option value="4">4 Teams</option><option value="5">5 Teams</option><option value="6">6 Teams</option><option value="7">7 Teams</option><option value="8">8 Teams</option><option value="9">9 Teams</option><option value="10">10 Teams</option></select></div>
+      <div class="field"><label for="studioTeamAssignment">Teamverteilung</label><select id="studioTeamAssignment"><option value="random" selected>🎲 Zufällig und ausgewogen</option><option value="choose">🧑 Spieler wählen selbst</option></select></div>
+      <div class="field"><label for="studioHostPlays">Soll die Spielleitung mitspielen?</label><select id="studioHostPlays"><option value="false" selected>Nein · nur moderieren</option><option value="true">Ja · im Freunde-Modus</option></select></div>
+    </div>
+    <div id="studioCustomQuestionsWrap" class="field hidden" style="margin-top:18px"><label for="studioQuestions">Deine Aufgaben <span class="form-required">*</span></label><textarea id="studioQuestions" class="studio-question-area" maxlength="2400" placeholder="3x4&#10;7x8&#10;9x6&#10;12x12" oninput="updateStudioQuestionCount()"></textarea><p class="studio-field-note">Eine Aufgabe pro Zeile, zum Beispiel <b>3x4</b>, <b>7*8</b> oder <b>12 × 12</b>. Maximal 100 Aufgaben, Faktoren 1–99. Die richtige Antwort und drei falsche Optionen werden automatisch erstellt.</p><p id="studioQuestionError" class="form-error" aria-live="polite"></p><label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input id="studioShuffleQuestions" type="checkbox" style="width:auto" checked> Aufgaben bei jeder Runde mischen</label></div>
+    <div class="studio-options">
+      <div class="studio-option"><h3>🛡️ Fair & sicher</h3><p>Keine Punkte-Vorteile durch Avatare oder Rahmen. Der Klassenmodus zeigt auf dem Handy nur die Farbfelder.</p></div>
+      <div class="studio-option"><h3>📱 Für Handy und Computer</h3><p>Das Spiel passt sich an kleine Bildschirme an. Beim Klassenmodus bleiben die vier Antwortfarben in fester Reihenfolge.</p></div>
+    </div>
+    <div class="row" style="margin-top:20px;flex-wrap:wrap"><button class="btn primary" onclick="createStudioShareLink()">✨ Vorlage erstellen & Link generieren</button><button class="btn secondary" onclick="clearStudioConfig()">Zurücksetzen</button></div>
+    <div id="studioLinkBox" class="studio-link-box hidden"><span class="kicker">DEINE SPIELVORLAGE</span><h3 id="studioLinkTitle" style="margin:7px 0">Vorlage erstellt!</h3><p id="studioLinkDescription" class="muted" style="font-size:13px;line-height:1.55">Teile diesen Link mit Freunden. Er enthält deine Spieleinstellungen und selbst eingegebenen Aufgaben.</p><div class="studio-link-row"><input id="studioShareLink" class="modal-link-input" aria-label="Teilbarer Vorlagenlink" readonly><button class="btn secondary" onclick="copyStudioLink()">🔗 Link kopieren</button></div><div id="studioPreview" class="studio-preview"></div><div class="row" style="margin-top:14px;flex-wrap:wrap"><button class="btn purple" onclick="useStudioConfigNow()">Live-Raum mit diesen Regeln erstellen →</button><button class="btn secondary" onclick="copyStudioLink()">Erneut teilen</button></div><p class="studio-field-note">Der Link teilt die Spielvorlage, nicht einen bereits laufenden Raum. Danach erstellt eine Person den Live-Raum und teilt den QR-Code/Spielcode an alle.</p></div>
+  </div>
+</section>
+
+
+<section id="creator" class="screen panel">
+  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <div class="creator-hero">
+    <span class="pill">🎮 MATHEMEISTER · GAME CREATOR</span>
+    <h2>Deine Idee. Dein Spiel.</h2>
+    <p>Baue ein Spiel Schritt für Schritt – ganz ohne Programmieren. Wähle eine Vorlage, ändere Inhalte und Regeln, teste dein Spiel direkt und teile den Bauplan mit Freunden.</p>
+    <div class="creator-tagline"><span>⚡ Einfach starten</span><span>🧩 10 Spieltypen</span><span>📱 Handyfreundlich</span><span>💾 Ohne Pflichtkonto</span></div>
+  </div>
+  <div id="creatorHomePanel">
+    <div class="creator-prompt-box">
+      <span class="kicker">DU HAST SCHON EINE IDEE?</span>
+      <h3 style="margin:8px 0 3px">Beschreibe dein Spiel in einem Satz</h3>
+      <p class="muted" style="margin:0;font-size:13px;line-height:1.55">Zum Beispiel: „Ein Memory-Spiel mit Tieren“ oder „Ein Quiz über Fußball“. Wir schlagen dir einen passenden Starttyp vor; danach kannst du alles selbst anpassen.</p>
+      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Ich möchte ein Spiel bauen, bei dem …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Passende Vorlage</button></div>
+      <p id="creatorIdeaStatus" class="creator-status" aria-live="polite"></p>
+    </div>
+    <div class="creator-section-head"><div><h3>1. Wähle einen Starttyp</h3><p>Die Vorlage ist nur der Anfang – Name, Fragen, Farben und Regeln kannst du verändern.</p></div></div>
+    <div class="creator-template-grid" id="creatorTemplateGrid"></div>
+    <div class="creator-section-head"><div><h3>2. Deine gespeicherten Entwürfe</h3><p>Deine Entwürfe bleiben auf diesem Gerät gespeichert.</p></div><div class="creator-quick-actions"><button class="btn secondary" type="button" onclick="creatorExportAll()">⬇️ Alle exportieren</button><label class="btn secondary creator-import-label">⬆️ JSON importieren<input id="creatorImportFile" type="file" accept=".json,application/json" hidden onchange="creatorImportFileChanged(event)"></label></div></div>
+    <div id="creatorDraftLibrary" class="creator-library"></div>
+    <div class="creator-rule-note">Hinweis: Gespeicherte Entwürfe sind lokal in diesem Browser. Ein geteilter Link enthält den Spielbauplan. Für eine öffentliche Spielbibliothek mit Nutzerprofilen und für echte Live-Multiplayer-Modi aller Spieltypen braucht es später einen Server und passende Sicherheitsregeln.</div>
+  </div>
+  <div id="creatorEditorPanel" class="hidden">
+    <div class="creator-section-head"><div><h3 id="creatorEditorTitle">Dein Spiel bearbeiten</h3><p id="creatorEditorSubtitle">Schritt 1 von 3 · Name und Stil</p></div><button class="btn secondary" type="button" onclick="creatorBackToHome()">← Alle Spiele</button></div>
+    <div class="creator-stepbar"><div class="creator-step active" id="creatorStepOne"><b>1 · Idee</b>Name & Aussehen</div><div class="creator-step" id="creatorStepTwo"><b>2 · Inhalt</b>Fragen & Karten</div><div class="creator-step" id="creatorStepThree"><b>3 · Testen</b>Regeln & Teilen</div></div>
+    <div class="creator-editor-layout">
+      <div class="creator-pane">
+        <div id="creatorBasicsFields">
+          <h3>🎨 Mach das Spiel zu deinem Spiel</h3>
+          <div class="creator-field-grid" style="margin-top:14px">
+            <div class="field"><label for="creatorTitleInput">Name des Spiels</label><input id="creatorTitleInput" maxlength="70" placeholder="z. B. Das große Tierduell" oninput="creatorUpdateBasics()"></div>
+            <div class="field"><label for="creatorThemeInput">Farbwelt</label><select id="creatorThemeInput" onchange="creatorUpdateBasics()"><option value="neon">Neon & futuristisch</option><option value="ocean">Ocean & frisch</option><option value="sunset">Sunset & warm</option><option value="forest">Forest & ruhig</option><option value="candy">Candy & bunt</option></select></div>
+            <div class="field" style="grid-column:1/-1"><label for="creatorDescriptionInput">Beschreibung (optional)</label><textarea id="creatorDescriptionInput" maxlength="500" placeholder="Worum geht es? Was sollen die Spieler schaffen?" oninput="creatorUpdateBasics()"></textarea></div>
+          </div>
+          <div class="creator-rule-note">Du kannst mit einem Satz starten. Wir haben Beispielinhalte eingefügt, damit du sofort testen kannst. Ersetze sie Schritt für Schritt durch deine eigenen Ideen.</div>
+          <div class="creator-actions-row"><button class="btn primary" type="button" onclick="creatorGoStep(2)">Weiter: Inhalte bearbeiten →</button></div>
+        </div>
+        <div id="creatorContentFields" class="hidden">
+          <h3>🧩 Baue die Inhalte</h3><p class="muted" id="creatorContentHelp" style="font-size:13px"></p>
+          <div id="creatorContentEditor"></div>
+          <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorAddContent()">＋ Inhalt hinzufügen</button><button class="btn secondary" type="button" onclick="creatorGoStep(1)">← Zurück</button><button class="btn primary" type="button" onclick="creatorGoStep(3)">Weiter: Regeln & Test →</button></div>
+        </div>
+        <div id="creatorRulesFields" class="hidden">
+          <h3>⚙️ Regeln und Ablauf</h3><p class="muted" style="font-size:13px">Wähle, wie lange gespielt wird und wie Punkte vergeben werden.</p>
+          <div class="creator-settings-grid" style="margin-top:14px">
+            <div class="creator-setting-card"><label for="creatorSecondsInput">Zeitlimit / Aufgabe (Sek.)</label><input id="creatorSecondsInput" type="number" min="5" max="180" step="5" value="20" oninput="creatorUpdateSettings()"></div>
+            <div class="creator-setting-card"><label for="creatorPointsInput">Punkte je Erfolg</label><input id="creatorPointsInput" type="number" min="0" max="10000" step="10" value="100" oninput="creatorUpdateSettings()"></div>
+            <div id="creatorLivesCard" class="creator-setting-card"><label for="creatorLivesInput">Versuche bei Fragen</label><select id="creatorLivesInput" onchange="creatorUpdateSettings()"><option value="1">1 · Hardcore</option><option value="2">2 Versuche</option><option value="3" selected>3 · Entspannt</option><option value="99">Unbegrenzt</option></select></div>
+            <div id="creatorFeedbackCard" class="creator-setting-card"><label for="creatorFeedbackInput">Lösung zeigen</label><select id="creatorFeedbackInput" onchange="creatorUpdateSettings()"><option value="after">Nach jeder Antwort</option><option value="end">Erst am Ende</option><option value="never">Nie während des Spiels</option></select></div>
+            <div class="creator-setting-card"><label for="creatorShuffleInput">Reihenfolge</label><select id="creatorShuffleInput" onchange="creatorUpdateSettings()"><option value="no">Wie erstellt</option><option value="yes" selected>Zufällig mischen</option></select></div>
+            <div class="creator-setting-card"><label for="creatorVisibilityInput">Spielbauplan</label><select id="creatorVisibilityInput" onchange="creatorUpdateSettings()"><option value="link">Über Link teilen</option><option value="private">Nur auf diesem Gerät</option></select></div>
+          </div>
+          <div class="creator-rule-note" id="creatorRuntimeNote">Die Vorschau läuft direkt in diesem Browser. Die Einstellungen bilden den Bauplan ab; ein echter Live-Raum für diesen Spieltyp ist ein späterer Serversystem-Schritt.</div>
+          <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorGoStep(2)">← Inhalte</button><button class="btn primary" type="button" onclick="creatorStartPreview()">▶ Spiel jetzt testen</button><button class="btn secondary" type="button" onclick="creatorSaveDraft(true)">💾 Entwurf speichern</button></div>
+          <div id="creatorSharePanel" class="creator-codebox hidden"><b>🔗 Dein Spielbauplan</b><p class="creator-status">Dieser Link enthält dein Spiel. Bei sehr großen Spielen nutze stattdessen JSON-Export.</p><input id="creatorShareUrl" readonly aria-label="Spielbauplan-Link"><div class="creator-code-actions"><button class="btn secondary" type="button" onclick="creatorCopyShareLink()">Link kopieren</button><button class="btn secondary" type="button" onclick="creatorExportCurrent()">JSON herunterladen</button></div></div>
+        </div>
+      </div>
+      <aside class="creator-pane creator-preview-sticky">
+        <div class="creator-section-head" style="margin-top:0"><div><h3>📱 Live-Vorschau</h3><p>So sieht ein Teil deines Spiels aus.</p></div></div>
+        <div id="creatorLivePreview" class="creator-mini-screen"><div class="mini-top"><span>VORSCHAU</span><span>DEMO</span></div><div style="font-size:30px">🎮</div><div class="mini-question">Dein Spiel wartet auf dich.</div><div class="creator-mini-answer">Deine Inhalte erscheinen hier.</div><div class="creator-progress-line"><span></span></div></div>
+        <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorStartPreview()">▶ Vorschau spielen</button></div>
+        <p class="creator-status" id="creatorPreviewStatus">Die Vorschau aktualisiert sich, während du dein Spiel bearbeitest.</p>
+      </aside>
+    </div>
+  </div>
+  <div id="creatorPlayPanel" class="hidden">
+    <div class="creator-section-head"><div><h3 id="creatorPlayTitle">Spiel testen</h3><p>Testmodus – Ergebnisse werden nicht online veröffentlicht.</p></div><button class="btn secondary" type="button" onclick="creatorStopPreview()">✕ Test beenden</button></div>
+    <div id="creatorPlayArea" class="creator-play-wrap"></div>
+  </div>
+</section>
+
+<section id="feedbackScreen" class="screen panel">
+  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <div class="studio-hero" style="border-color:#48e4ef44;background:radial-gradient(ellipse at 90% 0%,#48e4ef20,transparent 42%),linear-gradient(135deg,#1b2b46,#11182b 70%)"><span class="pill">💡 DEINE IDEE ZÄHLT</span><h2>Was sollen wir besser machen?</h2><p>Fehler gefunden, neue Spielidee oder Wunsch für eine kommende Funktion? Schreib uns genau, was passiert ist. Hilfreiche Rückmeldungen machen MatheMeister besser für alle.</p></div>
+  <div class="feedback-grid">
+    <div class="subpanel">
+      <form id="siteFeedbackForm" class="feedback-form">
+        <div class="field"><label for="feedbackType">Worum geht es?</label><select id="feedbackType" name="feedback-type" required><option value="bug">🐛 Fehler melden</option><option value="idea">💡 Neue Idee</option><option value="game">🎮 Wunsch für einen Spielmodus</option><option value="design">🎨 Design oder Bedienung</option><option value="other">💬 Sonstiges</option></select></div>
+        <div class="field"><label for="feedbackMessage">Deine Nachricht <span class="form-required">*</span></label><textarea id="feedbackMessage" name="message" required minlength="10" maxlength="3000" placeholder="Was ist passiert? Was hast du erwartet? Welche Funktion würdest du dir wünschen?" ></textarea><p class="studio-field-note">Bei einem Fehler hilft: Gerät, Spielmodus und die Schritte, die zum Fehler geführt haben.</p></div>
+        <div class="field"><label for="feedbackDevice">Gerät (optional)</label><select id="feedbackDevice" name="device"><option value="">Keine Angabe</option><option>iPhone / iPad</option><option>Android-Handy oder -Tablet</option><option>Windows-PC</option><option>Mac</option><option>Chromebook</option><option>Anderes Gerät</option></select></div>
+        <div class="field"><label for="feedbackEmail">E-Mail (optional, nur falls du eine Antwort möchtest)</label><input type="email" id="feedbackEmail" name="email" maxlength="120" placeholder="name@example.com"><p class="studio-field-note">Bitte keine Passwörter, privaten Daten oder vertraulichen Informationen senden.</p></div>
+        <button class="btn primary full" type="submit">Nachricht senden →</button>
+        <p id="feedbackSubmitStatus" class="studio-field-note" role="status" aria-live="polite">Dein Feedback wird sicher über MatheMeister gesendet.</p>
+      </form>
+    </div>
+    <aside class="feedback-side">
+      <article class="info-card"><h3>🐛 Einen Fehler melden</h3><p>Schreib, auf welcher Seite der Fehler vorkommt, zum Beispiel im Klassenmodus oder im Freunde-Modus.</p></article>
+      <article class="info-card"><h3>🧪 Dein eigenes Spiel</h3><p>Du kannst im Spielstudio deine Regeln einstellen und eine teilbare Vorlage für Freunde erstellen.</p></article>
+      <article class="info-card"><h3>🔐 Datenschutz</h3><p>Feedback ist optional. Name und Konto sind nicht nötig. Eine E-Mail ist nur erforderlich, wenn du eine Antwort möchtest.</p></article>
+    </aside>
+  </div>
+</section>
+
+<section id="siteInfo" class="screen panel">
+  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <span class="kicker">MATHEMEISTER WISSENSBEREICH</span>
+  <h2 id="siteInfoTitle">Über MatheMeister</h2>
+  <p class="muted" id="siteInfoIntro"></p>
+  <div id="siteInfoContent"></div>
+</section>
+
+<footer class="foot">MatheMeister Pro v10 · Secure Game Creator · Spielstudio · Feedback · Mobile Live-Spiel</footer>
+</div>
+<div id="appModal" class="modal-overlay hidden" role="presentation" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalMessage" tabindex="-1">
+    <button class="modal-close" type="button" aria-label="Schließen" onclick="closeAppModal(false)">×</button>
+    <div id="modalIcon" class="modal-icon primary" aria-hidden="true">✨</div>
+    <h2 id="modalTitle">Bist du sicher?</h2>
+    <p id="modalMessage" class="modal-copy"></p>
+    <div id="modalExtra" class="modal-extra"></div>
+    <div class="modal-actions"><button id="modalCancelBtn" class="btn secondary" type="button" onclick="closeAppModal(false)">Abbrechen</button><button id="modalConfirmBtn" class="btn primary" type="button" onclick="closeAppModal(true)">Bestätigen</button></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./app.js?v=10.5.1" defer></script>
+<script>
+  // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
+  window.setTimeout(function () {
+    if (document.documentElement.getAttribute('data-mathemeister-ready') === 'true') return;
+    var warning = document.createElement('div');
+    warning.setAttribute('role', 'alert');
+    warning.textContent = 'MatheMeister konnte nicht vollständig starten. Bitte lade die Seite neu. Falls das Problem bleibt, wurde app.js möglicherweise nicht geladen oder ein Browserfehler hat den Start gestoppt.';
+    warning.style.cssText = 'position:fixed;z-index:99999;left:12px;right:12px;bottom:12px;padding:14px 16px;border:1px solid #f59e0b;border-radius:14px;background:#20180b;color:#fff4d6;font:600 14px/1.5 system-ui,sans-serif;box-shadow:0 8px 30px #0008';
+    document.body.appendChild(warning);
+  }, 4500);
+</script>
+</body>
+</html>
