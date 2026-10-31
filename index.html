@@ -1,13 +1,11 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta name="google-site-verification" content="wO4-R9xpzWl0sKTMrSqPy-h5KrO2xMu0ISAckoPI3qM" />
-<link rel="icon" type="image/png.png.png" href="/favicon.png.png.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b18">
-<meta name="description" content="MatheMeister – Einmaleins üben, Mathe-Quiz spielen und eigene Quiz-, Puzzle- und Wortspiele erstellen. Entdecke interaktives Lernen direkt im Browser.">
-<title>MatheMeister – Einmaleins üben & Mathe-Quiz spielen</title>
+<meta name="description" content="MatheMeister Pro – trainieren, live spielen und eigene Quiz-, Puzzle- und Wortspiele ohne Programmieren bauen.">
+<title>MatheMeister Pro v10.5.3 · Game Creator & Live Update 🚀</title>
 
 <style>
 :root {
@@ -1352,6 +1350,19 @@ button:disabled,
  .live-chat-float{bottom:104px}
 }
 
+
+/* V10.5.3 – always reachable step-back navigation and creator resume card */
+.screen > .small-btn.back{display:none!important}
+#globalBackButton{position:fixed;left:max(14px,calc((100vw - 1160px)/2 + 14px));bottom:max(16px,env(safe-area-inset-bottom));z-index:75;display:none;align-items:center;gap:9px;padding:12px 17px;border:1px solid #6680a8;border-radius:999px;color:var(--text);background:linear-gradient(145deg,#253653f2,#111a2ff2);box-shadow:0 8px 28px #0008;backdrop-filter:blur(12px);font:800 14px/1.1 system-ui,sans-serif;cursor:pointer;transition:transform .16s,border-color .16s,box-shadow .16s}
+#globalBackButton.visible{display:inline-flex}
+#globalBackButton:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 12px 32px #0009}
+#globalBackButton .back-arrow{font-size:20px;line-height:1}
+.creator-resume-card{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 16px;padding:15px 17px;border:1px solid #48e4ef55;border-radius:18px;background:linear-gradient(120deg,#48e4ef13,#a866ff12)}
+.creator-resume-card strong{display:block;margin-bottom:4px}
+.creator-resume-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.creator-resume-card .btn{white-space:nowrap}
+@media(max-width:560px){#globalBackButton{left:12px;bottom:max(12px,env(safe-area-inset-bottom));padding:11px 14px}.creator-resume-card{align-items:stretch}.creator-resume-card .btn{width:100%}}
+
 </style>
 
 </head>
@@ -1392,8 +1403,10 @@ button:disabled,
   <button class="menu-item" onclick="openSiteInfo('how')"><span class="menu-icon">📘</span><span class="menu-copy">So funktioniert MatheMeister<small>Spielregeln und Tipps</small></span></button>
   <button class="menu-item" onclick="openSiteInfo('privacy')"><span class="menu-icon">🔐</span><span class="menu-copy">Datenschutz & Sicherheit<small>Was lokal und online gespeichert wird</small></span></button>
   <button class="menu-item" onclick="openSiteInfo('about')"><span class="menu-icon">🚀</span><span class="menu-copy">Über MatheMeister<small>Ziel, Funktionen und Feedback</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('developer')"><span class="menu-icon">👨‍💻</span><span class="menu-copy">Über mich<small>Der Entwickler von MatheMeister</small></span></button>
   <button class="menu-item" onclick="menuNavigate('studio')"><span class="menu-icon">🧪</span><span class="menu-copy">Spielstudio<small>Eigene Mathe-Runde erstellen und teilen</small></span></button>
   <button class="menu-item" onclick="menuNavigate('creator')"><span class="menu-icon">🎮</span><span class="menu-copy">Game Creator<small>Eigene Quizze, Puzzle und Spiele bauen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('adminScreen')"><span class="menu-icon">🛡️</span><span class="menu-copy">Admin-Bereich<small>Feedback und Meldungen verwalten</small></span></button>
   <button class="menu-item" onclick="menuNavigate('feedbackScreen')"><span class="menu-icon">💡</span><span class="menu-copy">Feedback & Ideen<small>Probleme melden und Wünsche teilen</small></span></button>
   <div class="site-menu-note">Gastmodus: Du kannst direkt spielen, ohne ein Konto anzulegen. Hinweis: Lokale Münzen und Käufe sind dadurch noch nicht zwischen Geräten synchronisiert.</div>
 </nav>
@@ -1468,18 +1481,8 @@ button:disabled,
 <p>20 Aufgaben in 2 Minuten. Schaffst du es?</p>
 <b id="dailyCardLabel">Heutige Challenge →</b>
 </button>
-<button class="tile" style="--tint:#ffd05a26" onclick="show('progress')">
-<span class="ico">🏆</span>
-<h3>Meine Erfolge</h3>
-<p>XP, Level, Bestleistungen und freischaltbare Abzeichen.</p>
-<b>Fortschritt ansehen →</b>
-</button>
-<button class="tile" style="--tint:#ff579b26" onclick="show('stats')">
-<span class="ico">📊</span>
-<h3>Statistiken</h3>
-<p>Sieh deine Entwicklung und entdecke knifflige Reihen.</p>
-<b>Analyse öffnen →</b>
-</button>
+
+
 <button class="tile" style="--tint:#48e4ef26" onclick="startMistakes()">
 <span class="ico">🎯</span>
 <h3>Fehler-Training</h3>
@@ -1495,20 +1498,9 @@ button:disabled,
 <button class="tile" style="--tint:#a866ff22" onclick="show('studio')">
 <span class="ico">🧪</span><h3>Spielstudio</h3><p>Gestalte deine eigene Runde und teile die Vorlage mit Freunden.</p><b>Spiel nach deinen Regeln →</b></button>
 <button class="tile" style="--tint:#48e4ef26" onclick="show('creator')"><span class="ico">🎮</span><h3>Game Creator</h3><p>Erstelle eigene Quizze, Wortspiele, Puzzle, Memory und Story-Spiele – ohne Programmieren.</p><b>Ein Spiel von Grund auf bauen →</b></button>
-<button class="tile" style="--tint:#48e4ef22" onclick="show('feedbackScreen')">
-<span class="ico">💡</span><h3>Feedback & Ideen</h3><p>Hast du einen Fehler entdeckt oder eine neue Idee?</p><b>Mit uns teilen →</b></button>
-<button class="tile" style="--tint:#a866ff22" onclick="show('settings')">
-<span class="ico">⚙️</span>
-<h3>Profil & Einstellungen</h3>
-<p>Name und persönliche Daten auf diesem Gerät verwalten.</p>
-<b>Anpassen →</b>
-</button>
-<button class="tile" style="--tint:#ffd05a28" onclick="show('shop')">
-<span class="ico">🪙</span>
-<h3>Profil-Shop</h3>
-<p>Sammle Spielmünzen und schalte Rahmen, Titel und Profil-Effekte frei.</p>
-<b><span id="homeCoins">250</span> Münzen · Shop öffnen →</b>
-</button>
+
+
+
 </div>
 <div class="section two">
 <div class="subpanel">
@@ -1952,16 +1944,20 @@ button:disabled,
     <div class="creator-tagline"><span>⚡ Einfach starten</span><span>🧩 10 Spieltypen</span><span>📱 Handyfreundlich</span><span>💾 Ohne Pflichtkonto</span></div>
   </div>
   <div id="creatorHomePanel">
+    <div id="creatorResumeCard" class="creator-resume-card hidden">
+      <div><strong>📝 Du hast noch einen Entwurf</strong><p id="creatorResumeText">Mach dort weiter, wo du aufgehört hast.</p></div>
+      <button class="btn primary" type="button" onclick="creatorResumeLastDraft()">Weiterarbeiten →</button>
+    </div>
     <div class="creator-prompt-box">
       <span class="kicker">DU HAST SCHON EINE IDEE?</span>
-      <h3 style="margin:8px 0 3px">Beschreibe dein Spiel in einem Satz</h3>
-      <p class="muted" style="margin:0;font-size:13px;line-height:1.55">Zum Beispiel: „Ein Memory-Spiel mit Tieren“ oder „Ein Quiz über Fußball“. Wir schlagen dir einen passenden Starttyp vor; danach kannst du alles selbst anpassen.</p>
-      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Ich möchte ein Spiel bauen, bei dem …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Passende Vorlage</button></div>
+      <h3 style="margin:8px 0 3px">Was für ein Spiel möchtest du machen?</h3>
+      <p class="muted" style="margin:0;font-size:13px;line-height:1.55">Schreibe zum Beispiel: „Ein Quiz über Fußball“ oder „Ein Memory mit Tieren“. Wir wählen eine passende Vorlage und fügen bei bekannten Themen Beispiel-Fragen ein. Du kannst alles ganz leicht ändern.</p>
+      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Zum Beispiel: Ein Quiz über Tiere …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Spiel starten</button></div>
       <p id="creatorIdeaStatus" class="creator-status" aria-live="polite"></p>
     </div>
-    <div class="creator-section-head"><div><h3>1. Wähle einen Starttyp</h3><p>Die Vorlage ist nur der Anfang – Name, Fragen, Farben und Regeln kannst du verändern.</p></div></div>
+    <div class="creator-section-head"><div><h3>1. Wähle ein Spiel</h3><p>Tippe auf ein Spiel. Danach zeigen wir dir Schritt für Schritt, was du tun kannst.</p></div></div>
     <div class="creator-template-grid" id="creatorTemplateGrid"></div>
-    <div class="creator-section-head"><div><h3>2. Deine gespeicherten Entwürfe</h3><p>Deine Entwürfe bleiben auf diesem Gerät gespeichert.</p></div><div class="creator-quick-actions"><button class="btn secondary" type="button" onclick="creatorExportAll()">⬇️ Alle exportieren</button><label class="btn secondary creator-import-label">⬆️ JSON importieren<input id="creatorImportFile" type="file" accept=".json,application/json" hidden onchange="creatorImportFileChanged(event)"></label></div></div>
+    <div class="creator-section-head"><div><h3>Deine gespeicherten Spiele</h3><p>Hier findest du Spiele, an denen du weiterarbeiten kannst. Sie sind auf diesem Gerät gespeichert.</p></div><div class="creator-quick-actions"><button class="btn secondary" type="button" onclick="creatorExportAll()">⬇️ Alle exportieren</button><label class="btn secondary creator-import-label">⬆️ JSON importieren<input id="creatorImportFile" type="file" accept=".json,application/json" hidden onchange="creatorImportFileChanged(event)"></label></div></div>
     <div id="creatorDraftLibrary" class="creator-library"></div>
     <div class="creator-rule-note">Hinweis: Gespeicherte Entwürfe sind lokal in diesem Browser. Ein geteilter Link enthält den Spielbauplan. Für eine öffentliche Spielbibliothek mit Nutzerprofilen und für echte Live-Multiplayer-Modi aller Spieltypen braucht es später einen Server und passende Sicherheitsregeln.</div>
   </div>
@@ -1973,20 +1969,20 @@ button:disabled,
         <div id="creatorBasicsFields">
           <h3>🎨 Mach das Spiel zu deinem Spiel</h3>
           <div class="creator-field-grid" style="margin-top:14px">
-            <div class="field"><label for="creatorTitleInput">Name des Spiels</label><input id="creatorTitleInput" maxlength="70" placeholder="z. B. Das große Tierduell" oninput="creatorUpdateBasics()"></div>
+            <div class="field"><label for="creatorTitleInput">Wie soll dein Spiel heißen?</label><input id="creatorTitleInput" maxlength="70" placeholder="z. B. Das große Tierduell" oninput="creatorUpdateBasics()"></div>
             <div class="field"><label for="creatorThemeInput">Farbwelt</label><select id="creatorThemeInput" onchange="creatorUpdateBasics()"><option value="neon">Neon & futuristisch</option><option value="ocean">Ocean & frisch</option><option value="sunset">Sunset & warm</option><option value="forest">Forest & ruhig</option><option value="candy">Candy & bunt</option></select></div>
-            <div class="field" style="grid-column:1/-1"><label for="creatorDescriptionInput">Beschreibung (optional)</label><textarea id="creatorDescriptionInput" maxlength="500" placeholder="Worum geht es? Was sollen die Spieler schaffen?" oninput="creatorUpdateBasics()"></textarea></div>
+            <div class="field" style="grid-column:1/-1"><label for="creatorDescriptionInput">Worum geht es in deinem Spiel? (freiwillig)</label><textarea id="creatorDescriptionInput" maxlength="500" placeholder="Worum geht es? Was sollen die Spieler schaffen?" oninput="creatorUpdateBasics()"></textarea></div>
           </div>
           <div class="creator-rule-note">Du kannst mit einem Satz starten. Wir haben Beispielinhalte eingefügt, damit du sofort testen kannst. Ersetze sie Schritt für Schritt durch deine eigenen Ideen.</div>
-          <div class="creator-actions-row"><button class="btn primary" type="button" onclick="creatorGoStep(2)">Weiter: Inhalte bearbeiten →</button></div>
+          <div class="creator-actions-row"><button class="btn primary" type="button" onclick="creatorGoStep(2)">Weiter: Fragen und Karten →</button></div>
         </div>
         <div id="creatorContentFields" class="hidden">
-          <h3>🧩 Baue die Inhalte</h3><p class="muted" id="creatorContentHelp" style="font-size:13px"></p>
+          <h3>🧩 Füge Fragen und Karten hinzu</h3><p class="muted" id="creatorContentHelp" style="font-size:13px"></p>
           <div id="creatorContentEditor"></div>
-          <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorAddContent()">＋ Inhalt hinzufügen</button><button class="btn secondary" type="button" onclick="creatorGoStep(1)">← Zurück</button><button class="btn primary" type="button" onclick="creatorGoStep(3)">Weiter: Regeln & Test →</button></div>
+          <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorAddContent()">＋ Neue Frage oder Karte</button><button class="btn secondary" type="button" onclick="creatorGoStep(1)">← Zurück</button><button class="btn primary" type="button" onclick="creatorGoStep(3)">Weiter: Spielregeln →</button></div>
         </div>
         <div id="creatorRulesFields" class="hidden">
-          <h3>⚙️ Regeln und Ablauf</h3><p class="muted" style="font-size:13px">Wähle, wie lange gespielt wird und wie Punkte vergeben werden.</p>
+          <h3>⚙️ Wie soll dein Spiel laufen?</h3><p class="muted" style="font-size:13px">Lege die Zeit und die Punkte fest. Du kannst die Vorschläge einfach so lassen.</p>
           <div class="creator-settings-grid" style="margin-top:14px">
             <div class="creator-setting-card"><label for="creatorSecondsInput">Zeitlimit / Aufgabe (Sek.)</label><input id="creatorSecondsInput" type="number" min="5" max="180" step="5" value="20" oninput="creatorUpdateSettings()"></div>
             <div class="creator-setting-card"><label for="creatorPointsInput">Punkte je Erfolg</label><input id="creatorPointsInput" type="number" min="0" max="10000" step="10" value="100" oninput="creatorUpdateSettings()"></div>
@@ -1996,7 +1992,7 @@ button:disabled,
             <div class="creator-setting-card"><label for="creatorVisibilityInput">Spielbauplan</label><select id="creatorVisibilityInput" onchange="creatorUpdateSettings()"><option value="link">Über Link teilen</option><option value="private">Nur auf diesem Gerät</option></select></div>
           </div>
           <div class="creator-rule-note" id="creatorRuntimeNote">Die Vorschau läuft direkt in diesem Browser. Die Einstellungen bilden den Bauplan ab; ein echter Live-Raum für diesen Spieltyp ist ein späterer Serversystem-Schritt.</div>
-          <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorGoStep(2)">← Inhalte</button><button class="btn primary" type="button" onclick="creatorStartPreview()">▶ Spiel jetzt testen</button><button class="btn secondary" type="button" onclick="creatorSaveDraft(true)">💾 Entwurf speichern</button></div>
+          <div class="creator-actions-row"><button class="btn secondary" type="button" onclick="creatorGoStep(2)">← Inhalte</button><button class="btn primary" type="button" onclick="creatorStartPreview()">▶ Spiel ausprobieren</button><button class="btn secondary" type="button" onclick="creatorSaveDraft(true)">💾 Spiel speichern</button></div>
           <div id="creatorSharePanel" class="creator-codebox hidden"><b>🔗 Dein Spielbauplan</b><p class="creator-status">Dieser Link enthält dein Spiel. Bei sehr großen Spielen nutze stattdessen JSON-Export.</p><input id="creatorShareUrl" readonly aria-label="Spielbauplan-Link"><div class="creator-code-actions"><button class="btn secondary" type="button" onclick="creatorCopyShareLink()">Link kopieren</button><button class="btn secondary" type="button" onclick="creatorExportCurrent()">JSON herunterladen</button></div></div>
         </div>
       </div>
@@ -2044,8 +2040,27 @@ button:disabled,
   <div id="siteInfoContent"></div>
 </section>
 
-<footer class="foot">MatheMeister Pro v10 · Secure Game Creator · Spielstudio · Feedback · Mobile Live-Spiel</footer>
+
+<section id="adminScreen" class="screen panel">
+  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <div class="studio-hero"><span class="pill">🛡️ NUR FÜR ADMINISTRATOREN</span><h2>MatheMeister – Admin</h2><p>Feedback und Meldungen sicher verwalten.</p></div>
+  <div id="adminLoginPanel" class="subpanel" style="max-width:520px;margin:18px auto">
+    <h3>Administrator-Anmeldung</h3><p class="muted">Melde dich mit deinem Supabase-Administratorkonto an.</p>
+    <form id="adminLoginForm" class="feedback-form">
+      <div class="field"><label for="adminEmail">E-Mail</label><input id="adminEmail" type="email" autocomplete="username" required maxlength="254"></div>
+      <div class="field"><label for="adminPassword">Passwort</label><input id="adminPassword" type="password" autocomplete="current-password" required maxlength="256"></div>
+      <button class="btn primary full" type="submit">Sicher anmelden →</button><p id="adminLoginStatus" class="studio-field-note" role="status"></p>
+    </form>
+  </div>
+  <div id="adminDashboard" class="hidden">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><h3>Feedback-Eingang</h3><p id="adminSignedInAs" class="muted"></p></div><button class="btn secondary" type="button" onclick="adminSignOut()">Abmelden</button></div>
+    <div class="row" style="gap:10px;flex-wrap:wrap;margin:14px 0"><label class="field" style="flex:1;min-width:150px">Status<select id="adminStatusFilter"><option value="">Alle Status</option><option value="new">Neu</option><option value="in_review">In Bearbeitung</option><option value="resolved">Erledigt</option></select></label><label class="field" style="flex:1;min-width:150px">Kategorie<select id="adminCategoryFilter"><option value="">Alle Kategorien</option><option value="bug">Fehler</option><option value="idea">Idee</option><option value="game">Spielmodus</option><option value="design">Design</option><option value="other">Sonstiges</option></select></label><button class="btn secondary" type="button" onclick="adminLoadFeedback()">↻ Aktualisieren</button></div>
+    <p id="adminFeedbackStatus" class="studio-field-note" aria-live="polite"></p><div id="adminFeedbackList" class="info-grid"></div>
+  </div>
+</section>
+<footer class="foot">MatheMeister Pro v10.5.3 · Game Creator · Live-Spiel · Community</footer>
 </div>
+<button id="globalBackButton" type="button" onclick="goBack()" aria-label="Einen Schritt zurück"><span class="back-arrow" aria-hidden="true">←</span><span>Zurück</span></button>
 <div id="appModal" class="modal-overlay hidden" role="presentation" aria-hidden="true">
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalMessage" tabindex="-1">
     <button class="modal-close" type="button" aria-label="Schließen" onclick="closeAppModal(false)">×</button>
@@ -2060,7 +2075,7 @@ button:disabled,
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.5.1" defer></script>
+<script src="./app.js?v=10.5.3" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {

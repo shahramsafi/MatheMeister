@@ -352,6 +352,8 @@ function openSiteInfo(topic='about'){
     how:{title:'So funktioniert MatheMeister',intro:'Lerne das Einmaleins, verbessere deine Bestleistungen und spiele live mit anderen.',html:`<div class="info-grid"><article class="info-card"><h3>🎯 Training</h3><p>Wähle Einfach, Mittel oder Schwer. Nach jeder Runde bekommst du eine Auswertung und sammelst Erfahrungspunkte.</p></article><article class="info-card"><h3>⚡ Math Rush</h3><p>Beantworte in 60 Sekunden so viele Aufgaben wie möglich. Versuche, deinen persönlichen Rekord zu schlagen.</p></article><article class="info-card"><h3>🏫 Klassenmodus</h3><p>Der Host zeigt die Frage am Computer. Auf den Handys antworten alle nur über vier Farbfelder.</p></article><article class="info-card"><h3>🌐 Freunde-Modus</h3><p>Frage und Antwortmöglichkeiten sind auf den Geräten aller Spieler sichtbar. Der Host kann die Runde verwalten und – optional – selbst mitspielen.</p></article><article class="info-card"><h3>👥 Team-Wettkampf</h3><p>Spielt als Einzelspieler oder in Teams. Es gibt eine Ergebnisrunde und eine Siegeransicht.</p></article><article class="info-card"><h3>🪙 Münzen & Shop</h3><p>Verdiene Spielmünzen und schalte kosmetische Profilrahmen, Titel, Avatare und Effekte frei. Diese Extras geben keinen Antwortvorteil.</p></article></div>`},
     privacy:{title:'Datenschutz & Sicherheit',intro:'MatheMeister soll ohne unnötige Hürden nutzbar sein. Deshalb gibt es aktuell keinen verpflichtenden Benutzeraccount.',html:`<div class="info-grid"><article class="info-card"><h3>📱 Lokale Daten</h3><p>Name, Avatar, Übungsstatistik, XP, Münzen und Shop-Käufe werden derzeit in diesem Browser gespeichert. Sie synchronisieren sich nicht automatisch zwischen Geräten und können beim Löschen der Browserdaten verloren gehen.</p></article><article class="info-card"><h3>🌐 Live-Spiel</h3><p>Live-Räume verwenden Supabase-RPC-Funktionen. Der Host verwaltet Spieler und sieht die vollständigen Ergebnisse. Spieler sehen nur die für sie bestimmte Ansicht und die öffentliche Top 10.</p></article><article class="info-card"><h3>🛡️ Schutzmaßnahmen</h3><p>Spieler- und Host-Tokens sind Sitzungsnachweise. Teile keine Host-Tokens und veröffentliche keine privaten Zugangsdaten. Veröffentlichte Browser-Anwendungen dürfen nur öffentliche Supabase-Schlüssel verwenden – niemals einen Service-Role-Schlüssel.</p></article><article class="info-card"><h3>⚠️ Gastkonto: Grenzen</h3><p>Ohne dauerhaftes Konto kann die Website noch nicht zuverlässig erkennen, dass dieselbe Person auf einem anderen Gerät weiterspielt. Browserlokale Münzen sind nicht fälschungssicher. Für eine globale Rangliste oder sichere Wallet brauchen wir später anonyme Authentifizierung oder optionale Kontoverknüpfung und serverseitige Regeln.</p></article></div><p class="muted">Die tatsächlichen Datenbankrechte hängen außerdem davon ab, welche SQL-Migrationen auf dem Supabase-Projekt installiert wurden. Diese Seite ersetzt keine technische Sicherheitsprüfung des Live-Projekts.</p>`},
     about:{title:'Über MatheMeister',intro:'MatheMeister macht Kopfrechnen zu einem kleinen Wettkampf – mit Fortschritt, Belohnungen, synchronen Klassenfarben und fairen Spielregeln.',html:`<div class="info-grid"><article class="info-card"><h3>🚀 Unser Ziel</h3><p>Ein schnelles, freundliches und motivierendes Mathe-Spiel für Lernende, Klassen und Freundesgruppen.</p></article><article class="info-card"><h3>✨ Was uns wichtig ist</h3><ul><li>Schneller Einstieg ohne Pflichtkonto</li><li>Klare, faire Punktevergabe</li><li>Private Einzelergebnisse</li><li>Belohnungen nur zur Personalisierung</li><li>Bedienbar auf Handy und Computer</li></ul></article><article class="info-card"><h3>💡 Feedback</h3><p>Notiere dir Probleme mit Spielcode, Gerät und dem genauen Schritt. So lassen sich Fehler gezielt prüfen, ohne funktionierende Bereiche unnötig zu ändern.</p></article><article class="info-card"><h3>🧭 Nächste Ausbaustufen</h3><p>Serverseitige Münz-Wallet, optionale Gerätesynchronisierung, weitere Fragetypen und ein wachsender Katalog an Spielvorlagen.</p></article></div>`}
+,
+    developer:{title:'Über mich – der Entwickler von MatheMeister',intro:'Ich entwickle MatheMeister mit dem Ziel, Lernen einfacher, kreativer und spielerischer zu machen.',html:`<div class="info-grid"><article class="info-card" style="grid-column:1/-1"><h3>👋 Hallo und willkommen!</h3><p>Ich bin der Entwickler von MatheMeister und arbeite Schritt für Schritt daran, aus einer eigenen Idee eine Plattform für Lernen und gemeinsames Spielen zu machen. Lernen soll nicht nur aus Aufgaben und richtigen Antworten bestehen. Es darf Spaß machen, Menschen zusammenbringen und Raum für eigene Ideen geben.</p><p>Mir ist besonders wichtig, dass jeder leicht eigene Spiele erstellen kann – auch Kinder, die noch nie programmiert haben. Eine Spielidee soll reichen, um loszulegen – die Technik soll im Hintergrund helfen und nicht im Weg stehen.</p></article><article class="info-card"><h3>🎮 Was ich aufbauen möchte</h3><p>MatheMeister soll ein Ort werden, an dem Menschen eigene Quizze, Puzzle und andere Spiele erstellen, mit Freunden spielen und ihre Ideen miteinander teilen können.</p></article><article class="info-card"><h3>🛠️ Schritt für Schritt</h3><p>Ich entwickle MatheMeister weiter, teste neue Funktionen und verbessere es anhand von Rückmeldungen. Nicht alles ist schon fertig – das Projekt wächst mit seinen Nutzern.</p></article><article class="info-card" style="grid-column:1/-1"><h3>💬 Danke, dass du dabei bist!</h3><p>Wenn du einen Fehler findest oder eine Idee hast, freue ich mich über dein Feedback. So kann MatheMeister gemeinsam besser werden.</p></article></div>`}
   };
   const page=pages[topic]||pages.about;
   $('siteInfoTitle').textContent=page.title;$('siteInfoIntro').textContent=page.intro;$('siteInfoContent').innerHTML=page.html;
@@ -359,7 +361,29 @@ function openSiteInfo(topic='about'){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('siteMenu') && !$('siteMenu').classList.contains('hidden'))toggleSiteMenu(false);});
 
-function show(id) {
+// Screen history is separate from browser history. It lets the in-app button move one step back.
+const mmScreenHistory=[];
+let mmActiveScreen='home';
+function updateGlobalBackButton(){
+  const button=$('globalBackButton');
+  if(!button)return;
+  const inLiveRoom=document.body.classList.contains('live-room-active');
+  const visible=mmActiveScreen!=='home' && !inLiveRoom;
+  button.classList.toggle('visible',visible);
+  button.setAttribute('aria-hidden',String(!visible));
+}
+function show(id, options={}) {
+    const current=document.querySelector('.screen.active')?.id || mmActiveScreen || 'home';
+    if(current!==id){
+      if(options.replaceCurrent){if(mmScreenHistory.length)mmScreenHistory.pop();}
+      else if(!options.fromBack && id!=='home'){
+        mmScreenHistory.push(current);
+        if(mmScreenHistory.length>40)mmScreenHistory.shift();
+      }
+    }
+    if(id==='home')mmScreenHistory.length=0;
+    mmActiveScreen=id;
+    if(current==='creator' && id!=='creator' && typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     $(id).classList.add('active');
     if(id==='home')refreshHome();
@@ -367,11 +391,27 @@ function show(id) {
     if(id==='stats')renderStats();
     if(id==='shop')renderShop();
     if(id==='settings'){ ensureEconomy(); updateAvatarChoices(); $('profileName').value=data.name; $('profileAvatar').value=data.avatar || '🦊'; }
-    window.scrollTo( {
-        top:0,
-        behavior:'smooth'
+    if(id==='creator' && typeof creatorRenderResumeCard==='function')creatorRenderResumeCard();
+    updateGlobalBackButton();
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+async function goBack(){
+  const current=document.querySelector('.screen.active')?.id || mmActiveScreen;
+  if(current==='creator'){
+    if(!$('creatorPlayPanel').classList.contains('hidden')){creatorStopPreview();return;}
+    if(!$('creatorEditorPanel').classList.contains('hidden')){
+      if(creatorCurrentStep>1){creatorGoStep(creatorCurrentStep-1);return;}
+      creatorAutoSaveNow();creatorBackToHome();return;
     }
-    )
+  }
+  if(current==='live' && live.room){
+    if(live.host && live.room.status==='lobby'){await cancelLiveRoom();return;}
+    if(await customConfirm({title:'Live-Spiel verlassen?',message:'Möchtest du diesen Live-Raum wirklich verlassen?',confirmText:'Spiel verlassen',cancelText:'Bleiben',icon:'↩️',tone:'danger'})){await leaveLiveRoom();}
+    return;
+  }
+  if(current==='game'){await quitGame();return;}
+  const target=mmScreenHistory.pop()||'home';
+  show(target,{fromBack:true});
 }
 function editProfile() {
     show('settings')
@@ -802,7 +842,7 @@ async function quitGame() {
         clearInterval(game.timer);
         game.timer=null
     }
-    show(game.mode==='classic'?'modes':'home')
+    show(game.mode==='classic'?'modes':'home',{replaceCurrent:true})
 }
 function yesterday() {
     const d=new Date();
@@ -1543,6 +1583,7 @@ function renderLiveRoom() {
     document.body.classList.toggle('classroom-player', isClassroomPhone);
     document.body.classList.toggle('friends-player-lobby', !live.host && room.display_mode === 'friends' && room.status === 'lobby');
     document.body.classList.toggle('friends-player-playing', !live.host && room.display_mode === 'friends' && room.status === 'playing');
+    updateGlobalBackButton();
     $('liveStart').classList.add('hidden'); $('liveRoom').classList.remove('hidden');
     ['liveBackBtn','liveKicker','liveHeading','liveIntro','liveNotice'].forEach(id => $(id)?.classList.add('hidden'));
     const players = live.players || [];
@@ -1594,7 +1635,10 @@ function renderLiveRoom() {
         html += `<div class="live-status-card"><span class="kicker">DIREKT BEITRETEN</span><p class="muted">QR-Code scannen oder den fünfstelligen Code teilen. Der Code bleibt oben jederzeit sichtbar.</p><div class="live-qr-wrap"><div id="liveQrCode" class="live-qr" aria-label="QR-Code zum Beitreten"></div><div><button class="btn secondary" onclick="copyJoinLink()">Beitrittslink kopieren</button><p class="muted" style="font-size:12px">QR funktioniert mit Handykamera.</p></div></div></div>`;
         html += `<div class="live-host-meter">👥 ${players.filter(p=>p.active!==false).length} Spieler bereit · ${Number(room.question_count)} Fragen · ${Number(room.seconds_per_question)} Sekunden je Frage${live.hostPlaying?' · Du spielst mit':''}</div><h3>Spieler im Raum (${players.filter(p=>p.active!==false).length})</h3>`;
         html += renderTeamScores(players.filter(p=>p.active!==false), room);
-        html += `<div class="player-list">${players.map(p=>`<div class="player ${p.active===false?'player-inactive':''}"><span>${profileMarkup(p)} ${room.team_mode?teamBadge(p.team_number):''}${p.removed_from_match?' · 🚫 aus Runde entfernt':p.active===false?' · ⏸️ pausiert':''}</span>${liveHostPlayerActions(p)}</div>`).join('')}</div><button class="btn purple full" style="margin-top:18px" onclick="startLiveGame()">Spiel starten →</button>`;
+        html += `<div class="player-list">${players.map(p=>`<div class="player ${p.active===false?'player-inactive':''}"><span>${profileMarkup(p)} ${room.team_mode?teamBadge(p.team_number):''}${p.removed_from_match?' · 🚫 aus Runde entfernt':p.active===false?' · ⏸️ pausiert':''}</span>${liveHostPlayerActions(p)}</div>`).join('')}</div>`;
+        const waitingPlayers=players.filter(p=>p.active!==false&&!p.removed_from_match&&(!live.hostPlaying||!p.is_self)).length;
+        html += waitingPlayers>0?`<button id="liveStartGameBtn" class="btn purple full" style="margin-top:18px" onclick="startLiveGame()">Spiel starten →</button>`:`<button id="liveStartGameBtn" class="btn purple full" style="margin-top:18px;opacity:.55;cursor:not-allowed" disabled>Warte auf den ersten Mitspieler …</button><p class="muted" style="font-size:12px;text-align:center">Sobald mindestens ein anderer Spieler beigetreten ist, kannst du starten.</p>`;
+        html += `<button class="btn danger full" style="margin-top:9px" onclick="cancelLiveRoom()">✕ Spielraum absagen</button>`;
       } else {
         html += liveSelfCard(room, me);
         html += `<div class="live-status-card"><div style="font-size:34px">⏳</div><h3>Du bist dabei!</h3><p class="muted">Warte, bis der Gastgeber die Runde startet.</p></div>`;
@@ -1655,6 +1699,8 @@ function renderLiveRoom() {
         const isLast=Number(room.question_index)>=Number(room.question_count);
         html += `<button class="btn purple full" style="margin-top:18px" onclick="${isLast?'finishLiveGame()':'nextLiveQuestion()'}">${isLast?'🏆 Meisterschaft anzeigen':'Nächste Frage →'}</button><p class="live-keyboard-hint">Tipp: Eingabetaste ↵ startet die nächste Frage.</p>`;
       } else html += `<p class="muted" style="font-size:12px">Warte auf den Gastgeber für die nächste Frage.</p>`;
+    } else if (room.status==='finished' && Number(room.question_index||0)===0) {
+      html += `<div class="player-removed-notice"><div class="removed-icon">🚫</div><h2>Der Gastgeber hat den Spielraum abgesagt</h2><p>Diese Runde wurde beendet, bevor sie begonnen hat.</p><button class="btn secondary" onclick="leaveLiveRoom()">Zur Startseite</button></div>`;
     } else {
       if (live.host) {
         html += room.team_mode?renderTeamPodium(players.filter(p=>p.active!==false&&!p.removed_from_match),room):renderSoloPodium(players.filter(p=>p.active!==false&&!p.removed_from_match),{showCorrectCount:room.display_mode==='friends'});
@@ -1849,7 +1895,9 @@ async function copyJoinLink() {
 }
 
 async function startLiveGame() {
-    if (!live.host || !live.room) return;
+    if (!live.host || !live.room || live.room.status!=='lobby') return;
+    const readyPlayers=(live.players||[]).filter(p=>p.active!==false&&!p.removed_from_match&&(!live.hostPlaying||!p.is_self));
+    if(readyPlayers.length<1){showToast('Warte, bis mindestens ein Mitspieler beigetreten ist.');return;}
     try {
         await setNextLiveQuestion(1);
     } catch (e) {
@@ -1980,7 +2028,22 @@ async function sendLiveReaction(reaction) {
     }
 }
 
-async function leaveLiveRoom() {
+async function cancelLiveRoom(){
+  if(!live.host||!live.room||live.room.status!=='lobby')return;
+  const code=live.room.code;
+  if(!await customConfirm({title:'Spielraum wirklich absagen?',message:'Der Warteraum wird geschlossen. Alle bereits beigetretenen Spieler sehen, dass die Runde abgesagt wurde. Du kannst danach einen neuen Raum erstellen.',confirmText:'Spielraum absagen',cancelText:'Weiter warten',icon:'🚫',tone:'danger'}))return;
+  try{
+    const sb=await getSb();
+    const {error}=await sb.rpc('mm_host_cancel_room',{p_code:code,p_host_token:live.token});
+    if(error)throw error;
+    showToast('Der Spielraum wurde abgesagt.');
+    await leaveLiveRoom({skipServer:true});
+  }catch(error){
+    showToast('Der Spielraum konnte nicht abgesagt werden: '+(error.message||'Unbekannter Fehler'));
+  }
+}
+
+async function leaveLiveRoom(options={}) {
     document.body.classList.remove('live-room-active','classroom-player','friends-player-lobby','friends-player-playing');
     live.reactionsOpen = false;
     if (live.timerInterval) { clearInterval(live.timerInterval); live.timerInterval = null; }
@@ -1997,7 +2060,7 @@ async function leaveLiveRoom() {
         await live.sb.removeChannel(live.subscription);
         live.subscription = null;
     }
-    if (live.sb && live.room && live.token) {
+    if (!options.skipServer && live.sb && live.room && live.token) {
         const { error } = await live.sb.rpc('mm_leave_room', {
             p_code: live.room.code,
             p_token: live.token
@@ -2062,6 +2125,45 @@ let creatorDraft=null;
 let creatorRun=null;
 let creatorRunTimer=null;
 let creatorFlipTimer=null;
+let creatorCurrentStep=1;
+let creatorAutoSaveTimer=null;
+const CREATOR_STEP_KEY='mm-game-creator-current-step-v1';
+function creatorReadCurrent(){
+ try{const raw=JSON.parse(localStorage.getItem(CREATOR_CURRENT_KEY)||'null');if(!raw)return null;return {draft:raw.draft||raw,step:Math.max(1,Math.min(3,Number(raw.step)||1))};}catch(_){return null;}
+}
+function creatorAutoSaveNow(){
+ if(!creatorDraft)return;
+ try{
+  creatorDraft.updatedAt=new Date().toISOString();
+  const snapshot=JSON.parse(JSON.stringify(creatorDraft));
+  if(!creatorIsValidConfig(snapshot))return;
+  const all=creatorGetDrafts();const i=all.findIndex(d=>d.id===snapshot.id);
+  if(i>=0)all[i]=snapshot;else all.unshift(snapshot);
+  creatorStoreDrafts(all);
+  localStorage.setItem(CREATOR_CURRENT_KEY,JSON.stringify({draft:snapshot,step:creatorCurrentStep}));
+  localStorage.setItem(CREATOR_STEP_KEY,String(creatorCurrentStep));
+  creatorRenderResumeCard();
+  if($('creatorHomePanel')&&!$('creatorHomePanel').classList.contains('hidden'))creatorRenderLibrary();
+ }catch(error){console.warn('Game-Creator-Autospeicherung fehlgeschlagen:',error);}
+}
+function creatorQueueAutoSave(){
+ if(!creatorDraft)return;
+ if(creatorAutoSaveTimer)clearTimeout(creatorAutoSaveTimer);
+ creatorAutoSaveTimer=setTimeout(()=>{creatorAutoSaveTimer=null;creatorAutoSaveNow();},350);
+}
+function creatorRenderResumeCard(){
+ const card=$('creatorResumeCard');if(!card)return;
+ const saved=creatorReadCurrent();
+ if(!saved||!creatorIsValidConfig(saved.draft)){card.classList.add('hidden');return;}
+ $('creatorResumeText').textContent=`„${saved.draft.title||'Mein Spiel'}“ · Schritt ${saved.step} von 3. Dein Entwurf wurde auf diesem Gerät gespeichert.`;
+ card.classList.remove('hidden');
+}
+function creatorResumeLastDraft(){
+ const saved=creatorReadCurrent();if(!saved||!creatorIsValidConfig(saved.draft)){showToast('Kein gespeicherter Entwurf gefunden.');return;}
+ creatorDraft=JSON.parse(JSON.stringify(saved.draft));creatorCurrentStep=saved.step;
+ creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(creatorCurrentStep);
+ showToast('Dein Entwurf ist wieder geöffnet.');
+}
 function creatorNewId(){return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function creatorBaseQuestion(type){
  if(type==='quiz')return {prompt:'Welche Antwort ist richtig?',image:'',options:['Antwort A','Antwort B','Antwort C','Antwort D'],correct:0,explanation:'Hier steht die Erklärung.'};
@@ -2122,21 +2224,64 @@ function creatorRenderLibrary(){
  if(!drafts.length){root.innerHTML='<div class="creator-empty" style="grid-column:1/-1">Noch keine Entwürfe gespeichert.<br>Wähle oben einen Starttyp und speichere dein erstes Spiel. 🎮</div>';return;}
  root.innerHTML=drafts.map(d=>`<article class="creator-draft-card"><div class="creator-draft-top"><div class="creator-draft-icon">${CREATOR_META[d.type].icon}</div><div style="min-width:0;flex:1"><h4>${esc(d.title)}</h4><p>${esc(CREATOR_META[d.type].title)} · ${d.type==='matching'||d.type==='memory'?d.pairs.length+' Paare':d.type==='reaction'?'Reaktionsmodus':d.questions.length+' Inhalte'} · ${Number(d.settings.seconds)||20} Sek.</p><p style="margin-top:5px">${esc(d.description||'Keine Beschreibung')}</p></div></div><div class="creator-draft-actions"><button class="btn secondary" type="button" onclick="creatorOpenDraft('${d.id}')">✏️ Bearbeiten</button><button class="btn secondary" type="button" onclick="creatorPlayDraft('${d.id}')">▶ Testen</button><button class="btn secondary" type="button" onclick="creatorShareDraft('${d.id}')">🔗 Teilen</button><button class="btn secondary" type="button" onclick="creatorDeleteDraft('${d.id}')">🗑️</button></div></article>`).join('');
 }
-function creatorStartNew(type){creatorDraft=creatorStarter(type);$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');creatorBindDraftToInputs();creatorGoStep(1);creatorRenderLibrary();}
-function creatorUseIdea(){const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Beschreibe deine Idee in einem Satz.');return;}const t=idea.toLocaleLowerCase();let type='quiz',reason='Quiz mit Auswahl';
+function creatorStartNew(type){creatorAutoSaveNow();creatorDraft=creatorStarter(type);creatorCurrentStep=1;$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');creatorBindDraftToInputs();creatorGoStep(1);creatorAutoSaveNow();creatorRenderLibrary();}
+function creatorIdeaTopic(text){
+ const t=text.toLocaleLowerCase('de');
+ const banks=[
+  {key:/fußball|fussball|soccer|bundesliga|ball/,name:'Fußball',questions:[
+   ['Wie viele Spieler einer Mannschaft stehen normalerweise zu Beginn auf dem Feld?',['9','10','11','12'],2,'Eine Mannschaft spielt normalerweise mit elf Spielern.'],
+   ['Wie heißt der Spieler, der das Tor verteidigt?',['Stürmer','Torwart','Schiedsrichter','Trainer'],1,'Der Torwart schützt das Tor.'],
+   ['Wie lange dauert ein reguläres Fußballspiel ohne Nachspielzeit?',['60 Minuten','90 Minuten','100 Minuten','120 Minuten'],1,'Ein reguläres Spiel dauert 90 Minuten.'] ]},
+  {key:/tier|tiere|hund|katze|natur|zoo/,name:'Tiere',questions:[
+   ['Welches Tier sagt „Miau“?',['Hund','Katze','Pferd','Kuh'],1,'Eine Katze miaut.'],
+   ['Welches Tier hat einen sehr langen Hals?',['Elefant','Giraffe','Fuchs','Pinguin'],1,'Die Giraffe hat einen langen Hals.'],
+   ['Wo lebt ein Fisch?',['Im Wasser','Im Baum','In der Wüste','Im Schnee'],0,'Fische leben im Wasser.'] ]},
+  {key:/weltraum|planeten|planet|sonne|mond|universum|all/,name:'Weltraum',questions:[
+   ['Welcher Planet ist unser Zuhause?',['Mars','Erde','Jupiter','Venus'],1,'Wir leben auf der Erde.'],
+   ['Was gibt uns am Tag Licht und Wärme?',['Der Mond','Die Sonne','Der Mars','Ein Sternbild'],1,'Die Sonne gibt uns Licht und Wärme.'],
+   ['Welcher Planet ist als roter Planet bekannt?',['Mars','Saturn','Neptun','Merkur'],0,'Der Mars wird roter Planet genannt.'] ]},
+  {key:/mathe|mathematik|einmaleins|rechnen|zahlen|multipli|malnehmen/,name:'Mathe',questions:[
+   ['Was ist 5 × 5?',['10','20','25','30'],2,'5 mal 5 ist 25.'],
+   ['Was ist 8 × 3?',['21','24','27','32'],1,'8 mal 3 ist 24.'],
+   ['Was ist 9 + 6?',['14','15','16','17'],1,'9 plus 6 ist 15.'] ]},
+  {key:/geografie|geographie|länder|land|hauptstadt|welt/,name:'Geografie',questions:[
+   ['Wie heißt die Hauptstadt von Deutschland?',['Berlin','München','Hamburg','Köln'],0,'Berlin ist die Hauptstadt von Deutschland.'],
+   ['In welchem Land steht der Eiffelturm?',['Italien','Frankreich','Spanien','Deutschland'],1,'Der Eiffelturm steht in Paris.'],
+   ['Welcher ist der größte Ozean?',['Atlantik','Indischer Ozean','Pazifik','Arktischer Ozean'],2,'Der Pazifik ist der größte Ozean.'] ]},
+  {key:/dinosaur|dino/,name:'Dinosaurier',questions:[
+   ['Wie heißt der berühmte Dinosaurier mit den kleinen Armen?',['T-Rex','Triceratops','Stegosaurus','Brachiosaurus'],0,'Der Tyrannosaurus Rex hatte kurze Arme.'],
+   ['Was bedeutet „Dinosaurier“ ungefähr?',['Riesenechse','Schneller Vogel','Meeresfisch','Fliegender Hund'],0,'Das Wort kommt aus dem Griechischen und bedeutet schreckliche Echse.'],
+   ['Wann lebten Dinosaurier?',['Vor langer Zeit','Im Mittelalter','Vor 100 Jahren','Heute überall'],0,'Dinosaurier lebten vor Millionen Jahren.'] ]}
+ ];
+ return banks.find(x=>x.key.test(t))||null;
+}
+function creatorUseIdea(){
+ const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Schreibe kurz, worum es in deinem Spiel gehen soll.');return;}
+ const t=idea.toLocaleLowerCase('de');let type='quiz',reason='Quiz';
  if(/memory|gedächtnis|paare finden|karten aufdecken/.test(t)){type='memory';reason='Memory'}
- else if(/zuordnen|verbinden|matching|paar|zusammengehören/.test(t)){type='matching';reason='Paare zuordnen'}
- else if(/wortsalat|buchstaben|wort erraten|wortspiel|word/.test(t)){type='word';reason='Wortsalat'}
+ else if(/zuordnen|verbinden|matching|paar|zusammengehören/.test(t)){type='matching';reason='Paare finden'}
+ else if(/wortsalat|buchstaben|wort erraten|wortspiel|word/.test(t)){type='word';reason='Wortspiel'}
  else if(/reihenfolge|sortier|ablauf|sortieren/.test(t)){type='sorting';reason='Reihenfolge-Puzzle'}
- else if(/geschichte|story|entscheidung|abenteuer/.test(t)){type='story';reason='Entscheidungs-Story'}
- else if(/tippen|reaktion|schnell|reflex|arcade|klick/.test(t)){type='reaction';reason='Reaktions-Challenge'}
+ else if(/geschichte|story|entscheidung|abenteuer/.test(t)){type='story';reason='Geschichte mit Entscheidungen'}
+ else if(/tippen|reaktion|schnell|reflex|arcade|klick/.test(t)){type='reaction';reason='Reaktionsspiel'}
  else if(/mehrere richtige|alle richtigen|mehrfach/.test(t)){type='multi';reason='Mehrfachauswahl'}
  else if(/richtig oder falsch|wahr oder falsch|true.?false/.test(t)){type='truefalse';reason='Richtig oder falsch'}
- else if(/tippe|schreib|texteingabe|antwort eintippen|freie antwort/.test(t)){type='short';reason='Freie Texteingabe'}
- creatorStartNew(type);creatorDraft.title=idea.slice(0,70);creatorDraft.description=idea.slice(0,500);creatorBindDraftToInputs();$('creatorIdeaStatus').textContent=`Wir haben „${reason}“ als Starttyp ausgewählt. Das ist keine starre Vorgabe – du kannst Inhalte und Regeln ändern.`;creatorUpdateLivePreview();}
+ else if(/tippe|schreib|texteingabe|antwort eintippen|freie antwort/.test(t)){type='short';reason='Antwort eintippen'}
+ const topic=creatorIdeaTopic(idea);creatorStartNew(type);
+ const cleanTitle=(topic?topic.name+'-Quiz':idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim()).slice(0,70);
+ creatorDraft.title=cleanTitle||'Mein Spiel';creatorDraft.description=idea.slice(0,500);
+ if(topic&&type==='quiz')creatorDraft.questions=topic.questions.map((q)=>({prompt:q[0],image:'',options:[...q[1]],correct:q[2],explanation:q[3]}));
+ if(topic&&(type==='memory'||type==='matching'))creatorDraft.pairs=topic.questions.map(q=>({left:q[0].replace(/[?]/g,''),right:q[1][q[2]]}));
+ if(topic&&type==='truefalse')creatorDraft.questions=topic.questions.map(q=>({prompt:q[0]+' '+q[1][q[2]]+'.',image:'',correct:true,explanation:q[3]}));
+ creatorBindDraftToInputs();
+ const extra=topic&&type==='quiz'?' Wir haben drei passende Beispiel-Fragen vorbereitet.':' Du bekommst eine passende Vorlage mit Beispiel-Inhalten.';
+ $('creatorIdeaStatus').textContent=`Dein Startspiel ist bereit: ${reason}.${extra} Du kannst alles ändern.`;
+ creatorUpdateLivePreview();
+ creatorAutoSaveNow();
+}
 function creatorBindDraftToInputs(){if(!creatorDraft)return;$('creatorSharePanel')?.classList.add('hidden');const usesQuestionAttempts=!['matching','memory','story','reaction'].includes(creatorDraft.type);$('creatorLivesCard')?.classList.toggle('hidden',!usesQuestionAttempts);$('creatorFeedbackCard')?.classList.toggle('hidden',['matching','memory','story','reaction'].includes(creatorDraft.type));$('creatorTitleInput').value=creatorDraft.title;$('creatorDescriptionInput').value=creatorDraft.description;$('creatorThemeInput').value=creatorDraft.theme;$('creatorSecondsInput').value=creatorDraft.settings.seconds;$('creatorPointsInput').value=creatorDraft.settings.points;$('creatorLivesInput').value=String(creatorDraft.settings.lives);$('creatorFeedbackInput').value=creatorDraft.settings.feedback;$('creatorShuffleInput').value=creatorDraft.settings.shuffle?'yes':'no';$('creatorVisibilityInput').value=creatorDraft.settings.visibility;creatorRenderContentEditor();creatorUpdateLivePreview();}
-function creatorUpdateBasics(){if(!creatorDraft)return;creatorDraft.title=$('creatorTitleInput').value.trim().slice(0,70)||'Mein Spiel';creatorDraft.description=$('creatorDescriptionInput').value.slice(0,500);creatorDraft.theme=$('creatorThemeInput').value;creatorDraft.updatedAt=new Date().toISOString();$('creatorEditorTitle').textContent=creatorDraft.title;creatorUpdateLivePreview();}
-function creatorUpdateSettings(){if(!creatorDraft)return;creatorDraft.settings.seconds=Math.max(5,Math.min(180,Number($('creatorSecondsInput').value)||20));creatorDraft.settings.points=Math.max(0,Math.min(10000,Number($('creatorPointsInput').value)||0));creatorDraft.settings.lives=Number($('creatorLivesInput').value)||3;creatorDraft.settings.feedback=$('creatorFeedbackInput').value;creatorDraft.settings.shuffle=$('creatorShuffleInput').value==='yes';creatorDraft.settings.visibility=$('creatorVisibilityInput').value;if(creatorDraft.settings.visibility==='private')$('creatorSharePanel')?.classList.add('hidden');creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();}
+function creatorUpdateBasics(){if(!creatorDraft)return;creatorDraft.title=$('creatorTitleInput').value.trim().slice(0,70)||'Mein Spiel';creatorDraft.description=$('creatorDescriptionInput').value.slice(0,500);creatorDraft.theme=$('creatorThemeInput').value;creatorDraft.updatedAt=new Date().toISOString();$('creatorEditorTitle').textContent=creatorDraft.title;creatorUpdateLivePreview();creatorQueueAutoSave();}
+function creatorUpdateSettings(){if(!creatorDraft)return;creatorDraft.settings.seconds=Math.max(5,Math.min(180,Number($('creatorSecondsInput').value)||20));creatorDraft.settings.points=Math.max(0,Math.min(10000,Number($('creatorPointsInput').value)||0));creatorDraft.settings.lives=Number($('creatorLivesInput').value)||3;creatorDraft.settings.feedback=$('creatorFeedbackInput').value;creatorDraft.settings.shuffle=$('creatorShuffleInput').value==='yes';creatorDraft.settings.visibility=$('creatorVisibilityInput').value;if(creatorDraft.settings.visibility==='private')$('creatorSharePanel')?.classList.add('hidden');creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();creatorQueueAutoSave();}
 function creatorQuestionCard(q,i){
  const type=creatorDraft.type;let fields='';
  if(type==='quiz')fields=`<div class="field"><label>Antworten · markiere die richtige</label><div class="creator-options-grid">${q.options.map((v,j)=>`<div class="creator-option-field"><input aria-label="Antwort ${j+1} als richtig markieren" type="radio" name="cqcorrect${i}" ${Number(q.correct)===j?'checked':''} onchange="creatorSetQuestion(${i},'correct',${j})"><input aria-label="Antwort ${j+1}" type="text" maxlength="180" value="${esc(v)}" oninput="creatorSetQuestion(${i},'option${j}',this.value)" placeholder="Antwort ${j+1}"></div>`).join('')}</div></div><div class="field"><label>Erklärung nach der Antwort (optional)</label><textarea maxlength="500" oninput="creatorSetQuestion(${i},'explanation',this.value)" placeholder="Warum ist das richtig?">${esc(q.explanation||'')}</textarea></div>`;
@@ -2149,18 +2294,18 @@ function creatorQuestionCard(q,i){
  return `<article class="creator-question-card"><div class="q-head"><strong>${CREATOR_META[type].icon} ${type==='story'?'Szene':type==='word'?'Wort':type==='sorting'?'Puzzle':'Aufgabe'} ${i+1}</strong><button type="button" class="btn secondary" ${creatorDraft.questions.length<=1?'disabled':''} onclick="creatorDeleteContent(${i})">Entfernen</button></div><div class="field"><label>${type==='story'?'Beschreibung der Szene':type==='word'?'Aufgabenhinweis':type==='sorting'?'Aufgabenstellung':'Frage oder Aufgabe'}</label><textarea maxlength="500" oninput="creatorSetQuestion(${i},'prompt',this.value)" placeholder="Schreibe hier deine Aufgabe...">${esc(q.prompt||'')}</textarea></div><div class="field"><label>Bild-URL (optional, https://...)</label><input type="url" maxlength="500" value="${esc(q.image||'')}" oninput="creatorSetQuestion(${i},'image',this.value)" placeholder="https://example.com/bild.jpg"></div>${fields}</article>`;
 }
 function creatorRenderContentEditor(){if(!creatorDraft)return;const root=$('creatorContentEditor');const type=creatorDraft.type;$('creatorContentHelp').textContent=CREATOR_META[type].help;
- if(type==='reaction'){root.innerHTML=`<article class="creator-question-card"><h4>⚡ Ziel und Aufgabe</h4><div class="field"><label>Text der Herausforderung</label><input maxlength="160" value="${esc(creatorDraft.challenge||'Tippe so oft du kannst!')}" oninput="creatorDraft.challenge=this.value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview()"></div><p class="creator-field-note">Der Spieler bekommt eine große Zielschaltfläche. Jeder gültige Klick zählt als Treffer. Die Runde endet nach der Zeit aus den Regeln.</p></article>`;return;}
+ if(type==='reaction'){root.innerHTML=`<article class="creator-question-card"><h4>⚡ Ziel und Aufgabe</h4><div class="field"><label>Text der Herausforderung</label><input maxlength="160" value="${esc(creatorDraft.challenge||'Tippe so oft du kannst!')}" oninput="creatorDraft.challenge=this.value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();creatorQueueAutoSave()"></div><p class="creator-field-note">Der Spieler bekommt eine große Zielschaltfläche. Jeder gültige Klick zählt als Treffer. Die Runde endet nach der Zeit aus den Regeln.</p></article>`;return;}
  if(type==='matching'||type==='memory'){root.innerHTML=`<div class="creator-question-list">${creatorDraft.pairs.map((p,i)=>`<article class="creator-question-card"><div class="q-head"><strong>${type==='memory'?'🃏 Kartenpaar':'🔗 Paar'} ${i+1}</strong><button type="button" class="btn secondary" ${creatorDraft.pairs.length<=2?'disabled':''} onclick="creatorDeleteContent(${i})">Entfernen</button></div><div class="creator-pair-row"><input maxlength="180" aria-label="Linker Begriff" value="${esc(p.left)}" oninput="creatorSetPair(${i},'left',this.value)" placeholder="Linke Seite"><input maxlength="180" aria-label="Rechter Begriff" value="${esc(p.right)}" oninput="creatorSetPair(${i},'right',this.value)" placeholder="Passende rechte Seite"><button type="button" class="btn secondary" onclick="creatorSwapPair(${i})" title="Seiten tauschen">↔</button></div></article>`).join('')}</div><div class="creator-rule-note">${type==='memory'?'Im Memory erscheinen beide Seiten als verdeckte Karten.':'Links und rechts werden getrennt angezeigt; der Spieler verbindet passende Begriffe.'} Füge eigene Texte, Emojis oder kurze Beschreibungen ein.</div>`;return;}
  root.innerHTML=`<div class="creator-question-list">${creatorDraft.questions.map((q,i)=>creatorQuestionCard(q,i)).join('')}</div>`;
 }
-function creatorSetQuestion(i,key,value){if(!creatorDraft||!creatorDraft.questions[i])return;const q=creatorDraft.questions[i];if(key.startsWith('option')){q.options[Number(key.slice(6))]=value;}else if(key==='answers'){q.answers=value.split('|').map(x=>x.trim()).filter(Boolean).slice(0,10);}else if(key==='items'){q.items=value.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12);}else q[key]=value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();}
-function creatorSetMultiCorrect(i,j,on){const q=creatorDraft?.questions[i];if(!q)return;const set=new Set(q.correct);on?set.add(j):set.delete(j);q.correct=[...set].sort();creatorDraft.updatedAt=new Date().toISOString();}
-function creatorSetStoryOption(i,j,key,value){const o=creatorDraft?.questions[i]?.options?.[j];if(o){o[key]=value;creatorDraft.updatedAt=new Date().toISOString();}}
-function creatorSetPair(i,key,value){if(creatorDraft?.pairs[i]){creatorDraft.pairs[i][key]=value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();}}
-function creatorSwapPair(i){if(!creatorDraft?.pairs[i])return;const p=creatorDraft.pairs[i];[p.left,p.right]=[p.right,p.left];creatorRenderContentEditor();creatorUpdateLivePreview();}
-function creatorAddContent(){if(!creatorDraft)return;const type=creatorDraft.type;if(type==='reaction'){showToast('Für diesen Spieltyp brauchst du keine weitere Aufgabe.');return;}if(type==='matching'||type==='memory'){if(creatorDraft.pairs.length>=60){showToast('Maximal 60 Paare pro Spiel.');return;}creatorDraft.pairs.push({left:'Neuer Begriff',right:'Passender Begriff'});}else{if(creatorDraft.questions.length>=100){showToast('Maximal 100 Aufgaben pro Spiel.');return;}creatorDraft.questions.push(creatorBaseQuestion(type));}creatorRenderContentEditor();creatorUpdateLivePreview();}
-function creatorDeleteContent(i){if(!creatorDraft)return;const type=creatorDraft.type;if(type==='matching'||type==='memory'){if(creatorDraft.pairs.length<=2)return;creatorDraft.pairs.splice(i,1);}else{if(creatorDraft.questions.length<=1)return;creatorDraft.questions.splice(i,1);}creatorRenderContentEditor();creatorUpdateLivePreview();}
-function creatorGoStep(step){if(!creatorDraft)return;creatorUpdateBasics();creatorUpdateSettings();$('creatorBasicsFields').classList.toggle('hidden',step!==1);$('creatorContentFields').classList.toggle('hidden',step!==2);$('creatorRulesFields').classList.toggle('hidden',step!==3);[1,2,3].forEach(n=>$(`creatorStep${n===1?'One':n===2?'Two':'Three'}`).classList.toggle('active',n===step));$('creatorEditorSubtitle').textContent=`Schritt ${step} von 3 · ${step===1?'Name und Stil':step===2?'Inhalte bauen':'Regeln & testen'}`;creatorUpdateLivePreview();}
+function creatorSetQuestion(i,key,value){if(!creatorDraft||!creatorDraft.questions[i])return;const q=creatorDraft.questions[i];if(key.startsWith('option')){q.options[Number(key.slice(6))]=value;}else if(key==='answers'){q.answers=value.split('|').map(x=>x.trim()).filter(Boolean).slice(0,10);}else if(key==='items'){q.items=value.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12);}else q[key]=value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();creatorQueueAutoSave();}
+function creatorSetMultiCorrect(i,j,on){const q=creatorDraft?.questions[i];if(!q)return;const set=new Set(Array.isArray(q.correct)?q.correct:[]);on?set.add(j):set.delete(j);q.correct=[...set].sort((a,b)=>a-b);creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();creatorQueueAutoSave();}
+function creatorSetStoryOption(i,j,key,value){const o=creatorDraft?.questions[i]?.options?.[j];if(o){o[key]=value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();creatorQueueAutoSave();}}
+function creatorSetPair(i,key,value){if(creatorDraft?.pairs[i]){creatorDraft.pairs[i][key]=value;creatorDraft.updatedAt=new Date().toISOString();creatorUpdateLivePreview();creatorQueueAutoSave();}}
+function creatorSwapPair(i){if(!creatorDraft?.pairs[i])return;const p=creatorDraft.pairs[i];[p.left,p.right]=[p.right,p.left];creatorRenderContentEditor();creatorUpdateLivePreview();creatorQueueAutoSave();}
+function creatorAddContent(){if(!creatorDraft)return;const type=creatorDraft.type;if(type==='reaction'){showToast('Für diesen Spieltyp brauchst du keine weitere Aufgabe.');return;}if(type==='matching'||type==='memory'){if(creatorDraft.pairs.length>=60){showToast('Maximal 60 Paare pro Spiel.');return;}creatorDraft.pairs.push({left:'Neuer Begriff',right:'Passender Begriff'});}else{if(creatorDraft.questions.length>=100){showToast('Maximal 100 Aufgaben pro Spiel.');return;}creatorDraft.questions.push(creatorBaseQuestion(type));}creatorRenderContentEditor();creatorUpdateLivePreview();creatorQueueAutoSave();}
+function creatorDeleteContent(i){if(!creatorDraft)return;const type=creatorDraft.type;if(type==='matching'||type==='memory'){if(creatorDraft.pairs.length<=2)return;creatorDraft.pairs.splice(i,1);}else{if(creatorDraft.questions.length<=1)return;creatorDraft.questions.splice(i,1);}creatorRenderContentEditor();creatorUpdateLivePreview();creatorQueueAutoSave();}
+function creatorGoStep(step){if(!creatorDraft)return;step=Math.max(1,Math.min(3,Number(step)||1));creatorCurrentStep=step;creatorUpdateBasics();creatorUpdateSettings();$('creatorBasicsFields').classList.toggle('hidden',step!==1);$('creatorContentFields').classList.toggle('hidden',step!==2);$('creatorRulesFields').classList.toggle('hidden',step!==3);[1,2,3].forEach(n=>$(`creatorStep${n===1?'One':n===2?'Two':'Three'}`).classList.toggle('active',n===step));$('creatorEditorSubtitle').textContent=`Schritt ${step} von 3 · ${step===1?'Name und Stil':step===2?'Inhalte bauen':'Regeln & testen'}`;if(step===2)creatorRenderContentEditor();creatorUpdateLivePreview();creatorQueueAutoSave();}
 function creatorUpdateLivePreview(){if(!creatorDraft||!$('creatorLivePreview'))return;creatorDraft.title=($('creatorTitleInput')?.value||creatorDraft.title).trim().slice(0,70)||'Mein Spiel';creatorDraft.description=$('creatorDescriptionInput')?.value??creatorDraft.description;creatorDraft.theme=$('creatorThemeInput')?.value||creatorDraft.theme;const type=creatorDraft.type;let example='Deine eigenen Inhalte';let answers=[];
  if(type==='matching'||type==='memory'){example=creatorDraft.pairs[0]?.left||'Ein Paar finden';answers=[creatorDraft.pairs[0]?.right||'Passendes Element','Weitere Karte'];}
  else if(type==='reaction'){example=creatorDraft.challenge||'Bereit?';answers=['ZIEL ANKLICKEN'];}
@@ -2170,13 +2315,13 @@ function creatorUpdateLivePreview(){if(!creatorDraft||!$('creatorLivePreview'))r
  $('creatorEditorTitle').textContent=creatorDraft.title;$('creatorPreviewStatus').textContent=`${CREATOR_META[type].title} · ${type==='matching'||type==='memory'?creatorDraft.pairs.length+' Paare':type==='reaction'?'Reaktionsmodus':creatorDraft.questions.length+' Aufgaben'} · ${creatorDraft.settings.points} Punkte pro Erfolg`;
 }
 function creatorBuildConfig(){if(!creatorDraft)throw new Error('Wähle zuerst einen Spieltyp.');creatorUpdateBasics();creatorUpdateSettings();const c=creatorSanitizeConfig(creatorDraft);if(['matching','memory'].includes(c.type)){if(c.pairs.some(p=>!p.left||!p.right))throw new Error('Fülle alle Felder eines Paares aus.');}if(c.type==='story'&&c.questions.some(q=>!q.options?.some(o=>o.text.trim())))throw new Error('Jede Szene braucht mindestens eine Auswahl.');if(c.type==='sorting'&&c.questions.some(q=>new Set(q.items).size!==q.items.length))throw new Error('Entferne doppelte Elemente aus einer Sortieraufgabe.');return c;}
-function creatorSaveDraft(showMessage=false){try{const c=creatorBuildConfig();const all=creatorGetDrafts();const index=all.findIndex(d=>d.id===c.id);if(index>=0)all[index]=c;else all.unshift(c);creatorStoreDrafts(all);creatorDraft=c;localStorage.setItem(CREATOR_CURRENT_KEY,JSON.stringify(c));creatorRenderLibrary();if(showMessage)showToast('Entwurf sicher auf diesem Gerät gespeichert.');return c;}catch(e){showToast(e.message||'Entwurf konnte nicht gespeichert werden.');return null;}}
-function creatorOpenDraft(id){const c=creatorGetDrafts().find(d=>d.id===id);if(!c)return;creatorDraft=JSON.parse(JSON.stringify(c));creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(1);}
-function creatorPlayDraft(id){const c=creatorGetDrafts().find(d=>d.id===id);if(!c)return;creatorDraft=JSON.parse(JSON.stringify(c));creatorSwitchToEditor();creatorBindDraftToInputs();creatorStartPreview();}
-function creatorDeleteDraft(id){const all=creatorGetDrafts().filter(d=>d.id!==id);creatorStoreDrafts(all);if(creatorDraft?.id===id)creatorDraft=null;creatorRenderLibrary();showToast('Entwurf wurde von diesem Gerät entfernt.');}
+function creatorSaveDraft(showMessage=false){try{const c=creatorBuildConfig();const all=creatorGetDrafts();const index=all.findIndex(d=>d.id===c.id);if(index>=0)all[index]=c;else all.unshift(c);creatorStoreDrafts(all);creatorDraft=c;localStorage.setItem(CREATOR_CURRENT_KEY,JSON.stringify({draft:c,step:creatorCurrentStep}));creatorRenderLibrary();creatorRenderResumeCard();if(showMessage)showToast('Entwurf sicher auf diesem Gerät gespeichert.');return c;}catch(e){showToast(e.message||'Entwurf konnte nicht gespeichert werden.');return null;}}
+function creatorOpenDraft(id){const c=creatorGetDrafts().find(d=>d.id===id);if(!c)return;creatorDraft=JSON.parse(JSON.stringify(c));creatorCurrentStep=1;creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(1);creatorAutoSaveNow();}
+function creatorPlayDraft(id){const c=creatorGetDrafts().find(d=>d.id===id);if(!c)return;creatorDraft=JSON.parse(JSON.stringify(c));creatorCurrentStep=3;creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(3);creatorStartPreview();}
+function creatorDeleteDraft(id){const all=creatorGetDrafts().filter(d=>d.id!==id);creatorStoreDrafts(all);if(creatorDraft?.id===id)creatorDraft=null;const current=creatorReadCurrent();if(current?.draft?.id===id){localStorage.removeItem(CREATOR_CURRENT_KEY);localStorage.removeItem(CREATOR_STEP_KEY);}creatorRenderLibrary();creatorRenderResumeCard();showToast('Entwurf wurde von diesem Gerät entfernt.');}
 function creatorSwitchToEditor(){$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');}
-function creatorBackToHome(){creatorStopRunTimer();creatorDraft=null;$('creatorHomePanel').classList.remove('hidden');$('creatorEditorPanel').classList.add('hidden');$('creatorPlayPanel').classList.add('hidden');creatorRenderLibrary();}
-function creatorShareDraft(id){const c=creatorGetDrafts().find(d=>d.id===id);if(!c)return;creatorDraft=JSON.parse(JSON.stringify(c));creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(3);creatorMakeShareLink();}
+function creatorBackToHome(){creatorAutoSaveNow();creatorStopRunTimer();creatorDraft=null;$('creatorHomePanel').classList.remove('hidden');$('creatorEditorPanel').classList.add('hidden');$('creatorPlayPanel').classList.add('hidden');creatorRenderLibrary();}
+function creatorShareDraft(id){const c=creatorGetDrafts().find(d=>d.id===id);if(!c)return;creatorDraft=JSON.parse(JSON.stringify(c));creatorCurrentStep=3;creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(3);creatorMakeShareLink();creatorAutoSaveNow();}
 function creatorBaseUrl(){const url=new URL(window.location.href);url.search='';url.hash='';return url;}
 function creatorEncode(c){return btoa(unescape(encodeURIComponent(JSON.stringify(c)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
 function creatorDecode(text){const b64=String(text).replace(/-/g,'+').replace(/_/g,'/');return JSON.parse(decodeURIComponent(escape(atob(b64+'='.repeat((4-b64.length%4)%4)))));}
@@ -2191,10 +2336,10 @@ function creatorFileName(name){return String(name||'mathemeister-spiel').normali
 function creatorImportFileChanged(event){const file=event.target.files?.[0];if(!file)return;if(file.size>1024*1024){showToast('Die Datei ist größer als 1 MB.');event.target.value='';return;}const reader=new FileReader();reader.onload=()=>{try{const raw=JSON.parse(reader.result);const list=raw?.format==='mathemeister-game-drafts'&&Array.isArray(raw.games)?raw.games:[raw];if(!list.length||list.length>30)throw new Error('Die Datei muss 1 bis 30 Spiele enthalten.');const old=creatorGetDrafts();let added=0;for(const item of list){const c=creatorSanitizeConfig(item);c.id=creatorNewId();old.unshift(c);added++;}creatorStoreDrafts(old.slice(0,30));creatorRenderLibrary();showToast(`${added} Spiel(e) importiert.`);}catch(e){showToast('Import fehlgeschlagen: '+(e.message||'Ungültige Datei.'));}event.target.value='';};reader.readAsText(file);}
 function creatorUseIdeaLink(c){creatorDraft=c;creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(1);}
 function creatorLoadSharedLink(hashOverride){const rawHash=typeof hashOverride==='string'?hashOverride:window.location.hash;const match=rawHash.match(/^#mmcreator=(.+)$/);if(!match)return;try{if(match[1].length>12000)throw new Error('Der Spiel-Link ist zu groß.');const c=creatorSanitizeConfig(creatorDecode(decodeURIComponent(match[1])));c.id=creatorNewId();creatorDraft=c;const all=creatorGetDrafts();all.unshift(c);creatorStoreDrafts(all.slice(0,30));try{history.replaceState(null,'',window.location.pathname+window.location.search);}catch(_){}show('creator');creatorSwitchToEditor();creatorBindDraftToInputs();creatorGoStep(1);showToast('Spielbauplan geladen. Du kannst ihn testen oder ändern.');}catch(e){showToast('Spiel-Link ungültig: '+(e.message||'Bitte JSON importieren.'));}}
-function creatorStartPreview(){try{creatorDraft=creatorBuildConfig();creatorSaveDraft(false);creatorRun={config:JSON.parse(JSON.stringify(creatorDraft)),index:0,score:0,correct:0,answered:0,selected:[],matched:[],left:-1,right:-1,memCards:[],memFirst:-1,sortItems:[],reactionCount:0,done:false};if(creatorRun.config.settings.shuffle){if(creatorRun.config.questions.length)creatorRun.config.questions=creatorShuffle(creatorRun.config.questions);if(creatorRun.config.type==='matching')creatorRun.config.pairs=creatorShuffle(creatorRun.config.pairs);} $('creatorEditorPanel').classList.add('hidden');$('creatorHomePanel').classList.add('hidden');$('creatorPlayPanel').classList.remove('hidden');$('creatorPlayTitle').textContent=creatorRun.config.title;creatorRenderGameStep();}catch(e){showToast(e.message||'Bitte prüfe deine Inhalte.');}}
+function creatorStartPreview(){try{const built=creatorBuildConfig();creatorDraft=built;creatorCurrentStep=3;creatorSaveDraft(false);const runConfig=JSON.parse(JSON.stringify(built));if(runConfig.settings.shuffle){if(runConfig.questions.length)runConfig.questions=creatorShuffle(runConfig.questions);if(runConfig.type==='matching')runConfig.pairs=creatorShuffle(runConfig.pairs);}creatorRun={config:runConfig,index:0,score:0,correct:0,answered:0,selected:[],matched:[],left:-1,right:-1,memCards:[],memFirst:-1,sortItems:[],reactionCount:0,done:false};$('creatorEditorPanel').classList.add('hidden');$('creatorHomePanel').classList.add('hidden');$('creatorPlayPanel').classList.remove('hidden');$('creatorPlayTitle').textContent=creatorRun.config.title;creatorRenderGameStep();}catch(e){showToast(e.message||'Bitte prüfe deine Inhalte.');}}
 function creatorShuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
 function creatorStopRunTimer(){if(creatorRunTimer){clearInterval(creatorRunTimer);creatorRunTimer=null;}if(creatorFlipTimer){clearTimeout(creatorFlipTimer);creatorFlipTimer=null;}}
-function creatorStopPreview(){creatorStopRunTimer();creatorRun=null;$('creatorPlayPanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorHomePanel').classList.add('hidden');creatorUpdateLivePreview();}
+function creatorStopPreview(){creatorStopRunTimer();creatorRun=null;$('creatorPlayPanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorHomePanel').classList.add('hidden');creatorUpdateLivePreview();creatorAutoSaveNow();}
 function creatorEscapeHtml(v){return esc(String(v??''));}
 function creatorImageHtml(q){
  const raw=String(q?.image||'').trim();if(!raw||raw.length>500)return '';
@@ -2243,8 +2388,30 @@ function creatorMemoryFlip(i){const r=creatorRun;if(!r||r.done||r.memLock)return
 function creatorRenderReaction(){const r=creatorRun,c=r.config;r.reactionCount=0;r.reactionRemaining=c.settings.seconds;const render=()=>{if(!creatorRun||creatorRun!==r)return;$('creatorPlayArea').innerHTML=`<div class="creator-play-header"><span class="pill">⚡ REAKTIONS-CHALLENGE</span><span class="pill">⏱️ <span id="creatorReactionTime">${r.reactionRemaining}</span> s</span><span class="pill">⭐ <span id="creatorReactionCount">${r.reactionCount}</span></span></div><div class="creator-play-question" style="text-align:center">${creatorEscapeHtml(c.challenge||'Tippe so oft du kannst!')}</div><button type="button" id="creatorReactionTarget" style="width:100%;min-height:220px;border:2px solid #48e4ef80;border-radius:24px;color:#fff;background:radial-gradient(circle at 50% 40%,#a866ff50,#1b2850);font-size:clamp(28px,6vw,46px);font-weight:900" onclick="creatorReactionTap()">⚡ TIPPE!</button><p class="creator-status" style="text-align:center">Jeder Klick zählt. Die Zeit startet beim ersten Tippen.</p><div class="creator-actions-row"><button class="btn secondary" onclick="creatorStopPreview()">Test verlassen</button></div>`;};render();r.reactionStarted=false;creatorApplyPlayTheme();}
 function creatorReactionTap(){const r=creatorRun;if(!r||r.done)return;if(!r.reactionStarted){r.reactionStarted=true;r.reactionDeadline=Date.now()+r.config.settings.seconds*1000;creatorRunTimer=setInterval(()=>{if(!creatorRun||creatorRun!==r){creatorStopRunTimer();return;}r.reactionRemaining=Math.max(0,Math.ceil((r.reactionDeadline-Date.now())/1000));const t=$('creatorReactionTime');if(t)t.textContent=r.reactionRemaining;if(r.reactionRemaining<=0){creatorStopRunTimer();r.done=true;r.score=r.reactionCount*r.config.settings.points;$('creatorPlayArea').innerHTML=`<div class="creator-play-question">🏁 Zeit ist um!</div><p>Du hast ${r.reactionCount} Mal getippt.</p><div class="creator-actions-row"><button class="btn primary" onclick="creatorRenderGameEnd()">Ergebnis ansehen</button></div>`;}},200);}r.reactionCount++;r.score=r.reactionCount*r.config.settings.points;const cnt=$('creatorReactionCount');if(cnt)cnt.textContent=r.reactionCount;const b=$('creatorReactionTarget');if(b){b.style.transform=`scale(${r.reactionCount%2?.97:1}) rotate(${r.reactionCount%2?1:-1}deg)`;b.textContent=r.reactionCount%5===0?'🔥 NOCHMAL!':'⚡ TREFFER!';}}
 function creatorRenderGameEndReaction(){creatorRenderGameEnd();}
-function creatorPreviewInit(){creatorRenderTemplateGrid();creatorRenderLibrary();}
+function creatorPreviewInit(){creatorRenderTemplateGrid();creatorRenderLibrary();creatorRenderResumeCard();}
+window.addEventListener('pagehide',()=>{if(creatorAutoSaveTimer){clearTimeout(creatorAutoSaveTimer);creatorAutoSaveTimer=null;}creatorAutoSaveNow();});
 
+
+
+// Admin panel: authenticated Supabase session + server-side allowlist checks.
+let mmAdminSession = null;
+function adminStatusLabel(v){return ({new:'Neu',in_review:'In Bearbeitung',resolved:'Erledigt'})[v]||v;}
+function adminCategoryLabel(v){return ({bug:'Fehler',idea:'Idee',game:'Spielmodus',design:'Design',other:'Sonstiges'})[v]||v;}
+function adminSetView(isAdmin){$('adminLoginPanel')?.classList.toggle('hidden',isAdmin);$('adminDashboard')?.classList.toggle('hidden',!isAdmin);}
+async function adminLogin(event){
+ event.preventDefault();const status=$('adminLoginStatus');const button=$('adminLoginForm')?.querySelector('button[type="submit"]');if(button)button.disabled=true;if(status)status.textContent='Anmeldung wird geprüft …';
+ try{const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('adminEmail').value.trim(),password:$('adminPassword').value});if(error)throw error;mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');adminSetView(true);$('adminSignedInAs').textContent='Angemeldet als '+(data.user?.email||'Administrator');$('adminPassword').value='';if(status)status.textContent='';await adminLoadFeedback();}
+ catch(e){if(status)status.textContent='Anmeldung fehlgeschlagen: '+(e.message||'Bitte Zugangsdaten prüfen.');adminSetView(false);}
+ finally{if(button)button.disabled=false;}
+}
+async function adminLoadFeedback(){
+ const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');if(!out)return;out.innerHTML='';if(status)status.textContent='Berichte werden geladen …';
+ try{const sb=await getSb();const {data:sessionData}=await sb.auth.getSession();mmAdminSession=sessionData.session;if(!mmAdminSession){adminSetView(false);if(status)status.textContent='Bitte erneut anmelden.';return;}const st=$('adminStatusFilter')?.value||null,cat=$('adminCategoryFilter')?.value||null;const {data,error}=await sb.rpc('mm_admin_list_feedback',{p_status:st,p_category:cat});if(error)throw error;const rows=Array.isArray(data)?data:[];if(status)status.textContent=rows.length+' Meldung(en) gefunden.';if(!rows.length){out.innerHTML='<article class="info-card">Noch keine Meldungen in diesem Filter.</article>';return;}out.innerHTML=rows.map(r=>`<article class="info-card" style="min-width:0"><div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap"><strong>#${Number(r.id)} · ${esc(adminCategoryLabel(r.category))}</strong><span class="pill">${esc(adminStatusLabel(r.status))}</span></div><p style="white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0">${esc(r.message)}</p><p class="muted" style="font-size:12px">${esc(new Date(r.created_at).toLocaleString('de-DE'))}${r.device?' · '+esc(r.device):''}</p>${r.contact_email?`<p><a href="mailto:${encodeURIComponent(r.contact_email)}">${esc(r.contact_email)}</a></p>`:''}<div class="row" style="gap:7px;flex-wrap:wrap;margin-top:12px"><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${Number(r.id)},'new')">Neu</button><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${Number(r.id)},'in_review')">In Bearbeitung</button><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${Number(r.id)},'resolved')">Erledigt</button><button class="btn secondary" type="button" onclick="adminDeleteFeedback(${Number(r.id)})">🗑 Löschen</button></div></article>`).join('');}
+ catch(e){if(status)status.textContent='Fehler beim Laden: '+(e.message||'Zugriff verweigert.');out.innerHTML='';}
+}
+async function adminUpdateFeedback(id,statusValue){try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_update_feedback',{p_id:id,p_status:statusValue});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Status aktualisiert.');await adminLoadFeedback();}catch(e){showToast('Änderung fehlgeschlagen: '+(e.message||''));}}
+async function adminDeleteFeedback(id){if(!await customConfirm({title:'Meldung löschen?',message:'Diese Meldung wird dauerhaft gelöscht. Möchtest du fortfahren?',confirmText:'Endgültig löschen',cancelText:'Abbrechen',icon:'🗑️',tone:'danger'}))return;try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_delete_feedback',{p_id:id});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Meldung gelöscht.');await adminLoadFeedback();}catch(e){showToast('Löschen fehlgeschlagen: '+(e.message||''));}}
+async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmAdminSession=null;adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
 
 $('joinCode').addEventListener('input',
 e=>e.target.value=e.target.value.replace(/\D/g,
@@ -2266,6 +2433,9 @@ loadStudioFromLink();
 creatorLoadSharedLink();
 showFeedbackSuccessIfNeeded();
 $('siteFeedbackForm')?.addEventListener('submit',handleFeedbackSubmit);
+$('adminLoginForm')?.addEventListener('submit',adminLogin);
+$('adminStatusFilter')?.addEventListener('change',adminLoadFeedback);
+$('adminCategoryFilter')?.addEventListener('change',adminLoadFeedback);
 if (typeof restoreLiveSession === 'function') setTimeout(restoreLiveSession, 100);
 
 // Diagnostic marker: set only after the application initialization completed.
