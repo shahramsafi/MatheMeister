@@ -2315,21 +2315,21 @@ function creatorResumeLastDraft(){
 }
 function creatorNewId(){return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function creatorBaseQuestion(type){
- if(type==='quiz')return {prompt:'Was ist 7 × 8?',image:'',options:['54','56','58','64'],correct:1,explanation:'7 × 8 = 56.'};
- if(type==='truefalse')return {prompt:'6 × 7 = 42.',image:'',correct:true,explanation:'6 × 7 = 42.'};
- if(type==='short')return {prompt:'Wie viel ist 9 × 6?',image:'',answers:['54'],hint:'9 mal 6.'};
- if(type==='multi')return {prompt:'Welche Aufgaben ergeben 24?',image:'',options:['3 × 8','4 × 6','5 × 4','7 × 3'],correct:[0,1],explanation:'3 × 8 und 4 × 6 ergeben 24.'};
- if(type==='word')return {prompt:'Entwirre die Ziffern zur richtigen Lösung von 8 × 7.',image:'',word:'65',hint:'8 mal 7 ist 56.'};
+ if(type==='quiz')return {prompt:'Welche Antwort ist richtig?',image:'',options:['Antwort A','Antwort B','Antwort C','Antwort D'],correct:0,explanation:'Hier steht die Erklärung.'};
+ if(type==='truefalse')return {prompt:'Diese Aussage ist richtig.',image:'',correct:true,explanation:'Schreibe kurz, warum.'};
+ if(type==='short')return {prompt:'Wie lautet die Lösung?',image:'',answers:['Beispiel'],hint:'Ein kleiner Tipp'};
+ if(type==='multi')return {prompt:'Wähle alle passenden Antworten.',image:'',options:['Auswahl A','Auswahl B','Auswahl C','Auswahl D'],correct:[0,2],explanation:'Nicht nur eine Antwort kann stimmen.'};
+ if(type==='word')return {prompt:'Entwirre das Wort.',image:'',word:'PLANET',hint:'Ein Objekt im Weltraum'};
  if(type==='story')return {prompt:'Du stehst vor einer geheimnisvollen Tür. Was machst du?',image:'',options:[{text:'Ich öffne die Tür',outcome:'Du entdeckst einen hellen Raum.'},{text:'Ich suche einen Schlüssel',outcome:'Du findest eine Truhe.'},{text:'Ich gehe zurück',outcome:'Du entdeckst einen geheimen Weg.'},{text:'Ich rufe nach Hilfe',outcome:'Ein Begleiter kommt dazu.'}]};
- if(type==='sorting')return {prompt:'Ordne die Ergebnisse den Aufgaben von klein nach groß.',image:'',items:['2 × 3 = 6','3 × 4 = 12','4 × 5 = 20','5 × 6 = 30']};
+ if(type==='sorting')return {prompt:'Ordne die Schritte in die richtige Reihenfolge.',image:'',items:['Erster Schritt','Zweiter Schritt','Dritter Schritt','Vierter Schritt']};
  return {prompt:'Neue Aufgabe',image:''};
 }
-function creatorBasePair(type){if(type==='memory')return {left:'7 × 8',right:'56'};return {left:'7 × 8',right:'56'};}
+function creatorBasePair(type){if(type==='memory')return {left:'Katze',right:'🐈'};return {left:'Begriff',right:'Passender Begriff'};}
 function creatorStarter(type){
  const q=creatorBaseQuestion(type);const p=creatorBasePair(type);
  const cfg={v:2,id:creatorNewId(),title:`Mein ${CREATOR_META[type].title}`,description:'Ein selbst erstelltes Spiel – ändere den Inhalt nach deinen Ideen.',type,theme:'neon',settings:{seconds:20,points:100,lives:3,feedback:'after',shuffle:true,visibility:'link'},questions:[],pairs:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
  if(['matching','memory'].includes(type))cfg.pairs=[p,{left:'Hund',right:type==='memory'?'🐕':'Treues Haustier'},{left:'Sonne',right:type==='memory'?'☀️':'Unser Stern' }];
- else if(type==='reaction')cfg.challenge='Löse so viele Malaufgaben wie möglich!';
+ else if(type==='reaction')cfg.challenge='Tippe so oft du kannst!';
  else cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:type==='story'?'Du findest einen Wegweiser. Wohin gehst du?':q.prompt+' (2)',...(type==='quiz'?{options:['Option 1','Option 2','Option 3','Option 4'],correct:1}:{})}];
  return cfg;
 }
@@ -2375,15 +2375,34 @@ function creatorRenderLibrary(){
 }
 function creatorStartNew(type){creatorAutoSaveNow();creatorDraft=creatorStarter(type);creatorCurrentStep=1;$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');creatorBindDraftToInputs();creatorGoStep(1);creatorAutoSaveNow();creatorRenderLibrary();}
 function creatorIdeaTopic(text){
- const t=String(text||'').toLocaleLowerCase('de');
- // This release is intentionally focused on multiplication only.
- return /einmaleins|multipli|malaufgab|malnehmen|\bmathe\b|\bquiz\b|\bspiel\b/.test(t)
-   ? {name:'Einmaleins',questions:[
-      ['Was ist 5 × 5?',['20','25','30','35'],1,'5 × 5 ist 25.'],
-      ['Was ist 8 × 3?',['21','24','27','32'],1,'8 × 3 ist 24.'],
-      ['Was ist 9 × 6?',['45','48','54','56'],2,'9 × 6 ist 54.']
-     ]}
-   : null;
+ const t=text.toLocaleLowerCase('de');
+ const banks=[
+  {key:/fußball|fussball|soccer|bundesliga|ball/,name:'Fußball',questions:[
+   ['Wie viele Spieler einer Mannschaft stehen normalerweise zu Beginn auf dem Feld?',['9','10','11','12'],2,'Eine Mannschaft spielt normalerweise mit elf Spielern.'],
+   ['Wie heißt der Spieler, der das Tor verteidigt?',['Stürmer','Torwart','Schiedsrichter','Trainer'],1,'Der Torwart schützt das Tor.'],
+   ['Wie lange dauert ein reguläres Fußballspiel ohne Nachspielzeit?',['60 Minuten','90 Minuten','100 Minuten','120 Minuten'],1,'Ein reguläres Spiel dauert 90 Minuten.'] ]},
+  {key:/tier|tiere|hund|katze|natur|zoo/,name:'Tiere',questions:[
+   ['Welches Tier sagt „Miau“?',['Hund','Katze','Pferd','Kuh'],1,'Eine Katze miaut.'],
+   ['Welches Tier hat einen sehr langen Hals?',['Elefant','Giraffe','Fuchs','Pinguin'],1,'Die Giraffe hat einen langen Hals.'],
+   ['Wo lebt ein Fisch?',['Im Wasser','Im Baum','In der Wüste','Im Schnee'],0,'Fische leben im Wasser.'] ]},
+  {key:/weltraum|planeten|planet|sonne|mond|universum|all/,name:'Weltraum',questions:[
+   ['Welcher Planet ist unser Zuhause?',['Mars','Erde','Jupiter','Venus'],1,'Wir leben auf der Erde.'],
+   ['Was gibt uns am Tag Licht und Wärme?',['Der Mond','Die Sonne','Der Mars','Ein Sternbild'],1,'Die Sonne gibt uns Licht und Wärme.'],
+   ['Welcher Planet ist als roter Planet bekannt?',['Mars','Saturn','Neptun','Merkur'],0,'Der Mars wird roter Planet genannt.'] ]},
+  {key:/mathe|mathematik|einmaleins|rechnen|zahlen|multipli|malnehmen/,name:'Mathe',questions:[
+   ['Was ist 5 × 5?',['10','20','25','30'],2,'5 mal 5 ist 25.'],
+   ['Was ist 8 × 3?',['21','24','27','32'],1,'8 mal 3 ist 24.'],
+   ['Was ist 9 + 6?',['14','15','16','17'],1,'9 plus 6 ist 15.'] ]},
+  {key:/geografie|geographie|länder|land|hauptstadt|welt/,name:'Geografie',questions:[
+   ['Wie heißt die Hauptstadt von Deutschland?',['Berlin','München','Hamburg','Köln'],0,'Berlin ist die Hauptstadt von Deutschland.'],
+   ['In welchem Land steht der Eiffelturm?',['Italien','Frankreich','Spanien','Deutschland'],1,'Der Eiffelturm steht in Paris.'],
+   ['Welcher ist der größte Ozean?',['Atlantik','Indischer Ozean','Pazifik','Arktischer Ozean'],2,'Der Pazifik ist der größte Ozean.'] ]},
+  {key:/dinosaur|dino/,name:'Dinosaurier',questions:[
+   ['Wie heißt der berühmte Dinosaurier mit den kleinen Armen?',['T-Rex','Triceratops','Stegosaurus','Brachiosaurus'],0,'Der Tyrannosaurus Rex hatte kurze Arme.'],
+   ['Was bedeutet „Dinosaurier“ ungefähr?',['Riesenechse','Schneller Vogel','Meeresfisch','Fliegender Hund'],0,'Das Wort kommt aus dem Griechischen und bedeutet schreckliche Echse.'],
+   ['Wann lebten Dinosaurier?',['Vor langer Zeit','Im Mittelalter','Vor 100 Jahren','Heute überall'],0,'Dinosaurier lebten vor Millionen Jahren.'] ]}
+ ];
+ return banks.find(x=>x.key.test(t))||null;
 }
 function creatorUseIdea(){
  const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Schreibe kurz, worum es in deinem Spiel gehen soll.');return;}
@@ -2398,8 +2417,8 @@ function creatorUseIdea(){
  else if(/richtig oder falsch|wahr oder falsch|true.?false/.test(t)){type='truefalse';reason='Richtig oder falsch'}
  else if(/tippe|schreib|texteingabe|antwort eintippen|freie antwort/.test(t)){type='short';reason='Antwort eintippen'}
  const topic=creatorIdeaTopic(idea);creatorStartNew(type);
- const cleanTitle=(topic?topic.name+'-Quiz':('Einmaleins: '+idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim())).slice(0,70);
- creatorDraft.title=cleanTitle||'Mein Einmaleins-Spiel';creatorDraft.description='Ein selbst erstelltes Spiel rund ums Einmaleins. Idee: '+idea.slice(0,420);
+ const cleanTitle=(topic?topic.name+'-Quiz':idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim()).slice(0,70);
+ creatorDraft.title=cleanTitle||'Mein Spiel';creatorDraft.description=idea.slice(0,500);
  if(topic&&type==='quiz')creatorDraft.questions=topic.questions.map((q)=>({prompt:q[0],image:'',options:[...q[1]],correct:q[2],explanation:q[3]}));
  if(topic&&(type==='memory'||type==='matching'))creatorDraft.pairs=topic.questions.map(q=>({left:q[0].replace(/[?]/g,''),right:q[1][q[2]]}));
  if(topic&&type==='truefalse')creatorDraft.questions=topic.questions.map(q=>({prompt:q[0]+' '+q[1][q[2]]+'.',image:'',correct:true,explanation:q[3]}));
