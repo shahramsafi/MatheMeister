@@ -8,7 +8,7 @@
 <script>
 (function(){try{var root=document.documentElement;var s=sessionStorage.getItem('mm-app-screen-v1');var valid=['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo','result'];var gameOk=s==='game'&&!!sessionStorage.getItem('mm-app-game-v1');if((valid.includes(s)||gameOk)&&s!=='live')root.classList.add('app-restoring');var adminRequested=sessionStorage.getItem('mm-admin-screen-open-v1')==='1'||localStorage.getItem('mm-admin-screen-open-v1')==='1';if(adminRequested)root.classList.add('admin-restoring');}catch(e){}})();
 </script>
-<title>MatheMeister Pro v10.8.6 · Stabilität, Login & mobile UX 🚀</title>
+<title>MatheMeister Pro v10.8.9 · Nachrichten & Desktop-Fix 🚀</title>
 
 <style>
 :root {
@@ -1628,6 +1628,41 @@ body.admin-mode #globalBackButton{display:none!important}
 body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-room-active .mobile-tabbar{display:none!important}
 @media(prefers-reduced-motion:reduce){.mobile-tabbar button,.top{transition:none!important}}
 
+
+/* V10.8.9: reliable private-message layout on desktop and mobile */
+#adminScreen [data-admin-panel="messages"]{width:100%;min-width:0}
+#adminScreen .admin-messages-layout{
+  display:grid;
+  grid-template-columns:minmax(280px,.82fr) minmax(0,1.18fr);
+  gap:16px;
+  align-items:start;
+  width:100%;
+  min-width:0;
+}
+#adminScreen .admin-messages-layout > .admin-surface-card{
+  display:block;
+  min-width:0;
+  width:100%;
+  visibility:visible;
+}
+#adminScreen #adminPrivateConversations{
+  display:grid;
+  grid-auto-flow:row;
+  align-content:start;
+  gap:8px;
+  width:100%;
+  min-width:0;
+  visibility:visible;
+}
+#adminScreen .admin-conversation-item{
+  display:block;
+  width:100%;
+  min-width:0;
+}
+@media(max-width:850px){
+  #adminScreen .admin-messages-layout{grid-template-columns:minmax(0,1fr)}
+}
+
 </style>
 
 </head>
@@ -2421,11 +2456,11 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
           <div class="admin-messages-layout"><section class="admin-surface-card admin-conversations-panel"><div class="admin-card-heading"><div><h3>Unterhaltungen</h3><p>Nachrichten von registrierten Nutzern</p></div></div><div id="adminPrivateConversations" class="admin-conversation-list"><div class="admin-empty-state">Unterhaltungen werden geladen …</div></div></section><section id="adminPrivateThread" class="admin-surface-card admin-thread-panel"><div class="admin-thread-empty"><span>☷</span><h3>Gespräch auswählen</h3><p>Wähle links eine Unterhaltung aus, um den Verlauf zu lesen und zu antworten.</p></div></section></div>
         </section>
       </div>
-      <footer class="admin-footer"><span>MatheMeister Admin Center</span><span>Verwaltung · V10.7.1</span></footer>
+      <footer class="admin-footer"><span>MatheMeister Admin Center</span><span>Verwaltung · V10.8.9</span></footer>
     </main>
   </div>
 </section>
-<footer class="foot">MatheMeister Pro v10.7.1 · Admin Center</footer>
+<footer class="foot">MatheMeister Pro v10.8.9 · Admin Center</footer>
 </div>
 <button id="globalBackButton" type="button" onclick="goBack()" aria-label="Einen Schritt zurück"><span class="back-arrow" aria-hidden="true">←</span><span>Zurück</span></button>
 <div id="appModal" class="modal-overlay hidden" role="presentation" aria-hidden="true">
@@ -2442,7 +2477,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.8.6" defer></script>
+<script src="./app.js?v=10.8.9" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {

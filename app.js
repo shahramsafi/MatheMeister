@@ -2598,9 +2598,92 @@ async function privateLoadMessages(){
 }
 async function privateSendMessage(event){event.preventDefault();const text=$('privateMessageText')?.value.trim()||'',st=$('privateMessageStatus');if(text.length<3){if(st)st.textContent='Bitte schreibe mindestens 3 Zeichen.';return;}try{const sb=await getSb();const {error}=await sb.rpc('mm_private_user_send_message',{p_message:text});if(error)throw error;$('privateMessageText').value='';if(st)st.textContent='Deine Nachricht wurde gesendet.';await privateLoadMessages();}catch(e){if(st)st.textContent='Senden fehlgeschlagen: '+(e.message||'');}}
 async function adminLoadPrivateConversations(){
- const out=$('adminPrivateConversations'),st=$('adminPrivateStatus');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltungen werden geladen …</div>';
- try{const sb=await getSb();const {data,error}=await sb.rpc('mm_private_admin_list_conversations');if(error)throw error;mmAdminPrivateRows=Array.isArray(data)?data:[];out.innerHTML=mmAdminPrivateRows.length?mmAdminPrivateRows.map(r=>`<button type="button" class="admin-conversation-item" onclick="adminOpenPrivateConversation('${r.conversation_id}')"><span class="admin-conversation-head"><strong>${esc(r.email||'Nutzer')}</strong>${Number(r.unread_count)>0?`<span class="admin-unread-count">${Number(r.unread_count)}</span>`:''}</span><span class="admin-conversation-preview">${esc(r.last_message||'Noch keine Nachricht')}</span><span class="admin-conversation-time">${esc(new Date(r.last_at).toLocaleString('de-DE'))}</span></button>`).join(''):'<div class="admin-empty-state">Noch keine privaten Nachrichten.</div>';if(st)st.textContent=`${mmAdminPrivateRows.length} Unterhaltung(en) geladen.`;adminRenderOverview();}
- catch(e){const message=e.message||'Fehler beim Laden';out.innerHTML=`<div class="admin-empty-state">${esc(message)}</div>`;if(st)st.textContent='Nachrichten konnten nicht geladen werden: '+message;}
+  const out = $('adminPrivateConversations');
+  const status = $('adminPrivateStatus');
+
+  if (!out) {
+    if (status) status.textContent = 'Der Nachrichtenbereich wurde im Dokument nicht gefunden.';
+    return;
+  }
+
+  out.innerHTML = '<div class="admin-empty-state">Unterhaltungen werden geladen …</div>';
+
+  try {
+    const sb = await getSb();
+    const { data, error } = await sb.rpc('mm_private_admin_list_conversations');
+    if (error) throw error;
+
+    const rows = Array.isArray(data) ? data : (data ? [data] : []);
+    mmAdminPrivateRows = rows;
+
+    const fragment = document.createDocumentFragment();
+
+    if (!rows.length) {
+      const empty = document.createElement('div');
+      empty.className = 'admin-empty-state';
+      empty.textContent = 'Noch keine privaten Nachrichten.';
+      fragment.appendChild(empty);
+    } else {
+      rows.forEach((row) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'admin-conversation-item';
+
+        const head = document.createElement('span');
+        head.className = 'admin-conversation-head';
+
+        const email = document.createElement('strong');
+        email.textContent = row.email || 'Nutzer';
+        head.appendChild(email);
+
+        const unreadCount = Number(row.unread_count) || 0;
+        if (unreadCount > 0) {
+          const badge = document.createElement('span');
+          badge.className = 'admin-unread-count';
+          badge.textContent = String(unreadCount);
+          head.appendChild(badge);
+        }
+
+        const preview = document.createElement('span');
+        preview.className = 'admin-conversation-preview';
+        preview.textContent = row.last_message || 'Noch keine Nachricht';
+
+        const time = document.createElement('span');
+        time.className = 'admin-conversation-time';
+        const parsedDate = row.last_at ? new Date(row.last_at) : null;
+        time.textContent = parsedDate && !Number.isNaN(parsedDate.getTime())
+          ? parsedDate.toLocaleString('de-DE')
+          : '';
+
+        button.append(head, preview, time);
+        button.addEventListener('click', () => {
+          if (row.conversation_id) adminOpenPrivateConversation(String(row.conversation_id));
+        });
+        fragment.appendChild(button);
+      });
+    }
+
+    out.replaceChildren(fragment);
+    out.style.display = 'grid';
+    out.style.visibility = 'visible';
+
+    const panel = out.closest('.admin-conversations-panel');
+    if (panel) {
+      panel.style.display = 'block';
+      panel.style.visibility = 'visible';
+    }
+
+    if (status) status.textContent = `${rows.length} Unterhaltung(en) geladen.`;
+    adminRenderOverview();
+  } catch (error) {
+    const message = error && error.message ? error.message : 'Unbekannter Fehler beim Laden.';
+    out.innerHTML = '';
+    const errorBox = document.createElement('div');
+    errorBox.className = 'admin-empty-state';
+    errorBox.textContent = message;
+    out.appendChild(errorBox);
+    if (status) status.textContent = 'Nachrichten konnten nicht geladen werden: ' + message;
+  }
 }
 async function adminOpenPrivateConversation(id){
  mmPrivateConversationId=id;document.querySelectorAll('.admin-conversation-item').forEach(el=>el.classList.toggle('active',el.getAttribute('onclick')?.includes(String(id))));const out=$('adminPrivateThread');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltung wird geladen …</div>';
