@@ -211,6 +211,7 @@ const STORE='matheme-pro-v2';
 const defaultData=()=>( {
     name:'Meister',
     avatar:'🦊',
+    profileImage:'',
     xp:0,
     coins:250,
     inventory:['frame_basic','title_none','effect_none'],
@@ -316,7 +317,10 @@ function loadData() {
 function saveData() {
     localStorage.setItem(STORE,
     JSON.stringify(data));
-    refreshHome()
+    refreshHome();
+    const active=document.querySelector('.screen.active')?.id;
+    if(active==='profile' && typeof renderProfile==='function')renderProfile();
+    if(active==='leaderboard' && typeof renderLeaderboard==='function')renderLeaderboard();
 }
 function esc(s) {
     return String(s).replace(/[&<>"']/g,
@@ -337,19 +341,29 @@ function showToast(msg) {
     showToast.t=setTimeout(()=>t.classList.remove('show'),
     2600)
 }
-function toggleSiteMenu(force) {
-  const menu=$('siteMenu'), overlay=$('siteMenuOverlay'), btn=$('siteMenuToggle');
-  if(!menu||!overlay||!btn)return;
-  const currentlyOpen=!menu.classList.contains('hidden');
-  const open=typeof force==='boolean'?force:!currentlyOpen;
-  menu.classList.toggle('hidden',!open);overlay.classList.toggle('hidden',!open);
-  menu.setAttribute('aria-hidden',String(!open));btn.setAttribute('aria-expanded',String(open));
-  const moreTab=document.querySelector('#mobileTabbar [data-mobile-more]');
-  if(moreTab)moreTab.classList.toggle('active',open || !['home','modes','live','progress'].includes(document.querySelector('.screen.active')?.id||mmActiveScreen||'home'));
-  btn.setAttribute('aria-label',open?'Hauptmenü schließen':'Hauptmenü öffnen');
-  if(open){const first=menu.querySelector('button.menu-item');if(first)first.focus();}
+function toggleSiteMenu(force){
+ const menu=$('siteMenu'),overlay=$('siteMenuOverlay'),btn=$('siteMenuToggle');
+ if(!menu||!overlay||!btn)return false;
+ const open=typeof force==='boolean'?force:menu.classList.contains('hidden');
+ menu.classList.toggle('hidden',!open);overlay.classList.toggle('hidden',!open);
+ menu.setAttribute('aria-hidden',String(!open));overlay.setAttribute('aria-hidden',String(!open));
+ btn.setAttribute('aria-expanded',String(open));btn.setAttribute('aria-label',open?'Weitere Bereiche schließen':'Weitere Bereiche öffnen');btn.classList.toggle('is-open',open);
+ if(open)menu.querySelector('button.menu-item')?.focus({preventScroll:true});
+ return open;
 }
-function menuNavigate(id){toggleSiteMenu(false);if(id==='feedbackScreen')feedbackChooseMode('choose');show(id);}
+function menuNavigate(id){toggleSiteMenu(false);if(id==='feedbackScreen'&&typeof feedbackChooseMode==='function')feedbackChooseMode('choose');return show(id);}
+async function openAdminCenter(){
+ toggleSiteMenu(false);
+ if(!show('adminScreen'))return false;
+ adminToggleSidebar(false);adminSetView(false);
+ const status=$('adminLoginStatus');if(status)status.textContent='Admin-Zugang wird geprüft …';
+ try{
+  const sb=await getSb();const {data,error}=await sb.auth.getSession();if(error)throw error;
+  if(data?.session){mmAdminSession=data.session;$('adminSignedInAs').textContent='Angemeldet als '+(data.session.user?.email||'Administrator');const authorized=await adminLoadFeedback(true);if(authorized&&mmAdminSession)await adminLoadPrivateConversations();if(status)status.textContent=authorized?'':'Dieses Konto besitzt keine Administratorrechte oder der Admin-Zugriff ist nicht erreichbar.';}
+  else{mmAdminSession=null;adminSetView(false);if(status)status.textContent='Bitte mit deinem Administrator-Konto anmelden.';}
+ }catch(e){mmAdminSession=null;adminSetView(false);if(status)status.textContent='Admin-Verbindung nicht verfügbar: '+(e.message||'Bitte später erneut versuchen.');}
+ return true;
+}
 function openSiteInfo(topic='about'){
   toggleSiteMenu(false);
   const pages={
@@ -363,12 +377,102 @@ function openSiteInfo(topic='about'){
   $('siteInfoTitle').textContent=page.title;$('siteInfoIntro').textContent=page.intro;$('siteInfoContent').innerHTML=page.html;
   show('siteInfo');
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('siteMenu') && !$('siteMenu').classList.contains('hidden'))toggleSiteMenu(false);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('siteMenu')&&!$('siteMenu').classList.contains('hidden')){toggleSiteMenu(false);$('siteMenuToggle')?.focus({preventScroll:true});}});
+document.addEventListener('click',e=>{const menu=$('siteMenu'),button=$('siteMenuToggle');if(!menu||menu.classList.contains('hidden')||menu.contains(e.target)||button?.contains(e.target))return;toggleSiteMenu(false);});
 
 // Screen history is separate from browser history. Each entry remembers the exact scroll offset.
 // Keeping the offset on the history entry (rather than only per screen) also handles revisiting a screen.
 const mmScreenHistory=[];
 let mmActiveScreen='home';
+let leaderboardPeriod='week';
+function mobileNavTargetForScreen(id){
+  if(id==='home')return 'home';
+  if(id==='leaderboard')return 'leaderboard';
+  if(['profile','progress','stats','settings','shop'].includes(id))return 'profile';
+  if(['modes','live','teacher','studio','creator','game','result'].includes(id))return 'modes';
+  return '';
+}
+function updateMobileTabbar(id){
+  const target=mobileNavTargetForScreen(id);
+  document.querySelectorAll('#mobileTabbar [data-mobile-screen]').forEach(btn=>{
+    const active=btn.dataset.mobileScreen===target;
+    btn.classList.toggle('active',active);
+    if(active)btn.setAttribute('aria-current','page');else btn.removeAttribute('aria-current');
+  });
+}
+function renderProfile(){
+  if(!$('profile'))return;
+  ensureEconomy();
+  const xp=Math.max(0,Number(data.xp)||0),level=currentLevel(),into=xp%100;
+  $('profileDisplayName').textContent=data.name||'Meister';
+  $('profileLevel').textContent='Level '+level;
+  $('profileXPLabel').textContent=into+' / 100 XP · '+xp.toLocaleString('de-DE')+' XP gesamt';
+  $('profileXPRemaining').textContent=(100-into)+' XP bis Level '+(level+1);
+  $('profileXPFill').style.width=into+'%';
+  $('profileStreak').textContent=Number(data.daily?.streak)||0;
+  $('profileGames').textContent=(data.sessions||[]).length;
+  const best=(data.sessions||[]).reduce((m,x)=>Math.max(m,Number(x.accuracy)||0),0);
+  $('profileBest').textContent=best+'%';
+  $('profileCoins').textContent=(Number(data.coins)||0).toLocaleString('de-DE')+' 🪙';
+  const face=$('profilePhotoFace');
+  if(face){
+    face.replaceChildren();
+    if(data.profileImage){const img=document.createElement('img');img.alt='Dein Profilbild';img.src=data.profileImage;face.appendChild(img);}
+    else face.textContent=data.avatar||'🦊';
+  }
+  const earned=(typeof BADGES!=='undefined'?BADGES.filter(b=>(data.badges||[]).includes(b[0])).slice(-3).reverse():[]);
+  $('profileBadgePreview').innerHTML=earned.length?earned.map(b=>`<div class="profile-badge-chip"><span>${esc(b[1])}</span><small>${esc(b[2])}</small></div>`).join(''):'<div class="profile-badge-chip" style="grid-column:1/-1"><span>✨</span><small>Spiele weiter, um deine ersten Abzeichen freizuschalten.</small></div>';
+}
+function triggerProfilePhotoUpload(){ $('profilePhotoInput')?.click(); }
+function handleProfilePhotoChange(file){
+  if(!file)return;
+  if(!file.type||!file.type.startsWith('image/')){showToast('Bitte wähle eine Bilddatei aus.');return;}
+  if(file.size>8*1024*1024){showToast('Das Bild darf höchstens 8 MB groß sein.');return;}
+  const reader=new FileReader();
+  reader.onerror=()=>showToast('Das Bild konnte nicht gelesen werden.');
+  reader.onload=()=>{
+    const image=new Image();
+    image.onerror=()=>showToast('Die Bilddatei ist ungültig.');
+    image.onload=()=>{
+      const max=320,scale=Math.min(1,max/Math.max(image.naturalWidth,image.naturalHeight));
+      const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+      const ctx=canvas.getContext('2d');if(!ctx){showToast('Bildbearbeitung ist nicht verfügbar.');return;}
+      ctx.drawImage(image,0,0,canvas.width,canvas.height);
+      try{data.profileImage=canvas.toDataURL('image/jpeg',0.78);saveData();renderProfile();showToast('Profilbild wurde gespeichert.');}
+      catch(e){showToast('Das Bild ist zu groß für den lokalen Speicher. Bitte ein kleineres Bild wählen.');}
+    };
+    image.src=String(reader.result||'');
+  };
+  reader.readAsDataURL(file);
+}
+function setLeaderboardPeriod(period){
+  if(!['week','month','all'].includes(period))return;
+  leaderboardPeriod=period;
+  document.querySelectorAll('[data-leader-period]').forEach(b=>b.classList.toggle('active',b.dataset.leaderPeriod===period));
+  renderLeaderboard();
+}
+function renderLeaderboard(){
+  if(!$('leaderboard'))return;
+  const now=new Date();
+  const days=leaderboardPeriod==='week'?7:leaderboardPeriod==='month'?30:null;
+  const cutoff=days?new Date(now.getFullYear(),now.getMonth(),now.getDate()-days+1):null;
+  const sessions=(data.sessions||[]).filter(x=>{
+    if(!cutoff)return true;
+    const d=x.date?new Date(String(x.date)+'T00:00:00'):null;
+    return d&&Number.isFinite(d.getTime())&&d>=cutoff;
+  });
+  const xp=sessions.reduce((n,x)=>n+(Number(x.xp)||0),0);
+  const correct=sessions.reduce((n,x)=>n+(Number(x.correct)||0),0);
+  const attempted=sessions.reduce((n,x)=>n+(Number(x.attempted)||0),0);
+  $('leaderboardPeriodLabel').textContent=leaderboardPeriod==='week'?'Diese Woche':leaderboardPeriod==='month'?'Dieser Monat':'Alle lokal gespeicherten Runden';
+  $('leaderboardPlayerName').textContent='Du · '+(data.name||'Meister');
+  $('leaderboardPlayerMeta').textContent=sessions.length+' abgeschlossene Runden · Daten dieses Geräts';
+  $('leaderboardXP').textContent='+'+xp.toLocaleString('de-DE')+' XP';
+  $('leaderboardCorrect').textContent=correct.toLocaleString('de-DE');
+  $('leaderboardGames').textContent=sessions.length;
+  $('leaderboardAccuracy').textContent=(attempted?Math.round(correct/attempted*100):0)+'%';
+  document.querySelectorAll('[data-leader-period]').forEach(b=>b.classList.toggle('active',b.dataset.leaderPeriod===leaderboardPeriod));
+}
 function updateGlobalBackButton(){
   const button=$('globalBackButton');
   if(!button)return;
@@ -377,49 +481,32 @@ function updateGlobalBackButton(){
   button.classList.toggle('visible',visible);
   button.setAttribute('aria-hidden',String(!visible));
 }
-function show(id, options={}) {
-    // V10.8.1: Any screen change closes the global menu/drawer so it cannot cover another tab.
-    if(typeof toggleSiteMenu==='function')toggleSiteMenu(false);
-    const current=document.querySelector('.screen.active')?.id || mmActiveScreen || 'home';
-    const changingScreen=current!==id;
-    if(changingScreen){
-      if(options.replaceCurrent){if(mmScreenHistory.length)mmScreenHistory.pop();}
-      else if(!options.fromBack && id!=='home'){
-        mmScreenHistory.push({id:current,scrollY:Math.max(0,window.scrollY||window.pageYOffset||0)});
-        if(mmScreenHistory.length>40)mmScreenHistory.shift();
-      }
-    }
-    if(id==='home')mmScreenHistory.length=0;
-    mmActiveScreen=id;
-    if(id==='adminScreen'){try{sessionStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-screen-open-v1','1');}catch(_){}}
-    else if(current==='adminScreen'){try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}}
-    if(id==='feedbackScreen' && current!=='feedbackScreen' && typeof feedbackChooseMode==='function')feedbackChooseMode('choose');
-    document.body.classList.toggle('admin-mode',id==='adminScreen');
-    if(current==='creator' && id!=='creator' && typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    $(id).classList.add('active');
-    document.querySelectorAll('#mobileTabbar [data-mobile-screen]').forEach(btn=>btn.classList.toggle('active',btn.dataset.mobileScreen===id));
-    const profileSettingsToggle=$('profileSettingsToggle');if(profileSettingsToggle){profileSettingsToggle.setAttribute('aria-expanded',String(id==='settings'));profileSettingsToggle.setAttribute('aria-label',id==='settings'?'Einstellungen schließen':'Profil & Einstellungen öffnen');}
-    const moreTab=document.querySelector('#mobileTabbar [data-mobile-more]');
-    if(moreTab)moreTab.classList.toggle('active',!['home','modes','live','progress'].includes(id));
-    document.body.classList.toggle('mobile-game-screen',id==='game');
-    if(id==='home')refreshHome();
-    if(id==='progress')renderProgress();
-    if(id==='stats')renderStats();
-    if(id==='shop')renderShop();
-    if(id==='settings'){ ensureEconomy(); updateAvatarChoices(); $('profileName').value=data.name; $('profileAvatar').value=data.avatar || '🦊'; }
-    if(id==='creator' && typeof creatorRenderResumeCard==='function')creatorRenderResumeCard();
-    updateGlobalBackButton();
-    if(changingScreen){
-      const restoreY=options.fromBack?Math.max(0,Number(options.restoreScrollY)||0):0;
-      // Restore only after the destination is visible and its layout has settled.
-      // A second delayed frame covers the screen entrance animation on slower devices.
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        window.scrollTo({top:restoreY,left:0,behavior:'instant'});
-        requestAnimationFrame(()=>window.scrollTo({top:restoreY,left:0,behavior:'instant'}));
-      }));
-    }
-    persistAppViewState();
+function show(id,options={}){
+ const target=$(id);
+ if(!target||!target.classList.contains('screen')){console.warn('Unknown MatheMeister screen:',id);if(typeof showToast==='function')showToast('Dieser Bereich ist momentan nicht verfügbar.');return false;}
+ if(typeof toggleSiteMenu==='function')toggleSiteMenu(false);
+ const active=document.querySelector('.screen.active');
+ const current=active?.id||(document.getElementById(mmActiveScreen)?.classList.contains('screen')?mmActiveScreen:'home');
+ const changing=current!==id;
+ if(changing){
+  if(options.replaceCurrent){if(mmScreenHistory.length)mmScreenHistory.pop();}
+  else if(!options.fromBack&&id!=='home'&&document.getElementById(current)?.classList.contains('screen')){mmScreenHistory.push({id:current,scrollY:Math.max(0,window.scrollY||window.pageYOffset||0)});if(mmScreenHistory.length>40)mmScreenHistory.shift();}
+ }
+ if(id==='home')mmScreenHistory.length=0;
+ mmActiveScreen=id;
+ if(id==='adminScreen'){try{sessionStorage.setItem('mm-admin-screen-open-v1','1');if($('adminRememberMe')?.checked){localStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-remember-email-v1',$('adminEmail')?.value.trim()||'');}else{localStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-remember-email-v1');}}catch(_){}}
+ else if(current==='adminScreen'){try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}}
+ if(id==='feedbackScreen'&&current!=='feedbackScreen'&&typeof feedbackChooseMode==='function')feedbackChooseMode('choose');
+ document.body.classList.toggle('admin-mode',id==='adminScreen');
+ if(current==='creator'&&id!=='creator'&&typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
+ document.querySelectorAll('.screen').forEach(screen=>screen.classList.toggle('active',screen.id===id));
+ updateMobileTabbar(id);document.body.classList.toggle('mobile-game-screen',id==='game');
+ if(id==='home')refreshHome();if(id==='profile')renderProfile();if(id==='leaderboard')renderLeaderboard();if(id==='progress')renderProgress();if(id==='stats')renderStats();if(id==='shop')renderShop();
+ if(id==='settings'){ensureEconomy();updateAvatarChoices();if($('profileName'))$('profileName').value=data.name||'';if($('profileAvatar'))$('profileAvatar').value=data.avatar||'🦊';}
+ if(id==='creator'&&typeof creatorRenderResumeCard==='function')creatorRenderResumeCard();
+ updateGlobalBackButton();
+ if(changing){const y=options.fromBack?Math.max(0,Number(options.restoreScrollY)||0):0;requestAnimationFrame(()=>requestAnimationFrame(()=>{window.scrollTo({top:y,left:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo({top:y,left:0,behavior:'instant'}));}));}
+ persistAppViewState();return true;
 }
 
 // V10.7.1 – keep the current screen and an in-progress local exercise across refreshes.
@@ -432,7 +519,7 @@ const MM_APP_GAME_KEY='mm-app-game-v1';
 const MM_APP_RESULT_KEY='mm-app-result-v1';
 const MM_APP_INFO_KEY='mm-app-info-v1';
 // Every normal app section is restorable after a refresh in the same browser tab.
-const MM_RESTORABLE_SCREENS=new Set(['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo']);
+const MM_RESTORABLE_SCREENS=new Set(['modes','progress','stats','teacher','settings','shop','studio','creator','profile','leaderboard','feedbackScreen','siteInfo']);
 const MM_RESULT_FIELDS=['resultIcon','resultTitle','resultSub','resCorrect','resWrong','resAccuracy','xpEarned','recordMsg'];
 function persistAppViewState(){
   try{
@@ -524,28 +611,20 @@ function restoreAppViewState(){
 }
 
 async function goBack(){
-  const current=document.querySelector('.screen.active')?.id || mmActiveScreen;
-  if(current==='creator'){
-    if(!$('creatorPlayPanel').classList.contains('hidden')){creatorStopPreview();return;}
-    if(!$('creatorEditorPanel').classList.contains('hidden')){
-      if(creatorCurrentStep>1){creatorGoStep(creatorCurrentStep-1);return;}
-      creatorAutoSaveNow();creatorBackToHome();return;
-    }
-  }
-  if(current==='live' && live.room){
-    if(live.host && live.room.status==='lobby'){await cancelLiveRoom();return;}
-    if(await customConfirm({title:'Live-Spiel verlassen?',message:'Möchtest du diesen Live-Raum wirklich verlassen?',confirmText:'Spiel verlassen',cancelText:'Bleiben',icon:'↩️',tone:'danger'})){await leaveLiveRoom();}
-    return;
-  }
-  if(current==='game'){await quitGame();return;}
-  const previous=mmScreenHistory.pop()||{id:'home',scrollY:0};
-  show(previous.id,{fromBack:true,restoreScrollY:previous.scrollY});
+ const current=document.querySelector('.screen.active')?.id||mmActiveScreen||'home';
+ if(current==='creator'){
+  if($('creatorPlayPanel')&&!$('creatorPlayPanel').classList.contains('hidden')){creatorStopPreview();return;}
+  if($('creatorEditorPanel')&&!$('creatorEditorPanel').classList.contains('hidden')){if(creatorCurrentStep>1){creatorGoStep(creatorCurrentStep-1);return;}creatorAutoSaveNow();creatorBackToHome();return;}
+ }
+ if(current==='live'&&live.room){if(live.host&&live.room.status==='lobby'){await cancelLiveRoom();return;}if(await customConfirm({title:'Live-Spiel verlassen?',message:'Möchtest du diesen Live-Raum wirklich verlassen?',confirmText:'Spiel verlassen',cancelText:'Bleiben',icon:'↩️',tone:'danger'}))await leaveLiveRoom();return;}
+ if(current==='game'){await quitGame();return;}
+ if(['settings','progress','stats','shop'].includes(current)){if(show('profile',{fromBack:true,replaceCurrent:true}))return;}
+ let previous=null;
+ while(mmScreenHistory.length&&!previous){const c=mmScreenHistory.pop();if(c&&typeof c.id==='string'&&c.id!==current&&document.getElementById(c.id)?.classList.contains('screen'))previous=c;}
+ if(!previous)previous={id:'home',scrollY:0};
+ if(!show(previous.id,{fromBack:true,restoreScrollY:previous.scrollY}))show('home',{fromBack:true});
 }
-function editProfile() {
-    const active=document.querySelector('.screen.active')?.id;
-    if(active==='settings'){goBack();return;}
-    show('settings');
-}
+function editProfile(){const active=document.querySelector('.screen.active')?.id;if(active==='settings'){show('profile',{fromBack:true,replaceCurrent:true});return;}show('settings');}
 function saveProfile() {
     ensureEconomy(); updateAvatarChoices();
     const n=$('profileName').value.trim().slice(0,
@@ -1503,6 +1582,7 @@ async function getSb() {
     if (!live.sb) {
         const mod = await import('https://esm.sh/@supabase/supabase-js@2.118.0');
         live.sb = mod.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true } });
+        live.sb.auth.onAuthStateChange((event) => { if (event === 'PASSWORD_RECOVERY') { setTimeout(adminShowRecoveryPanel, 0); } });
     }
     return live.sb;
 }
@@ -2315,21 +2395,21 @@ function creatorResumeLastDraft(){
 }
 function creatorNewId(){return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function creatorBaseQuestion(type){
- if(type==='quiz')return {prompt:'Was ist 7 × 8?',image:'',options:['54','56','58','64'],correct:1,explanation:'7 × 8 = 56.'};
- if(type==='truefalse')return {prompt:'6 × 7 = 42.',image:'',correct:true,explanation:'6 × 7 = 42.'};
- if(type==='short')return {prompt:'Wie viel ist 9 × 6?',image:'',answers:['54'],hint:'9 mal 6.'};
- if(type==='multi')return {prompt:'Welche Aufgaben ergeben 24?',image:'',options:['3 × 8','4 × 6','5 × 4','7 × 3'],correct:[0,1],explanation:'3 × 8 und 4 × 6 ergeben 24.'};
- if(type==='word')return {prompt:'Entwirre die Ziffern zur richtigen Lösung von 8 × 7.',image:'',word:'65',hint:'8 mal 7 ist 56.'};
+ if(type==='quiz')return {prompt:'Welche Antwort ist richtig?',image:'',options:['Antwort A','Antwort B','Antwort C','Antwort D'],correct:0,explanation:'Hier steht die Erklärung.'};
+ if(type==='truefalse')return {prompt:'Diese Aussage ist richtig.',image:'',correct:true,explanation:'Schreibe kurz, warum.'};
+ if(type==='short')return {prompt:'Wie lautet die Lösung?',image:'',answers:['Beispiel'],hint:'Ein kleiner Tipp'};
+ if(type==='multi')return {prompt:'Wähle alle passenden Antworten.',image:'',options:['Auswahl A','Auswahl B','Auswahl C','Auswahl D'],correct:[0,2],explanation:'Nicht nur eine Antwort kann stimmen.'};
+ if(type==='word')return {prompt:'Entwirre das Wort.',image:'',word:'PLANET',hint:'Ein Objekt im Weltraum'};
  if(type==='story')return {prompt:'Du stehst vor einer geheimnisvollen Tür. Was machst du?',image:'',options:[{text:'Ich öffne die Tür',outcome:'Du entdeckst einen hellen Raum.'},{text:'Ich suche einen Schlüssel',outcome:'Du findest eine Truhe.'},{text:'Ich gehe zurück',outcome:'Du entdeckst einen geheimen Weg.'},{text:'Ich rufe nach Hilfe',outcome:'Ein Begleiter kommt dazu.'}]};
- if(type==='sorting')return {prompt:'Ordne die Ergebnisse den Aufgaben von klein nach groß.',image:'',items:['2 × 3 = 6','3 × 4 = 12','4 × 5 = 20','5 × 6 = 30']};
+ if(type==='sorting')return {prompt:'Ordne die Schritte in die richtige Reihenfolge.',image:'',items:['Erster Schritt','Zweiter Schritt','Dritter Schritt','Vierter Schritt']};
  return {prompt:'Neue Aufgabe',image:''};
 }
-function creatorBasePair(type){if(type==='memory')return {left:'7 × 8',right:'56'};return {left:'7 × 8',right:'56'};}
+function creatorBasePair(type){if(type==='memory')return {left:'Katze',right:'🐈'};return {left:'Begriff',right:'Passender Begriff'};}
 function creatorStarter(type){
  const q=creatorBaseQuestion(type);const p=creatorBasePair(type);
  const cfg={v:2,id:creatorNewId(),title:`Mein ${CREATOR_META[type].title}`,description:'Ein selbst erstelltes Spiel – ändere den Inhalt nach deinen Ideen.',type,theme:'neon',settings:{seconds:20,points:100,lives:3,feedback:'after',shuffle:true,visibility:'link'},questions:[],pairs:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
  if(['matching','memory'].includes(type))cfg.pairs=[p,{left:'Hund',right:type==='memory'?'🐕':'Treues Haustier'},{left:'Sonne',right:type==='memory'?'☀️':'Unser Stern' }];
- else if(type==='reaction')cfg.challenge='Löse so viele Malaufgaben wie möglich!';
+ else if(type==='reaction')cfg.challenge='Tippe so oft du kannst!';
  else cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:type==='story'?'Du findest einen Wegweiser. Wohin gehst du?':q.prompt+' (2)',...(type==='quiz'?{options:['Option 1','Option 2','Option 3','Option 4'],correct:1}:{})}];
  return cfg;
 }
@@ -2375,15 +2455,34 @@ function creatorRenderLibrary(){
 }
 function creatorStartNew(type){creatorAutoSaveNow();creatorDraft=creatorStarter(type);creatorCurrentStep=1;$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');creatorBindDraftToInputs();creatorGoStep(1);creatorAutoSaveNow();creatorRenderLibrary();}
 function creatorIdeaTopic(text){
- const t=String(text||'').toLocaleLowerCase('de');
- // This release is intentionally focused on multiplication only.
- return /einmaleins|multipli|malaufgab|malnehmen|\bmathe\b|\bquiz\b|\bspiel\b/.test(t)
-   ? {name:'Einmaleins',questions:[
-      ['Was ist 5 × 5?',['20','25','30','35'],1,'5 × 5 ist 25.'],
-      ['Was ist 8 × 3?',['21','24','27','32'],1,'8 × 3 ist 24.'],
-      ['Was ist 9 × 6?',['45','48','54','56'],2,'9 × 6 ist 54.']
-     ]}
-   : null;
+ const t=text.toLocaleLowerCase('de');
+ const banks=[
+  {key:/fußball|fussball|soccer|bundesliga|ball/,name:'Fußball',questions:[
+   ['Wie viele Spieler einer Mannschaft stehen normalerweise zu Beginn auf dem Feld?',['9','10','11','12'],2,'Eine Mannschaft spielt normalerweise mit elf Spielern.'],
+   ['Wie heißt der Spieler, der das Tor verteidigt?',['Stürmer','Torwart','Schiedsrichter','Trainer'],1,'Der Torwart schützt das Tor.'],
+   ['Wie lange dauert ein reguläres Fußballspiel ohne Nachspielzeit?',['60 Minuten','90 Minuten','100 Minuten','120 Minuten'],1,'Ein reguläres Spiel dauert 90 Minuten.'] ]},
+  {key:/tier|tiere|hund|katze|natur|zoo/,name:'Tiere',questions:[
+   ['Welches Tier sagt „Miau“?',['Hund','Katze','Pferd','Kuh'],1,'Eine Katze miaut.'],
+   ['Welches Tier hat einen sehr langen Hals?',['Elefant','Giraffe','Fuchs','Pinguin'],1,'Die Giraffe hat einen langen Hals.'],
+   ['Wo lebt ein Fisch?',['Im Wasser','Im Baum','In der Wüste','Im Schnee'],0,'Fische leben im Wasser.'] ]},
+  {key:/weltraum|planeten|planet|sonne|mond|universum|all/,name:'Weltraum',questions:[
+   ['Welcher Planet ist unser Zuhause?',['Mars','Erde','Jupiter','Venus'],1,'Wir leben auf der Erde.'],
+   ['Was gibt uns am Tag Licht und Wärme?',['Der Mond','Die Sonne','Der Mars','Ein Sternbild'],1,'Die Sonne gibt uns Licht und Wärme.'],
+   ['Welcher Planet ist als roter Planet bekannt?',['Mars','Saturn','Neptun','Merkur'],0,'Der Mars wird roter Planet genannt.'] ]},
+  {key:/mathe|mathematik|einmaleins|rechnen|zahlen|multipli|malnehmen/,name:'Mathe',questions:[
+   ['Was ist 5 × 5?',['10','20','25','30'],2,'5 mal 5 ist 25.'],
+   ['Was ist 8 × 3?',['21','24','27','32'],1,'8 mal 3 ist 24.'],
+   ['Was ist 9 + 6?',['14','15','16','17'],1,'9 plus 6 ist 15.'] ]},
+  {key:/geografie|geographie|länder|land|hauptstadt|welt/,name:'Geografie',questions:[
+   ['Wie heißt die Hauptstadt von Deutschland?',['Berlin','München','Hamburg','Köln'],0,'Berlin ist die Hauptstadt von Deutschland.'],
+   ['In welchem Land steht der Eiffelturm?',['Italien','Frankreich','Spanien','Deutschland'],1,'Der Eiffelturm steht in Paris.'],
+   ['Welcher ist der größte Ozean?',['Atlantik','Indischer Ozean','Pazifik','Arktischer Ozean'],2,'Der Pazifik ist der größte Ozean.'] ]},
+  {key:/dinosaur|dino/,name:'Dinosaurier',questions:[
+   ['Wie heißt der berühmte Dinosaurier mit den kleinen Armen?',['T-Rex','Triceratops','Stegosaurus','Brachiosaurus'],0,'Der Tyrannosaurus Rex hatte kurze Arme.'],
+   ['Was bedeutet „Dinosaurier“ ungefähr?',['Riesenechse','Schneller Vogel','Meeresfisch','Fliegender Hund'],0,'Das Wort kommt aus dem Griechischen und bedeutet schreckliche Echse.'],
+   ['Wann lebten Dinosaurier?',['Vor langer Zeit','Im Mittelalter','Vor 100 Jahren','Heute überall'],0,'Dinosaurier lebten vor Millionen Jahren.'] ]}
+ ];
+ return banks.find(x=>x.key.test(t))||null;
 }
 function creatorUseIdea(){
  const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Schreibe kurz, worum es in deinem Spiel gehen soll.');return;}
@@ -2398,8 +2497,8 @@ function creatorUseIdea(){
  else if(/richtig oder falsch|wahr oder falsch|true.?false/.test(t)){type='truefalse';reason='Richtig oder falsch'}
  else if(/tippe|schreib|texteingabe|antwort eintippen|freie antwort/.test(t)){type='short';reason='Antwort eintippen'}
  const topic=creatorIdeaTopic(idea);creatorStartNew(type);
- const cleanTitle=(topic?topic.name+'-Quiz':('Einmaleins: '+idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim())).slice(0,70);
- creatorDraft.title=cleanTitle||'Mein Einmaleins-Spiel';creatorDraft.description='Ein selbst erstelltes Spiel rund ums Einmaleins. Idee: '+idea.slice(0,420);
+ const cleanTitle=(topic?topic.name+'-Quiz':idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim()).slice(0,70);
+ creatorDraft.title=cleanTitle||'Mein Spiel';creatorDraft.description=idea.slice(0,500);
  if(topic&&type==='quiz')creatorDraft.questions=topic.questions.map((q)=>({prompt:q[0],image:'',options:[...q[1]],correct:q[2],explanation:q[3]}));
  if(topic&&(type==='memory'||type==='matching'))creatorDraft.pairs=topic.questions.map(q=>({left:q[0].replace(/[?]/g,''),right:q[1][q[2]]}));
  if(topic&&type==='truefalse')creatorDraft.questions=topic.questions.map(q=>({prompt:q[0]+' '+q[1][q[2]]+'.',image:'',correct:true,explanation:q[3]}));
@@ -2660,12 +2759,12 @@ async function adminLogin(event){
  event.preventDefault();const savedScrollY=window.scrollY||window.pageYOffset||0;const adminHistorySnapshot=mmScreenHistory.slice();const status=$('adminLoginStatus');const button=$('adminLoginForm')?.querySelector('button[type="submit"]');if(button)button.disabled=true;if(status)status.textContent='Anmeldung wird geprüft …';
  try{
   const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('adminEmail').value.trim(),password:$('adminPassword').value});if(error)throw error;
-  mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');try{sessionStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-screen-open-v1','1');}catch(_){}
+  mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');try{sessionStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-remember-choice-v1',$('adminRememberMe')?.checked?'1':'0');if($('adminRememberMe')?.checked){localStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-remember-email-v1',$('adminEmail').value.trim());}else{localStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-remember-email-v1');}}catch(_){}
   $('adminPassword').value='';
   // Do not reveal the dashboard until the protected server-side RPC confirms admin access.
-  await adminLoadFeedback(true);
-  if(mmAdminSession)await adminLoadPrivateConversations();
-  if(!mmAdminSession)throw new Error('Dieses Konto besitzt keine Administratorrechte.');
+  const authorized=await adminLoadFeedback(true);
+  if(authorized&&mmAdminSession)await adminLoadPrivateConversations();
+  if(!authorized||!mmAdminSession)throw new Error('Dieses Konto besitzt keine Administratorrechte oder die Admin-Datenbank ist nicht erreichbar.');
   $('adminSignedInAs').textContent='Angemeldet als '+(data.user?.email||'Administrator');if(status)status.textContent='';
   // Authentication must not navigate away from the admin screen or discard its return history.
   if((document.querySelector('.screen.active')?.id||'')!=='adminScreen'){mmScreenHistory.splice(0,mmScreenHistory.length,...adminHistorySnapshot);show('adminScreen',{fromBack:true,restoreScrollY:savedScrollY});}
@@ -2673,6 +2772,49 @@ async function adminLogin(event){
  }catch(e){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});mmAdminSession=null;adminSetView(false);if(status)status.textContent='Anmeldung fehlgeschlagen: '+(e.message||'Bitte Zugangsdaten prüfen.');if((document.querySelector('.screen.active')?.id||'')!=='adminScreen'){mmScreenHistory.splice(0,mmScreenHistory.length,...adminHistorySnapshot);show('adminScreen',{fromBack:true,restoreScrollY:savedScrollY});adminRestoreScroll(savedScrollY);}}
  finally{if(button)button.disabled=false;}
 }
+function adminTogglePassword(){
+ const input=$('adminPassword'),button=document.querySelector('.admin-password-toggle');if(!input||!button)return;
+ const reveal=input.type==='password';input.type=reveal?'text':'password';button.setAttribute('aria-pressed',String(reveal));button.setAttribute('aria-label',reveal?'Passwort verbergen':'Passwort anzeigen');button.title=reveal?'Passwort verbergen':'Passwort anzeigen';
+}
+function adminShowRecoveryPanel(){
+ const recovery=$('adminRecoveryPanel'),login=$('adminLoginCard');
+ if(!recovery||!login)return;
+ show('adminScreen',{fromBack:true});login.classList.add('hidden');recovery.classList.remove('hidden');
+ $('adminRecoveryStatus').textContent='';$('adminNewPassword')?.focus({preventScroll:true});
+}
+async function adminForgotPassword(){
+ const email=$('adminEmail')?.value.trim()||'',status=$('adminLoginStatus'),button=document.querySelector('.admin-forgot-button');
+ if(!email){if(status)status.textContent='Bitte gib zuerst deine Administrator-E-Mail-Adresse ein.';$('adminEmail')?.focus();return;}
+ if(button)button.disabled=true;if(status)status.textContent='Link zum Zurücksetzen wird angefordert …';
+ try{
+  const sb=await getSb();
+  const redirectTo=window.location.origin+window.location.pathname+'?adminRecovery=1';
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo});if(error)throw error;
+  if(status)status.textContent='Falls ein Konto zu dieser Adresse gehört, wurde eine E-Mail zum Zurücksetzen gesendet.';
+ }catch(e){if(status)status.textContent='Zurücksetzen nicht möglich: '+(e.message||'Bitte Verbindung prüfen.');}
+ finally{if(button)button.disabled=false;}
+}
+async function adminUpdateRecoveredPassword(event){
+ event.preventDefault();const password=$('adminNewPassword')?.value||'',confirm=$('adminNewPasswordConfirm')?.value||'',status=$('adminRecoveryStatus'),button=$('adminRecoveryForm')?.querySelector('button[type="submit"]');
+ if(password.length<8){if(status)status.textContent='Das Passwort muss mindestens 8 Zeichen enthalten.';return;}
+ if(password!==confirm){if(status)status.textContent='Die Passwörter stimmen nicht überein.';$('adminNewPasswordConfirm')?.focus();return;}
+ if(button)button.disabled=true;if(status)status.textContent='Passwort wird gespeichert …';
+ try{
+  const sb=await getSb();const {error}=await sb.auth.updateUser({password});if(error)throw error;
+  await sb.auth.signOut();
+  try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}
+  $('adminRecoveryForm')?.reset();$('adminRecoveryPanel')?.classList.add('hidden');$('adminLoginCard')?.classList.remove('hidden');
+  if(status)status.textContent='';const loginStatus=$('adminLoginStatus');if(loginStatus)loginStatus.textContent='Passwort geändert. Bitte melde dich mit deinem neuen Passwort an.';
+  try{history.replaceState({},document.title,window.location.pathname);}catch(_){}
+ }catch(e){if(status)status.textContent='Passwort konnte nicht gespeichert werden: '+(e.message||'Bitte den Link erneut öffnen.');}
+ finally{if(button)button.disabled=false;}
+}
+function adminInitLoginPreferences(){
+ try{const remembered=localStorage.getItem('mm-admin-remember-email-v1');if(remembered)$('adminEmail').value=remembered;const choice=localStorage.getItem('mm-admin-remember-choice-v1');$('adminRememberMe').checked=choice===null?true:choice==='1';}catch(_){}
+ $('adminRememberMe')?.addEventListener('change',()=>{try{localStorage.setItem('mm-admin-remember-choice-v1',$('adminRememberMe').checked?'1':'0');if(!$('adminRememberMe').checked){localStorage.removeItem('mm-admin-remember-email-v1');localStorage.removeItem('mm-admin-screen-open-v1');}else if($('adminEmail').value.trim())localStorage.setItem('mm-admin-remember-email-v1',$('adminEmail').value.trim());}catch(_){}});
+ $('adminEmail')?.addEventListener('change',()=>{try{if($('adminRememberMe')?.checked)localStorage.setItem('mm-admin-remember-email-v1',$('adminEmail').value.trim());}catch(_){}});
+}
+
 async function adminRestoreSessionAfterRefresh(){
  const root=document.documentElement;
  let requested=false;
@@ -2694,8 +2836,13 @@ async function adminRestoreSessionAfterRefresh(){
   mmAdminSession=data.session;
   $('adminSignedInAs').textContent='Angemeldet als '+(data.session.user?.email||'Administrator');
   if(status)status.textContent='Sitzung wird wiederhergestellt …';
-  await adminLoadFeedback(true);
-  if(mmAdminSession)await adminLoadPrivateConversations();
+  const authorized=await adminLoadFeedback(true);
+  if(!authorized||!mmAdminSession){
+   adminSetView(false);
+   if(status)status.textContent='Admin-Rechte konnten nicht bestätigt werden. Bitte melde dich erneut an oder prüfe die Admin-Berechtigung.';
+   return;
+  }
+  await adminLoadPrivateConversations();
   if(status)status.textContent='';
  }catch(e){
   // Keep the auth session and restoration marker; transient network failures must not silently send the user Home.
@@ -2727,19 +2874,36 @@ function adminGetReplyData(id){const row=mmAdminFeedbackRows.find(r=>Number(r.id
 function adminOpenReply(id){const {row,draft}=adminGetReplyData(id);if(!row?.contact_email){showToast('Für diese Meldung ist keine E-Mail-Adresse vorhanden.');return;}if(!draft){showToast('Bitte schreibe zuerst deine Antwort.');$('adminReply'+Number(id))?.focus();return;}const subject='Deine Nachricht an MatheMeister';const body='Hallo,\n\n'+draft+'\n\nViele Grüße\nMatheMeister';const href='mailto:'+encodeURIComponent(row.contact_email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);window.location.href=href;}
 async function adminCopyReply(id){const {row,draft}=adminGetReplyData(id);if(!row?.contact_email){showToast('Für diese Meldung ist keine E-Mail-Adresse vorhanden.');return;}if(!draft){showToast('Bitte schreibe zuerst deine Antwort.');$('adminReply'+Number(id))?.focus();return;}const text='An: '+row.contact_email+'\nBetreff: Deine Nachricht an MatheMeister\n\nHallo,\n\n'+draft+'\n\nViele Grüße\nMatheMeister';try{await navigator.clipboard.writeText(text);showToast('Antworttext wurde kopiert.');}catch(_){const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();showToast(ok?'Antworttext wurde kopiert.':'Kopieren nicht möglich – bitte Text markieren.');}}
 async function adminLoadFeedback(keepDashboard=false){
- const savedScrollY=window.scrollY||window.pageYOffset||0;const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');if(!out)return;out.innerHTML='';if(status)status.textContent='Berichte werden geladen …';
+ const savedScrollY=window.scrollY||window.pageYOffset||0;
+ const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');
+ if(!out)return false;
+ out.innerHTML='';if(status)status.textContent='Berichte werden geladen …';
  try{
-  const sb=await getSb();const {data:sessionData}=await sb.auth.getSession();mmAdminSession=sessionData.session;
-  if(!mmAdminSession){adminSetView(false);mmAdminFeedbackRows=[];if(status)status.textContent='Bitte erneut anmelden.';return;}
+  const sb=await getSb();
+  const {data:sessionData,error:sessionError}=await sb.auth.getSession();
+  if(sessionError)throw sessionError;
+  mmAdminSession=sessionData?.session||null;
+  if(!mmAdminSession){adminSetView(false);mmAdminFeedbackRows=[];if(status)status.textContent='Bitte erneut anmelden.';return false;}
   const st=$('adminStatusFilter')?.value||null,cat=$('adminCategoryFilter')?.value||null;
-  const {data,error}=await sb.rpc('mm_admin_list_feedback',{p_status:st,p_category:cat});if(error)throw error;
-  mmAdminFeedbackRows=Array.isArray(data)?data:[];adminSetView(true);adminRenderFeedback();adminRenderOverview();adminRestoreScroll(savedScrollY);
- }catch(e){mmAdminFeedbackRows=[];out.innerHTML='';if(status)status.textContent='Admin-Sitzung vorhanden, aber Daten konnten nicht geladen werden: '+(e.message||'Bitte Verbindung und Admin-Berechtigung prüfen.');if(keepDashboard&&mmAdminSession){adminSetView(true);}else{adminSetView(false);if(!keepDashboard){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});mmAdminSession=null;}}}
+  const {data,error}=await sb.rpc('mm_admin_list_feedback',{p_status:st,p_category:cat});
+  if(error)throw error;
+  mmAdminFeedbackRows=Array.isArray(data)?data:[];
+  adminSetView(true);adminRenderFeedback();adminRenderOverview();adminRestoreScroll(savedScrollY);
+  return true;
+ }catch(e){
+  mmAdminFeedbackRows=[];out.innerHTML='';
+  if(status)status.textContent='Admin-Zugriff konnte nicht bestätigt werden: '+(e.message||'Bitte Verbindung und Admin-Berechtigung prüfen.');
+  // Never leave a blank or unverified dashboard open after a failed authorization RPC.
+  adminSetView(false);mmAdminSession=null;
+  if(!keepDashboard){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});}
+  return false;
+ }
 }
 async function adminUpdateFeedback(id,statusValue){try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_update_feedback',{p_id:id,p_status:statusValue});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Status aktualisiert.');await adminLoadFeedback();}catch(e){showToast('Änderung fehlgeschlagen: '+(e.message||''));}}
 async function adminDeleteFeedback(id){if(!await customConfirm({title:'Meldung löschen?',message:'Diese Meldung wird dauerhaft gelöscht. Möchtest du fortfahren?',confirmText:'Endgültig löschen',cancelText:'Abbrechen',icon:'🗑️',tone:'danger'}))return;try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_delete_feedback',{p_id:id});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Meldung gelöscht.');await adminLoadFeedback();}catch(e){showToast('Löschen fehlgeschlagen: '+(e.message||''));}}
 async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
 
+const menuToggle=$('siteMenuToggle');if(menuToggle)menuToggle.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleSiteMenu();});
 $('joinCode').addEventListener('input',
 e=>e.target.value=e.target.value.replace(/\D/g,
 '').slice(0,
@@ -2764,6 +2928,9 @@ $('siteFeedbackForm')?.addEventListener('submit',handleFeedbackSubmit);
 $('privateAuthForm')?.addEventListener('submit',privateAuthSubmit);
 $('privateMessageForm')?.addEventListener('submit',privateSendMessage);
 $('adminLoginForm')?.addEventListener('submit',adminLogin);
+$('adminRecoveryForm')?.addEventListener('submit',adminUpdateRecoveredPassword);
+adminInitLoginPreferences();
+if(new URLSearchParams(window.location.search).get('adminRecovery')==='1'){getSb().then(()=>adminShowRecoveryPanel()).catch(e=>{const s=$('adminLoginStatus');if(s)s.textContent='Passwort-Link konnte nicht geöffnet werden: '+(e.message||'');});}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')adminToggleSidebar(false);});
 $('adminStatusFilter')?.addEventListener('change',adminLoadFeedback);
 $('adminCategoryFilter')?.addEventListener('change',adminLoadFeedback);
