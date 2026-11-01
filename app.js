@@ -2600,7 +2600,7 @@ async function privateSendMessage(event){event.preventDefault();const text=$('pr
 async function adminLoadPrivateConversations(){
  const out=$('adminPrivateConversations'),st=$('adminPrivateStatus');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltungen werden geladen …</div>';
  try{const sb=await getSb();const {data,error}=await sb.rpc('mm_private_admin_list_conversations');if(error)throw error;mmAdminPrivateRows=Array.isArray(data)?data:[];out.innerHTML=mmAdminPrivateRows.length?mmAdminPrivateRows.map(r=>`<button type="button" class="admin-conversation-item" onclick="adminOpenPrivateConversation('${r.conversation_id}')"><span class="admin-conversation-head"><strong>${esc(r.email||'Nutzer')}</strong>${Number(r.unread_count)>0?`<span class="admin-unread-count">${Number(r.unread_count)}</span>`:''}</span><span class="admin-conversation-preview">${esc(r.last_message||'Noch keine Nachricht')}</span><span class="admin-conversation-time">${esc(new Date(r.last_at).toLocaleString('de-DE'))}</span></button>`).join(''):'<div class="admin-empty-state">Noch keine privaten Nachrichten.</div>';if(st)st.textContent=`${mmAdminPrivateRows.length} Unterhaltung(en) geladen.`;adminRenderOverview();}
- catch(e){out.innerHTML=`<div class="admin-empty-state">${esc(e.message||'Fehler beim Laden')}</div>`;}
+ catch(e){const message=e.message||'Fehler beim Laden';out.innerHTML=`<div class="admin-empty-state">${esc(message)}</div>`;if(st)st.textContent='Nachrichten konnten nicht geladen werden: '+message;}
 }
 async function adminOpenPrivateConversation(id){
  mmPrivateConversationId=id;document.querySelectorAll('.admin-conversation-item').forEach(el=>el.classList.toggle('active',el.getAttribute('onclick')?.includes(String(id))));const out=$('adminPrivateThread');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltung wird geladen …</div>';
@@ -2622,7 +2622,7 @@ function adminNavigate(view){
  document.querySelectorAll('[data-admin-nav]').forEach(el=>el.classList.toggle('active',el.dataset.adminNav===view));
  const title=$('adminHeaderTitle');if(title)title.textContent=mmAdminViewTitles[view];
  adminToggleSidebar(false);
- if(view==='messages' && mmAdminSession)adminLoadPrivateConversations();
+ if(view==='messages')adminLoadPrivateConversations();
  if(view==='overview')adminRenderOverview();
 }
 function adminToggleSidebar(force){
