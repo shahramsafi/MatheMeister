@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b18">
 <meta name="description" content="MatheMeister Pro – trainieren, live spielen und eigene Quiz-, Puzzle- und Wortspiele ohne Programmieren bauen.">
-<title>MatheMeister Pro v10.5.3 · Game Creator & Live Update 🚀</title>
+<title>MatheMeister Pro v10.7.1 · Admin Dashboard & Refresh Restore 🚀</title>
 
 <style>
 :root {
@@ -1351,7 +1351,7 @@ button:disabled,
 }
 
 
-/* V10.5.3 – always reachable step-back navigation and creator resume card */
+/* V10.5.5 – step-back navigation with per-history-entry scroll restoration */
 .screen > .small-btn.back{display:none!important}
 #globalBackButton{position:fixed;left:max(14px,calc((100vw - 1160px)/2 + 14px));bottom:max(16px,env(safe-area-inset-bottom));z-index:75;display:none;align-items:center;gap:9px;padding:12px 17px;border:1px solid #6680a8;border-radius:999px;color:var(--text);background:linear-gradient(145deg,#253653f2,#111a2ff2);box-shadow:0 8px 28px #0008;backdrop-filter:blur(12px);font:800 14px/1.1 system-ui,sans-serif;cursor:pointer;transition:transform .16s,border-color .16s,box-shadow .16s}
 #globalBackButton.visible{display:inline-flex}
@@ -1363,6 +1363,267 @@ button:disabled,
 .creator-resume-card .btn{white-space:nowrap}
 @media(max-width:560px){#globalBackButton{left:12px;bottom:max(12px,env(safe-area-inset-bottom));padding:11px 14px}.creator-resume-card{align-items:stretch}.creator-resume-card .btn{width:100%}}
 
+
+/* V10.5.5 – admin controls, mobile touch targets and safe text wrapping */
+.admin-feedback-card{display:flex;flex-direction:column;gap:8px}
+.admin-note-label{display:block;font-size:12px;font-weight:750;margin-top:5px}
+.admin-note-label span{font-weight:500;color:var(--muted)}
+.admin-note{width:100%;min-height:72px;resize:vertical;box-sizing:border-box}
+.admin-feedback-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.admin-feedback-actions .btn{min-height:42px;flex:1 1 auto;white-space:normal}
+.admin-search-field input{width:100%;min-width:0;box-sizing:border-box}
+#adminScreen .field{min-width:0}
+#adminScreen .row{min-width:0}
+#adminScreen a{overflow-wrap:anywhere}
+@media(max-width:700px){#adminScreen .admin-feedback-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#adminScreen .admin-feedback-actions .btn{width:100%;min-height:46px;padding:10px 8px;font-size:12px}#adminScreen .admin-note{font-size:16px}#adminScreen .admin-search-field input{font-size:16px}}
+@media(max-width:360px){#adminScreen .admin-feedback-actions{grid-template-columns:1fr}}
+
+/* V10.7.0 – Admin Center redesign: restrained, responsive and data-led */
+body.admin-mode .wrap{width:100%;max-width:none;margin:0;padding:0}
+body.admin-mode>.wrap>.top,body.admin-mode>.wrap>.foot{display:none!important}
+body.admin-mode #globalBackButton{display:none!important}
+#adminScreen.admin-screen{width:100%;max-width:none;min-height:100vh;margin:0;padding:0;border:0;border-radius:0;background:#0d1421;color:#edf1f8;box-shadow:none;overflow:visible}
+#adminScreen .admin-layout{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh;background:#0d1421}
+#adminScreen .admin-sidebar{position:sticky;top:0;height:100vh;min-height:620px;display:flex;flex-direction:column;padding:24px 16px 18px;background:#111a29;border-right:1px solid #263246;z-index:30}
+#adminScreen .admin-sidebar-brand,#adminScreen .admin-login-brand{display:flex;align-items:center;gap:11px;padding:0 8px 28px}
+#adminScreen .admin-brand-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:#6f60bd;color:white;font-size:23px;font-weight:800;box-shadow:0 5px 18px #6f60bd35}
+#adminScreen .admin-sidebar-brand strong,#adminScreen .admin-login-brand strong{display:block;font-size:15px;letter-spacing:-.3px}
+#adminScreen .admin-sidebar-brand small,#adminScreen .admin-login-brand small{display:block;margin-top:3px;color:#8592a8;font-size:9px;letter-spacing:1.6px;font-weight:800}
+#adminScreen .admin-workspace-label{padding:0 11px 10px;color:#78869c;font-size:10px;font-weight:800;letter-spacing:1.15px}
+#adminScreen .admin-nav{display:grid;gap:5px}
+#adminScreen .admin-nav-item{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#aab5c7;text-align:left;font-size:13px;font-weight:650;transition:background .16s,color .16s,border-color .16s}
+#adminScreen .admin-nav-item:hover{background:#ffffff08;color:#f4f6fb}
+#adminScreen .admin-nav-item.active{background:#25243d;border-color:#514879;color:#f6f3ff}
+#adminScreen .admin-nav-icon{width:20px;text-align:center;font-size:17px;color:#97a5bb}
+#adminScreen .admin-nav-item.active .admin-nav-icon{color:#b5a3ff}
+#adminScreen .admin-nav-badge{margin-left:auto;min-width:21px;padding:2px 6px;border-radius:20px;background:#343b50;color:#d6dceb;text-align:center;font-size:10px;font-weight:800}
+#adminScreen .admin-sidebar-spacer{flex:1}
+#adminScreen .admin-sidebar-note{display:flex;align-items:center;gap:9px;padding:13px 10px;margin:0 0 12px;border:1px solid #29374b;border-radius:10px;background:#ffffff04}
+#adminScreen .admin-sidebar-note strong{display:block;font-size:11px}
+#adminScreen .admin-sidebar-note small{display:block;margin-top:3px;color:#8794a9;font-size:10px}
+#adminScreen .admin-secure-dot,#adminScreen .admin-connection i{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#54c99a;box-shadow:0 0 0 3px #54c99a18}
+#adminScreen .admin-sidebar-link,#adminScreen .admin-sidebar-logout{display:flex;align-items:center;gap:10px;min-height:41px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:#aab5c7;text-align:left;font-size:12px;font-weight:650}
+#adminScreen .admin-sidebar-link:hover,#adminScreen .admin-sidebar-logout:hover{background:#ffffff08;color:#fff}
+#adminScreen .admin-sidebar-logout{color:#d19a9f}
+#adminScreen .admin-main{min-width:0;display:flex;flex-direction:column;min-height:100vh}
+#adminScreen .admin-topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:82px;padding:14px clamp(18px,3vw,38px);border-bottom:1px solid #263246;background:#0f1725f5;backdrop-filter:blur(14px)}
+#adminScreen .admin-topbar-left{display:flex;align-items:center;gap:13px;min-width:0}
+#adminScreen .admin-breadcrumb{margin:0 0 4px;color:#8090a7;font-size:11px}
+#adminScreen .admin-breadcrumb span{padding:0 5px;color:#56657a}
+#adminScreen .admin-topbar h1{margin:0;font-size:20px;line-height:1.2;letter-spacing:-.4px}
+#adminScreen .admin-topbar-right{display:flex;align-items:center;gap:16px}
+#adminScreen .admin-connection{display:flex;align-items:center;gap:8px;color:#9eb0c2;font-size:11px;white-space:nowrap}
+#adminScreen .admin-user-chip{display:flex;align-items:center;gap:9px;padding-left:15px;border-left:1px solid #29364a}
+#adminScreen .admin-user-avatar{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#30394c;color:#ded8ff;font-size:13px;font-weight:800}
+#adminScreen .admin-user-chip strong{display:block;font-size:11px}
+#adminScreen .admin-user-chip small{display:block;max-width:190px;margin-top:3px;color:#8290a5;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#adminScreen .admin-icon-button,#adminScreen .admin-mobile-toggle{width:37px;height:37px;border:1px solid #303d52;border-radius:9px;background:#ffffff05;color:#dce3ee;font-size:19px}
+#adminScreen .admin-icon-button:hover,#adminScreen .admin-mobile-toggle:hover{background:#ffffff0d}
+#adminScreen .admin-mobile-toggle{display:none}
+#adminScreen .admin-content{width:100%;max-width:1540px;margin:0 auto;padding:clamp(20px,3vw,38px)}
+#adminScreen .admin-page{min-width:0}
+#adminScreen .admin-welcome-row,#adminScreen .admin-page-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 24px}
+#adminScreen .admin-eyebrow{margin:0 0 7px;color:#a99bde;font-size:10px;font-weight:850;letter-spacing:1.35px}
+#adminScreen .admin-welcome-row h2,#adminScreen .admin-page-intro h2{margin:0;font-size:clamp(24px,3vw,30px);letter-spacing:-.8px;line-height:1.16}
+#adminScreen .admin-muted{margin:8px 0 0;color:#91a0b5;font-size:13px;line-height:1.6}
+#adminScreen .admin-outline-button{min-height:38px;padding:0 13px;border:1px solid #35435a;border-radius:8px;background:#ffffff05;color:#dce4ef;font-size:11px;font-weight:750;white-space:nowrap}
+#adminScreen .admin-outline-button:hover{border-color:#7465ac;background:#ffffff0a}
+#adminScreen .admin-metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
+#adminScreen .admin-metric-card{min-width:0;padding:17px 18px;border:1px solid #2a384d;border-radius:11px;background:#151f30;box-shadow:0 6px 18px #0000000b}
+#adminScreen .admin-metric-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#aab7c9;font-size:11px;font-weight:650}
+#adminScreen .admin-metric-card>strong{display:block;margin:17px 0 4px;font-size:29px;font-weight:780;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+#adminScreen .admin-metric-card>small{color:#8190a5;font-size:10px}
+#adminScreen .admin-metric-icon,#adminScreen .admin-quick-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;font-size:16px}
+#adminScreen .blue{background:#294e733f;color:#79b8ff}
+#adminScreen .amber{background:#6b51253f;color:#e9c16f}
+#adminScreen .violet{background:#493b7042;color:#b7a1ff}
+#adminScreen .green{background:#285e4c40;color:#71d7ac}
+#adminScreen .admin-overview-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.85fr);gap:16px;align-items:start}
+#adminScreen .admin-surface-card{min-width:0;border:1px solid #2a384d;border-radius:11px;background:#151f30}
+#adminScreen .admin-recent-panel,#adminScreen .admin-quick-panel,#adminScreen .admin-conversations-panel{padding:18px}
+#adminScreen .admin-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}
+#adminScreen .admin-card-heading h3{margin:0;font-size:14px;font-weight:760;letter-spacing:-.2px}
+#adminScreen .admin-card-heading p{margin:5px 0 0;color:#8492a7;font-size:11px;line-height:1.5}
+#adminScreen .admin-text-button{border:0;background:transparent;color:#b4a3ef;font-size:11px;font-weight:750;white-space:nowrap}
+#adminScreen .admin-text-button:hover{color:#d4caff}
+#adminScreen .admin-recent-list{display:grid;gap:8px}
+#adminScreen .admin-recent-item{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-top:1px solid #2a374a;min-width:0}
+#adminScreen .admin-recent-item:first-child{border-top:0;padding-top:2px}
+#adminScreen .admin-recent-symbol{width:31px;height:31px;flex:0 0 31px;display:grid;place-items:center;border-radius:8px;background:#29364b;color:#b8c9df;font-size:14px}
+#adminScreen .admin-recent-copy{min-width:0;flex:1}
+#adminScreen .admin-recent-copy strong{display:block;color:#e9eef6;font-size:11px}
+#adminScreen .admin-recent-copy p{margin:4px 0 0;color:#8d9bb0;font-size:11px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+#adminScreen .admin-recent-time{color:#7f8da2;font-size:10px;white-space:nowrap}
+#adminScreen .admin-quick-link{display:flex;align-items:center;gap:11px;width:100%;padding:12px 0;border:0;border-top:1px solid #2b374a;background:transparent;color:#e6edf7;text-align:left}
+#adminScreen .admin-quick-link:first-of-type{border-top:0}
+#adminScreen .admin-quick-link>span:nth-child(2){min-width:0;flex:1}
+#adminScreen .admin-quick-link strong{display:block;font-size:11px}
+#adminScreen .admin-quick-link small{display:block;margin-top:4px;color:#8795aa;font-size:10px;line-height:1.4}
+#adminScreen .admin-quick-link>b{color:#9ba9bc;font-size:16px}
+#adminScreen .admin-quick-link:hover strong{color:#c3b5ff}
+#adminScreen .admin-data-note{display:flex;gap:9px;margin-top:16px;padding:11px;border:1px solid #334158;border-radius:8px;background:#ffffff03}
+#adminScreen .admin-data-note>span{width:17px;height:17px;flex:0 0 17px;display:grid;place-items:center;border-radius:50%;background:#34425a;color:#c0cde0;font-size:10px;font-weight:800}
+#adminScreen .admin-data-note p{margin:0;color:#91a0b5;font-size:10px;line-height:1.55}
+#adminScreen .admin-empty-state{padding:23px 12px;color:#8492a7;text-align:center;font-size:11px;line-height:1.6}
+#adminScreen .admin-filter-bar{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px;gap:10px;padding:13px;border:1px solid #2a384d;border-radius:10px;background:#151f30}
+#adminScreen .admin-search-box{display:flex;align-items:center;gap:10px;min-width:0;padding:0 11px;border:1px solid #334159;border-radius:8px;background:#0f1928;color:#94a4ba}
+#adminScreen .admin-search-box>span{font-size:19px}
+#adminScreen .admin-search-box input{width:100%;min-width:0;min-height:38px;border:0;outline:0;background:transparent;color:#edf1f8;font-size:11px;box-shadow:none}
+#adminScreen .admin-search-box input:focus{outline:0}
+#adminScreen .admin-select-wrap{display:flex;align-items:center;gap:8px;min-width:0;padding:0 9px;border:1px solid #334159;border-radius:8px;background:#0f1928;color:#8090a7;font-size:10px}
+#adminScreen .admin-select-wrap select{width:100%;min-width:0;min-height:38px;border:0;background:transparent;color:#dce4ef;font-size:11px;outline:0}
+#adminScreen .admin-select-wrap option{background:#111a29;color:#edf1f8}
+#adminScreen .admin-result-count{margin:13px 0;color:#8594a9;font-size:11px}
+#adminScreen .admin-feedback-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+#adminScreen .admin-feedback-card{display:flex;flex-direction:column;gap:9px;min-width:0;padding:16px;border:1px solid #2b394e;border-radius:10px;background:#151f30}
+#adminScreen .admin-feedback-card .admin-feedback-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#adminScreen .admin-feedback-card .admin-feedback-category{color:#e8edf6;font-size:11px;font-weight:780}
+#adminScreen .admin-status-pill{padding:4px 8px;border:1px solid #3c4a60;border-radius:20px;background:#ffffff05;color:#b7c4d6;font-size:9px;font-weight:800;white-space:nowrap}
+#adminScreen .admin-status-pill.new{border-color:#69592e;background:#4f411d35;color:#e5c776}
+#adminScreen .admin-status-pill.in_review{border-color:#465a7d;background:#2c426235;color:#9fc5ff}
+#adminScreen .admin-status-pill.resolved{border-color:#315e4e;background:#244b3c35;color:#83d7b0}
+#adminScreen .admin-feedback-message{margin:2px 0;color:#e2e9f3;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+#adminScreen .admin-feedback-meta{margin:0;color:#8291a6;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+#adminScreen .admin-reply-actions{display:flex;flex-wrap:wrap;gap:7px}
+#adminScreen .admin-reply-actions .btn,#adminScreen .admin-feedback-actions .btn{min-height:34px;padding:7px 10px;border:1px solid #3a4961;border-radius:7px;background:#ffffff06;color:#cbd5e3;font-size:10px;font-weight:700;box-shadow:none;text-decoration:none}
+#adminScreen .admin-reply-actions .btn:hover,#adminScreen .admin-feedback-actions .btn:hover{border-color:#7567a8;background:#ffffff0b;transform:none}
+#adminScreen .admin-note-label{display:block;color:#c1cada;font-size:10px;font-weight:750}
+#adminScreen .admin-note-label span{color:#7e8da3;font-weight:500}
+#adminScreen .admin-note{width:100%;min-height:65px;padding:9px 10px;border:1px solid #34435a;border-radius:7px;background:#0f1928;color:#eaf0f8;font:inherit;font-size:11px;resize:vertical}
+#adminScreen .admin-feedback-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+#adminScreen .admin-messages-layout{display:grid;grid-template-columns:minmax(255px,.78fr) minmax(0,1.22fr);gap:14px;align-items:stretch;min-height:440px}
+#adminScreen .admin-conversations-panel{padding:15px;min-width:0}
+#adminScreen .admin-conversation-list{display:grid;gap:7px}
+#adminScreen .admin-conversation-item{display:block;width:100%;padding:12px;border:1px solid #2d3a4f;border-radius:8px;background:#101a29;color:#e8edf6;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
+#adminScreen .admin-conversation-item:hover,#adminScreen .admin-conversation-item.active{border-color:#71649f;background:#201e35}
+#adminScreen .admin-conversation-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#adminScreen .admin-conversation-head strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+#adminScreen .admin-unread-count{padding:3px 6px;border-radius:20px;background:#514580;color:#eee8ff;font-size:9px;font-weight:800}
+#adminScreen .admin-conversation-preview{display:block;margin:7px 0;color:#93a1b5;font-size:10px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#adminScreen .admin-conversation-time{display:block;color:#728198;font-size:9px}
+#adminScreen .admin-thread-panel{min-width:0;min-height:440px;padding:17px}
+#adminScreen .admin-thread-empty{display:grid;place-items:center;align-content:center;min-height:400px;padding:25px;text-align:center}
+#adminScreen .admin-thread-empty>span{width:48px;height:48px;display:grid;place-items:center;margin-bottom:12px;border-radius:12px;background:#493b7042;color:#b7a1ff;font-size:24px}
+#adminScreen .admin-thread-empty h3{margin:0;font-size:14px}
+#adminScreen .admin-thread-empty p{max-width:280px;margin:7px 0 0;color:#8a99ad;font-size:11px;line-height:1.6}
+#adminScreen #adminPrivateThread .info-grid{display:grid;grid-template-columns:1fr;gap:8px;margin:0 0 15px}
+#adminScreen #adminPrivateThread .info-card{padding:12px;border:1px solid #2c3a4e;border-radius:8px;background:#101a29}
+#adminScreen #adminPrivateThread .info-card p{margin:7px 0 0;color:#bdc8d7;font-size:11px;line-height:1.6}
+#adminScreen #adminPrivateThread .feedback-form{padding-top:13px;border-top:1px solid #2d3a4e}
+#adminScreen #adminPrivateThread textarea{width:100%;min-height:105px;padding:11px;border:1px solid #35445b;border-radius:8px;background:#0f1928;color:#edf1f8;font:inherit;font-size:12px}
+#adminScreen #adminPrivateThread .btn.primary{min-height:39px;padding:9px 13px;border-radius:8px;background:#66579e;color:#fff;box-shadow:none;font-size:11px}
+#adminScreen .admin-footer{display:flex;justify-content:space-between;gap:12px;margin-top:auto;padding:14px clamp(18px,3vw,38px);border-top:1px solid #253247;color:#6f7e93;font-size:10px}
+#adminScreen .admin-login-wrap{display:grid;align-content:center;justify-items:center;min-height:100vh;padding:30px 18px;background:#0d1421}
+#adminScreen .admin-login-brand{padding:0;margin-bottom:25px}
+#adminScreen .admin-login-card{width:min(100%,420px);padding:30px;border:1px solid #2b394e;border-radius:13px;background:#151f30;box-shadow:0 20px 60px #0003}
+#adminScreen .admin-login-icon{width:43px;height:43px;display:grid;place-items:center;margin-bottom:20px;border:1px solid #51477b;border-radius:10px;background:#322b4b;color:#c1b4ff;font-size:21px}
+#adminScreen .admin-login-card h2{margin:0;font-size:24px;letter-spacing:-.6px}
+#adminScreen .admin-login-card .admin-muted{margin:8px 0 22px}
+#adminScreen .admin-login-form{display:grid;gap:14px}
+#adminScreen .admin-login-form .field{display:grid;gap:7px;margin:0}
+#adminScreen .admin-login-form label{color:#c2ccda;font-size:11px;font-weight:700}
+#adminScreen .admin-login-form input{width:100%;min-height:43px;padding:0 12px;border:1px solid #35445b;border-radius:8px;background:#0f1928;color:#edf1f8;font-size:13px;box-shadow:none}
+#adminScreen .admin-login-form input:focus{border-color:#8776c4;outline:2px solid #8776c42a}
+#adminScreen .admin-primary-button{display:flex;align-items:center;justify-content:space-between;min-height:44px;margin-top:4px;padding:0 14px;border:1px solid #7668ae;border-radius:8px;background:#66579e;color:white;font-size:12px;font-weight:800}
+#adminScreen .admin-primary-button:hover{background:#7565ad}
+#adminScreen .admin-status-message{min-height:16px;margin:0;color:#e2a6ad;font-size:11px;line-height:1.5}
+#adminScreen .admin-login-foot{display:flex;align-items:center;gap:8px;margin-top:19px;padding-top:15px;border-top:1px solid #2a384d;color:#8190a5;font-size:10px}
+#adminScreen .admin-back-link{margin-top:20px;border:0;background:transparent;color:#a3b0c3;font-size:11px}
+#adminScreen .admin-back-link:hover{color:white}
+@media(max-width:1120px){#adminScreen .admin-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#adminScreen .admin-overview-grid{grid-template-columns:minmax(0,1fr)}#adminScreen .admin-filter-bar{grid-template-columns:minmax(0,1fr) 160px 160px}}
+@media(max-width:850px){#adminScreen .admin-layout{grid-template-columns:minmax(0,1fr)}#adminScreen .admin-sidebar{position:fixed;left:0;top:0;bottom:0;width:min(285px,86vw);height:100dvh;min-height:0;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 45px #0005}#adminScreen .admin-sidebar.open{transform:translateX(0)}#adminScreen .admin-drawer-overlay{position:fixed;inset:0;z-index:25;background:#030712a8;opacity:0;pointer-events:none;transition:opacity .2s}#adminScreen .admin-drawer-overlay.open{opacity:1;pointer-events:auto}#adminScreen .admin-mobile-toggle{display:block}#adminScreen .admin-topbar{min-height:72px}#adminScreen .admin-topbar-right{gap:9px}#adminScreen .admin-connection{display:none}}
+@media(max-width:650px){#adminScreen .admin-content{padding:20px 14px 28px}#adminScreen .admin-topbar{padding:12px 14px}#adminScreen .admin-topbar h1{font-size:17px}#adminScreen .admin-user-chip{padding-left:9px}#adminScreen .admin-user-chip small{max-width:100px}#adminScreen .admin-user-avatar{width:29px;height:29px}#adminScreen .admin-icon-button{width:34px;height:34px}#adminScreen .admin-welcome-row,#adminScreen .admin-page-intro{align-items:flex-start;flex-direction:column}#adminScreen .admin-metric-grid{gap:9px}#adminScreen .admin-metric-card{padding:13px}#adminScreen .admin-metric-card>strong{margin:12px 0 3px;font-size:25px}#adminScreen .admin-metric-top{font-size:10px}#adminScreen .admin-metric-icon{width:28px;height:28px}#adminScreen .admin-filter-bar{grid-template-columns:1fr}#adminScreen .admin-search-box input{font-size:16px}#adminScreen .admin-select-wrap select{font-size:14px}#adminScreen .admin-feedback-list{grid-template-columns:1fr}#adminScreen .admin-messages-layout{grid-template-columns:1fr;min-height:0}#adminScreen .admin-thread-panel{min-height:280px}#adminScreen .admin-thread-empty{min-height:230px}#adminScreen .admin-footer{padding:12px 14px}#adminScreen .admin-login-card{padding:24px 20px}}
+@media(max-width:380px){#adminScreen .admin-metric-grid{grid-template-columns:1fr 1fr}#adminScreen .admin-metric-card>strong{font-size:23px}#adminScreen .admin-topbar-right{gap:6px}#adminScreen .admin-user-chip{gap:6px}#adminScreen .admin-user-chip strong{font-size:10px}#adminScreen .admin-user-chip small{max-width:75px}}
+
+
+/* V10.7.1 – dashboard composition inspired by the supplied Admin Dashboard reference */
+#adminScreen .admin-sidebar{padding:24px 15px 18px}
+#adminScreen .admin-drawer-overlay{display:none}
+#adminScreen .admin-sidebar-brand{padding-bottom:30px}
+#adminScreen .admin-brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#8a70ec,#5743a7);font-size:23px}
+#adminScreen .admin-nav{gap:5px}
+#adminScreen .admin-nav-item{min-height:43px;padding:0 11px;border-radius:9px;font-size:12px}
+#adminScreen .admin-nav-item.active{background:linear-gradient(100deg,#704ed0,#3b2d71);border-color:#7759d0;box-shadow:0 5px 18px #6b4bc42b}
+#adminScreen .admin-nav-item:disabled{opacity:.48;cursor:not-allowed}
+#adminScreen .admin-nav-item:disabled:hover{background:transparent;color:#aab5c7}
+#adminScreen .admin-nav-icon{font-size:18px}
+#adminScreen .admin-topbar{min-height:82px}
+#adminScreen .admin-notification-button{position:relative;width:43px;height:43px;border-radius:13px;font-size:19px}
+#adminScreen .admin-notification-dot{position:absolute;right:8px;top:7px;width:8px;height:8px;border:1px solid #0f1725;border-radius:50%;background:#a56bff}
+#adminScreen .admin-user-chip{gap:10px;padding:7px 10px 7px 12px;border:1px solid #2d3a50;border-radius:13px;background:#ffffff05}
+#adminScreen .admin-user-avatar{width:35px;height:35px;background:#51481f;color:#f6d66e;font-size:18px}
+#adminScreen .admin-user-refresh{margin-left:4px;padding:3px 4px;border:0;background:transparent;color:#aab7c9;font-size:17px}
+#adminScreen .admin-dashboard-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(270px,.85fr);gap:16px;align-items:stretch;margin-bottom:16px}
+#adminScreen .admin-activity-panel{min-width:0;padding:19px 20px}
+#adminScreen .admin-chart-legend{display:flex;align-items:center;gap:7px;color:#a8b4c7;font-size:10px;white-space:nowrap}
+#adminScreen .admin-chart-legend i{width:7px;height:7px;border-radius:50%;background:#a06bff;box-shadow:0 0 10px #a06bff88}
+#adminScreen .admin-activity-chart{min-height:188px;display:flex;align-items:center;justify-content:center}
+#adminScreen .admin-activity-svg{display:block;width:100%;height:auto;max-height:205px;overflow:visible}
+#adminScreen .admin-activity-svg text{fill:#a5b1c5;font:11px system-ui,sans-serif}
+#adminScreen .admin-activity-svg .grid-line{stroke:#334158;stroke-width:1;opacity:.55}
+#adminScreen .admin-activity-svg .activity-area{fill:url(#adminActivityFill)}
+#adminScreen .admin-activity-svg .activity-line{fill:none;stroke:#9c65f5;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#adminScreen .admin-activity-svg .activity-dot{fill:#a66cff;stroke:#d6c5ff;stroke-width:1.2}
+#adminScreen .admin-quick-panel{padding:19px 20px}
+#adminScreen .admin-quick-link{padding:12px 0}
+#adminScreen .admin-quick-link strong{font-size:12px}
+#adminScreen .admin-quick-link small{font-size:10px}
+#adminScreen .admin-quick-icon{width:35px;height:35px;flex:0 0 35px;border-radius:10px;font-size:17px}
+#adminScreen .admin-data-note{margin-top:11px}
+#adminScreen .admin-overview-lower-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+#adminScreen .admin-overview-lower-grid .admin-recent-panel{padding:19px 20px}
+#adminScreen .admin-recent-item{align-items:center;padding:12px 0}
+#adminScreen .admin-recent-symbol{width:34px;height:34px;flex:0 0 34px;border-radius:10px}
+#adminScreen .admin-symbol-message{background:#293f65;color:#82baff}
+#adminScreen .admin-symbol-bug{background:#633540;color:#ff9daa}
+#adminScreen .admin-symbol-idea{background:#5a4a27;color:#f4d36e}
+#adminScreen .admin-recent-copy strong{font-size:12px}
+#adminScreen .admin-recent-copy p{font-size:11px}
+#adminScreen .admin-recent-time{font-size:10px}
+@media(max-width:1120px){#adminScreen .admin-dashboard-grid{grid-template-columns:minmax(0,1fr)}#adminScreen .admin-overview-lower-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:850px){#adminScreen .admin-sidebar{width:min(285px,86vw)}#adminScreen .admin-drawer-overlay{display:block}#adminScreen .admin-dashboard-grid{grid-template-columns:1fr}}
+@media(max-width:650px){#adminScreen .admin-overview-lower-grid{grid-template-columns:1fr}#adminScreen .admin-activity-panel,#adminScreen .admin-quick-panel,#adminScreen .admin-overview-lower-grid .admin-recent-panel{padding:15px}#adminScreen .admin-user-chip{padding:5px 7px}#adminScreen .admin-user-chip small{max-width:100px}}
+
+
+/* V10.8.0 – mobile-first experience and unified violet calculator identity */
+.mm-logo-svg{display:block;width:100%;height:100%}
+.brand .logo{display:grid;place-items:center;flex:0 0 48px;padding:3px;border:1px solid #8d70ff88;border-radius:15px;background:linear-gradient(145deg,#211744,#100f25);box-shadow:0 7px 24px #7446ff40}
+#adminScreen .admin-brand-mark{padding:2px;overflow:hidden}
+#adminScreen .admin-brand-mark .mm-logo-svg{width:100%;height:100%}
+.mobile-tabbar{display:none}
+@media(max-width:700px){
+  body{background:radial-gradient(ellipse at 50% -12%,#38236a55,transparent 48%),#080b18}
+  .wrap{padding:12px 13px calc(94px + env(safe-area-inset-bottom))}
+  .top{position:sticky;top:0;z-index:40;align-items:center;gap:8px;margin:0 -13px 16px;padding:9px 13px;background:#0b1020eF;border-bottom:1px solid #ffffff12;backdrop-filter:blur(18px)}
+  .brand{gap:9px;min-width:0}.brand .logo{width:42px;height:42px;flex-basis:42px;border-radius:13px}.brand strong{font-size:16px}.brand small{font-size:8px;letter-spacing:1px}
+  .profile{gap:6px}.profile .avatar{width:34px;height:34px;border-radius:11px;font-size:17px}.profile .small-btn{width:35px;height:35px;padding:5px}.menu-toggle{width:39px;height:39px;border-radius:12px}
+  .hero{gap:12px}.hero-copy{padding:23px 18px;border-radius:22px}.hero-copy h1{font-size:clamp(39px,12vw,55px);margin:18px 0 12px;letter-spacing:-2px}.lead{font-size:14px;line-height:1.65}.hero-copy .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero-copy .btn{min-height:48px;padding:11px 9px;font-size:13px;justify-content:center}.visual{min-height:130px;max-height:155px;border-radius:20px}
+  .mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0 22px}.stat{padding:12px 8px;border-radius:14px;min-width:0}.stat span{font-size:10px}.stat strong{font-size:19px;overflow-wrap:anywhere}
+  .section-head{margin:22px 0 12px}.section-head h2{font-size:21px}.section-head p{font-size:12px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{min-height:174px;padding:14px 12px;border-radius:17px}.tile .ico{width:38px;height:38px;border-radius:12px;font-size:21px}.tile h3{font-size:14px;line-height:1.3}.tile p{font-size:11px;line-height:1.45}.tile b{font-size:10px;margin-top:10px}
+  .section.two{grid-template-columns:1fr;gap:9px}.subpanel{padding:15px;border-radius:17px}
+  .screen.panel{padding:19px 14px;border-radius:20px}.screen h2{font-size:23px;line-height:1.2}.screen .muted{font-size:13px;line-height:1.55}.level-grid{grid-template-columns:1fr;gap:10px}.level{padding:17px;border-radius:17px;text-align:left}.level h3{display:inline-block;margin-left:8px}.level p{margin:8px 0}.level em{font-size:11px}
+  .mobile-tabbar{position:fixed;z-index:90;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 5px;border:1px solid #8c70ff35;border-radius:20px;background:#11152aee;box-shadow:0 12px 36px #0009,inset 0 1px #ffffff12;backdrop-filter:blur(22px)}
+  .mobile-tabbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;min-height:48px;padding:4px 2px;border:0;border-radius:13px;background:transparent;color:#929bb5}
+  .mobile-tabbar button span{font-size:21px;line-height:1}.mobile-tabbar button small{font-size:9px;font-weight:750}.mobile-tabbar button.active{background:linear-gradient(145deg,#7546d7,#38256d);color:#fff;box-shadow:0 4px 15px #713ce64a}
+  .site-menu{position:fixed;top:65px;right:10px;left:10px;width:auto;max-height:calc(100dvh - 150px);overflow:auto;border-radius:19px}.site-menu .menu-item{min-height:57px}
+  #globalBackButton{bottom:calc(78px + env(safe-area-inset-bottom));z-index:85}
+  /* Keep all form controls comfortable and prevent iOS input zoom. */
+  input,select,textarea{font-size:16px!important;max-width:100%}.btn,.small-btn{min-height:44px}.formrow>*{min-width:0;width:100%}
+  /* Admin mobile workspace */
+  #adminScreen .admin-topbar{position:sticky;top:0;min-height:64px;padding:9px 12px;gap:7px}#adminScreen .admin-topbar h1{font-size:16px}#adminScreen .admin-breadcrumb{font-size:9px}#adminScreen .admin-content{padding:15px 12px 28px}#adminScreen .admin-welcome-row h2,#adminScreen .admin-page-intro h2{font-size:24px}#adminScreen .admin-muted{font-size:12px}
+  #adminScreen .admin-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#adminScreen .admin-metric-card{padding:12px;border-radius:14px}#adminScreen .admin-metric-card>strong{font-size:24px;margin:10px 0 3px}#adminScreen .admin-metric-top{font-size:10px;line-height:1.3}#adminScreen .admin-metric-card>small{font-size:9px;line-height:1.4}
+  #adminScreen .admin-surface-card{border-radius:15px}#adminScreen .admin-dashboard-grid,#adminScreen .admin-overview-lower-grid{grid-template-columns:minmax(0,1fr);gap:10px}#adminScreen .admin-activity-panel,#adminScreen .admin-quick-panel,#adminScreen .admin-overview-lower-grid .admin-recent-panel{padding:13px}#adminScreen .admin-activity-chart{min-height:150px}#adminScreen .admin-card-heading h3{font-size:13px}
+  #adminScreen .admin-filter-bar{padding:10px;border-radius:14px;gap:8px}#adminScreen .admin-search-box,#adminScreen .admin-select-wrap{min-height:44px}#adminScreen .admin-feedback-card{padding:13px;border-radius:14px}#adminScreen .admin-feedback-actions{grid-template-columns:repeat(2,minmax(0,1fr))}#adminScreen .admin-feedback-actions .btn{min-height:44px;font-size:12px}
+  #adminScreen .admin-messages-layout{display:flex;flex-direction:column}#adminScreen .admin-conversations-panel{padding:12px}#adminScreen .admin-thread-panel{min-height:260px;padding:13px}#adminScreen .admin-sidebar{padding-top:max(20px,env(safe-area-inset-top))}
+  #adminScreen .admin-footer{font-size:10px}
+}
+@media(max-width:390px){
+ .wrap{padding-left:10px;padding-right:10px}.top{margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px}.brand strong{font-size:14px}.brand small{font-size:7px}.profile .avatar{display:none}.hero-copy{padding:20px 15px}.hero-copy .row{grid-template-columns:1fr}.mini-stats .stat strong{font-size:17px}.tile{min-height:165px;padding:12px 10px}.tile h3{font-size:13px}.tile p{font-size:10px}
+ #adminScreen .admin-user-chip small{display:none}#adminScreen .admin-user-chip{padding:4px}#adminScreen .admin-user-avatar{width:29px;height:29px}#adminScreen .admin-topbar-right{gap:5px}
+}
+body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-room-active .mobile-tabbar{display:none!important}
+@media(prefers-reduced-motion:reduce){.mobile-tabbar button,.top{transition:none!important}}
+
 </style>
 
 </head>
@@ -1370,7 +1631,7 @@ button:disabled,
 <div class="wrap">
 <header class="top">
 <div class="brand">
-<div class="logo">🚀</div>
+<div class="logo"><svg class="mm-logo-svg" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="15" fill="#17132f" stroke="#8f6bff" stroke-width="4"/><rect x="14" y="13" width="36" height="38" rx="5" fill="none" stroke="#b9a3ff" stroke-width="2.6"/><path d="M18 28h28M32 17v9" stroke="#b9a3ff" stroke-width="2.5" stroke-linecap="round"/><path d="M21 36h8m-4-4v8m13-7v7m-4-3h8" stroke="#c7b4ff" stroke-width="3" stroke-linecap="round"/><path d="M20 45l5-5 5 5m6-5h8" stroke="#8f6bff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 <div>
 <strong>MatheMeister <span style="color:var(--cyan)">PRO</span>
 </strong>
@@ -1409,6 +1670,13 @@ button:disabled,
   <button class="menu-item" onclick="menuNavigate('adminScreen')"><span class="menu-icon">🛡️</span><span class="menu-copy">Admin-Bereich<small>Feedback und Meldungen verwalten</small></span></button>
   <button class="menu-item" onclick="menuNavigate('feedbackScreen')"><span class="menu-icon">💡</span><span class="menu-copy">Feedback & Ideen<small>Probleme melden und Wünsche teilen</small></span></button>
   <div class="site-menu-note">Gastmodus: Du kannst direkt spielen, ohne ein Konto anzulegen. Hinweis: Lokale Münzen und Käufe sind dadurch noch nicht zwischen Geräten synchronisiert.</div>
+</nav>
+<nav class="mobile-tabbar" id="mobileTabbar" aria-label="Schnellnavigation">
+  <button type="button" data-mobile-screen="home" class="active" onclick="show('home')"><span>⌂</span><small>Home</small></button>
+  <button type="button" data-mobile-screen="modes" onclick="show('modes')"><span>◎</span><small>Training</small></button>
+  <button type="button" data-mobile-screen="live" onclick="show('live')"><span>♧</span><small>Live</small></button>
+  <button type="button" data-mobile-screen="progress" onclick="show('progress')"><span>♛</span><small>Erfolge</small></button>
+  <button type="button" onclick="toggleSiteMenu(true)"><span>☰</span><small>Mehr</small></button>
 </nav>
 <section id="home" class="screen active">
 <div class="hero">
@@ -2013,13 +2281,18 @@ button:disabled,
 <section id="feedbackScreen" class="screen panel">
   <button class="small-btn back" onclick="show('home')">← Startseite</button>
   <div class="studio-hero" style="border-color:#48e4ef44;background:radial-gradient(ellipse at 90% 0%,#48e4ef20,transparent 42%),linear-gradient(135deg,#1b2b46,#11182b 70%)"><span class="pill">💡 DEINE IDEE ZÄHLT</span><h2>Was sollen wir besser machen?</h2><p>Fehler gefunden, neue Spielidee oder Wunsch für eine kommende Funktion? Schreib uns genau, was passiert ist. Hilfreiche Rückmeldungen machen MatheMeister besser für alle.</p></div>
-  <div class="feedback-grid">
+  <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin:18px 0">
+    <button type="button" class="info-card" style="text-align:left;cursor:pointer;border:1px solid #48e4ef66" onclick="feedbackChooseMode('anonymous')"><h3>💡 Feedback senden</h3><p>Teile uns deine Meinung, Ideen oder Probleme mit.</p><p class="studio-field-note">Deine Nachricht wird als Feedback an das Team gesendet. Eine persönliche Antwort über MatheMeister ist nicht möglich.</p><strong>Ohne Konto · Keine private Antwort</strong></button>
+    <button type="button" class="info-card" style="text-align:left;cursor:pointer;border:1px solid #9c83ff88" onclick="feedbackChooseMode('private')"><h3>💬 Private Nachricht</h3><p>Du hast eine Frage und möchtest eine persönliche Antwort erhalten?</p><p class="studio-field-note">Erstelle ein kostenloses Konto oder melde dich an. Du kannst Nachrichten mit dem Admin austauschen.</p><strong>Mit Konto · Antwort im Postfach</strong></button>
+  </div>
+  <div id="feedbackAnonymousPanel" class="feedback-grid hidden">
     <div class="subpanel">
+      <div class="row" style="justify-content:space-between;align-items:center;gap:10px"><h3>💡 Feedback ohne Antwort</h3><button class="btn secondary" type="button" onclick="feedbackChooseMode('choose')">← Zur Auswahl</button></div>
       <form id="siteFeedbackForm" class="feedback-form">
         <div class="field"><label for="feedbackType">Worum geht es?</label><select id="feedbackType" name="feedback-type" required><option value="bug">🐛 Fehler melden</option><option value="idea">💡 Neue Idee</option><option value="game">🎮 Wunsch für einen Spielmodus</option><option value="design">🎨 Design oder Bedienung</option><option value="other">💬 Sonstiges</option></select></div>
         <div class="field"><label for="feedbackMessage">Deine Nachricht <span class="form-required">*</span></label><textarea id="feedbackMessage" name="message" required minlength="10" maxlength="3000" placeholder="Was ist passiert? Was hast du erwartet? Welche Funktion würdest du dir wünschen?" ></textarea><p class="studio-field-note">Bei einem Fehler hilft: Gerät, Spielmodus und die Schritte, die zum Fehler geführt haben.</p></div>
         <div class="field"><label for="feedbackDevice">Gerät (optional)</label><select id="feedbackDevice" name="device"><option value="">Keine Angabe</option><option>iPhone / iPad</option><option>Android-Handy oder -Tablet</option><option>Windows-PC</option><option>Mac</option><option>Chromebook</option><option>Anderes Gerät</option></select></div>
-        <div class="field"><label for="feedbackEmail">E-Mail (optional, nur falls du eine Antwort möchtest)</label><input type="email" id="feedbackEmail" name="email" maxlength="120" placeholder="name@example.com"><p class="studio-field-note">Bitte keine Passwörter, privaten Daten oder vertraulichen Informationen senden.</p></div>
+        <p class="studio-field-note">Wichtig: Dieses Feedback ist eine Rückmeldung ohne Antwortfunktion. Wenn du eine persönliche Antwort möchtest, wähle bitte „Private Nachricht“.</p>
         <button class="btn primary full" type="submit">Nachricht senden →</button>
         <p id="feedbackSubmitStatus" class="studio-field-note" role="status" aria-live="polite">Dein Feedback wird sicher über MatheMeister gesendet.</p>
       </form>
@@ -2030,6 +2303,24 @@ button:disabled,
       <article class="info-card"><h3>🔐 Datenschutz</h3><p>Feedback ist optional. Name und Konto sind nicht nötig. Eine E-Mail ist nur erforderlich, wenn du eine Antwort möchtest.</p></article>
     </aside>
   </div>
+  <section id="feedbackPrivatePanel" class="subpanel hidden" style="margin-top:16px">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:10px"><h3>💬 Private Nachrichten</h3><button class="btn secondary" type="button" onclick="feedbackChooseMode('choose')">← Zur Auswahl</button></div>
+    <p class="muted">Melde dich an oder erstelle ein kostenloses Konto. Nach der E-Mail-Bestätigung kannst du private Nachrichten senden und Antworten lesen.</p>
+    <div id="privateAuthPanel" class="feedback-grid">
+      <form id="privateAuthForm" class="feedback-form subpanel">
+        <div class="field"><label for="privateEmail">E-Mail-Adresse</label><input id="privateEmail" type="email" autocomplete="email" required maxlength="254" placeholder="name@example.com"></div>
+        <div class="field"><label for="privatePassword">Passwort</label><input id="privatePassword" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="Mindestens 8 Zeichen"></div>
+        <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">Anmelden</button><button class="btn secondary" type="button" onclick="privateSignUp()">Konto erstellen</button></div>
+        <p id="privateAuthStatus" class="studio-field-note" role="status" aria-live="polite"></p>
+      </form>
+      <aside class="feedback-side"><article class="info-card"><h3>🔐 Deine Privatsphäre</h3><p>Nur du und der Administrator können eure Unterhaltung sehen. Andere Nutzer haben keinen Zugriff.</p></article><article class="info-card"><h3>📬 Antworten jederzeit lesen</h3><p>Deine Nachrichten bleiben in deinem Konto gespeichert – auch wenn du ein anderes Gerät verwendest.</p></article></aside>
+    </div>
+    <div id="privateInboxPanel" class="hidden">
+      <div class="row" style="justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><p id="privateSignedInAs" class="muted"></p><button class="btn secondary" type="button" onclick="privateSignOut()">Abmelden</button></div>
+      <form id="privateMessageForm" class="feedback-form"><div class="field"><label for="privateMessageText">Deine Nachricht an das MatheMeister-Team</label><textarea id="privateMessageText" required minlength="3" maxlength="3000" placeholder="Schreibe hier deine Nachricht …"></textarea></div><button class="btn primary" type="submit">Nachricht senden →</button><p id="privateMessageStatus" class="studio-field-note" role="status"></p></form>
+      <h3 style="margin-top:22px">📨 Gesprächsverlauf</h3><div id="privateMessageList" class="info-grid"></div>
+    </div>
+  </section>
 </section>
 
 <section id="siteInfo" class="screen panel">
@@ -2041,24 +2332,91 @@ button:disabled,
 </section>
 
 
-<section id="adminScreen" class="screen panel">
-  <button class="small-btn back" onclick="show('home')">← Startseite</button>
-  <div class="studio-hero"><span class="pill">🛡️ NUR FÜR ADMINISTRATOREN</span><h2>MatheMeister – Admin</h2><p>Feedback und Meldungen sicher verwalten.</p></div>
-  <div id="adminLoginPanel" class="subpanel" style="max-width:520px;margin:18px auto">
-    <h3>Administrator-Anmeldung</h3><p class="muted">Melde dich mit deinem Supabase-Administratorkonto an.</p>
-    <form id="adminLoginForm" class="feedback-form">
-      <div class="field"><label for="adminEmail">E-Mail</label><input id="adminEmail" type="email" autocomplete="username" required maxlength="254"></div>
-      <div class="field"><label for="adminPassword">Passwort</label><input id="adminPassword" type="password" autocomplete="current-password" required maxlength="256"></div>
-      <button class="btn primary full" type="submit">Sicher anmelden →</button><p id="adminLoginStatus" class="studio-field-note" role="status"></p>
-    </form>
+<section id="adminScreen" class="screen admin-screen">
+  <div id="adminLoginPanel" class="admin-login-wrap">
+    <div class="admin-login-brand"><span class="admin-brand-mark"><svg class="mm-logo-svg" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="15" fill="#17132f" stroke="#8f6bff" stroke-width="4"/><rect x="14" y="13" width="36" height="38" rx="5" fill="none" stroke="#b9a3ff" stroke-width="2.6"/><path d="M18 28h28M32 17v9" stroke="#b9a3ff" stroke-width="2.5" stroke-linecap="round"/><path d="M21 36h8m-4-4v8m13-7v7m-4-3h8" stroke="#c7b4ff" stroke-width="3" stroke-linecap="round"/><path d="M20 45l5-5 5 5m6-5h8" stroke="#8f6bff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>MatheMeister</strong><small>ADMINISTRATION</small></div></div>
+    <div class="admin-login-card">
+      <div class="admin-login-icon">⌘</div>
+      <p class="admin-eyebrow">GESCHÜTZTER BEREICH</p>
+      <h2>Willkommen zurück</h2>
+      <p class="admin-muted">Melde dich mit deinem Administrator-Konto an, um MatheMeister zu verwalten.</p>
+      <form id="adminLoginForm" class="admin-login-form">
+        <div class="field"><label for="adminEmail">E-Mail-Adresse</label><input id="adminEmail" type="email" autocomplete="username" required maxlength="254" placeholder="admin@beispiel.de"></div>
+        <div class="field"><label for="adminPassword">Passwort</label><input id="adminPassword" type="password" autocomplete="current-password" required maxlength="256" placeholder="Dein Passwort"></div>
+        <button class="admin-primary-button" type="submit">Sicher anmelden <span aria-hidden="true">→</span></button>
+        <p id="adminLoginStatus" class="admin-status-message" role="status" aria-live="polite"></p>
+      </form>
+      <div class="admin-login-foot"><span class="admin-secure-dot"></span> Geschützte Anmeldung über Supabase</div>
+    </div>
+    <button class="admin-back-link" type="button" onclick="show('home')">← Zurück zur Website</button>
   </div>
-  <div id="adminDashboard" class="hidden">
-    <div class="row" style="justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><h3>Feedback-Eingang</h3><p id="adminSignedInAs" class="muted"></p></div><button class="btn secondary" type="button" onclick="adminSignOut()">Abmelden</button></div>
-    <div class="row" style="gap:10px;flex-wrap:wrap;margin:14px 0"><label class="field" style="flex:1;min-width:150px">Status<select id="adminStatusFilter"><option value="">Alle Status</option><option value="new">Neu</option><option value="in_review">In Bearbeitung</option><option value="resolved">Erledigt</option></select></label><label class="field" style="flex:1;min-width:150px">Kategorie<select id="adminCategoryFilter"><option value="">Alle Kategorien</option><option value="bug">Fehler</option><option value="idea">Idee</option><option value="game">Spielmodus</option><option value="design">Design</option><option value="other">Sonstiges</option></select></label><button class="btn secondary" type="button" onclick="adminLoadFeedback()">↻ Aktualisieren</button></div>
-    <p id="adminFeedbackStatus" class="studio-field-note" aria-live="polite"></p><div id="adminFeedbackList" class="info-grid"></div>
+
+  <div id="adminDashboard" class="admin-layout hidden">
+    <div class="admin-drawer-overlay" id="adminDrawerOverlay" onclick="adminToggleSidebar(false)" aria-hidden="true"></div>
+    <aside class="admin-sidebar" id="adminSidebar" aria-label="Admin-Navigation">
+      <div class="admin-sidebar-brand"><span class="admin-brand-mark"><svg class="mm-logo-svg" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="15" fill="#17132f" stroke="#8f6bff" stroke-width="4"/><rect x="14" y="13" width="36" height="38" rx="5" fill="none" stroke="#b9a3ff" stroke-width="2.6"/><path d="M18 28h28M32 17v9" stroke="#b9a3ff" stroke-width="2.5" stroke-linecap="round"/><path d="M21 36h8m-4-4v8m13-7v7m-4-3h8" stroke="#c7b4ff" stroke-width="3" stroke-linecap="round"/><path d="M20 45l5-5 5 5m6-5h8" stroke="#8f6bff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>MatheMeister</strong><small>ADMIN CENTER</small></div></div>
+      <div class="admin-workspace-label">VERWALTUNG</div>
+      <nav class="admin-nav">
+        <button type="button" class="admin-nav-item active" data-admin-nav="overview" onclick="adminNavigate('overview')"><span class="admin-nav-icon">⌂</span><span>Übersicht</span></button>
+        <button type="button" class="admin-nav-item admin-nav-disabled" disabled title="Nutzerverwaltung ist noch nicht mit der Datenbank verbunden"><span class="admin-nav-icon">♙</span><span>Benutzer</span></button>
+        <button type="button" class="admin-nav-item" data-admin-nav="messages" onclick="adminNavigate('messages')"><span class="admin-nav-icon">✉</span><span>Nachrichten</span><span id="adminNavMessagesBadge" class="admin-nav-badge">0</span></button>
+        <button type="button" class="admin-nav-item" data-admin-nav="feedback" onclick="adminNavigate('feedback')"><span class="admin-nav-icon">☷</span><span>Feedback</span><span id="adminNavFeedbackBadge" class="admin-nav-badge">0</span></button>
+        <button type="button" class="admin-nav-item admin-nav-disabled" disabled title="Raumverwaltung ist noch nicht mit der Datenbank verbunden"><span class="admin-nav-icon">♧</span><span>Spiele &amp; Räume</span></button>
+        <button type="button" class="admin-nav-item admin-nav-disabled" disabled title="Spielstatistiken sind noch nicht verfügbar"><span class="admin-nav-icon">▥</span><span>Statistiken</span></button>
+        <button type="button" class="admin-nav-item admin-nav-disabled" disabled title="Es gibt noch keine zentrale Benachrichtigungsverwaltung"><span class="admin-nav-icon">🔔</span><span>Benachrichtigungen</span></button>
+        <button type="button" class="admin-nav-item admin-nav-disabled" disabled title="Weitere Admin-Einstellungen folgen"><span class="admin-nav-icon">⚙</span><span>Einstellungen</span></button>
+      </nav>
+      <div class="admin-sidebar-spacer"></div>
+      <div class="admin-sidebar-note"><span class="admin-secure-dot"></span><div><strong>Admin-Bereich</strong><small>Verbindung über Supabase</small></div></div>
+      <button class="admin-sidebar-link" type="button" onclick="show('home')"><span>↗</span> Zur Website</button>
+      <button class="admin-sidebar-logout" type="button" onclick="adminSignOut()"><span>⇥</span> Abmelden</button>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div class="admin-topbar-left">
+          <button type="button" class="admin-mobile-toggle" onclick="adminToggleSidebar()" aria-label="Navigation öffnen" aria-expanded="false">☰</button>
+          <div><p class="admin-breadcrumb">Verwaltung und Übersicht von MatheMeister</p><h1 id="adminHeaderTitle">Admin Dashboard</h1></div>
+        </div>
+        <div class="admin-topbar-right"><button class="admin-icon-button admin-notification-button" type="button" onclick="adminNavigate('messages')" aria-label="Ungelesene Nachrichten öffnen" title="Ungelesene Nachrichten öffnen">🔔<span id="adminTopUnreadDot" class="admin-notification-dot hidden"></span></button><div class="admin-user-chip"><span class="admin-user-avatar">👑</span><span><strong>Admin</strong><small id="adminSignedInAs">Angemeldet</small></span><button class="admin-user-refresh" type="button" onclick="adminRefreshAll()" title="Daten aktualisieren" aria-label="Daten aktualisieren">⌄</button></div></div>
+      </header>
+
+      <div class="admin-content">
+        <section class="admin-page" data-admin-panel="overview">
+          <div class="admin-welcome-row"><div><p class="admin-eyebrow">ADMIN CENTER</p><h2>Alles im Blick.</h2><p class="admin-muted">Die wichtigsten Rückmeldungen und Nachrichten deiner MatheMeister-Community.</p></div><button type="button" class="admin-outline-button" data-admin-refresh onclick="adminRefreshAll()">↻ Aktualisieren</button></div>
+          <div class="admin-metric-grid">
+            <article class="admin-metric-card"><div class="admin-metric-top"><span>Registrierte Benutzer</span><span class="admin-metric-icon blue">♙</span></div><strong>—</strong><small>Nutzerstatistik noch nicht angebunden</small></article>
+            <article class="admin-metric-card"><div class="admin-metric-top"><span>Spiele heute</span><span class="admin-metric-icon green">🎮</span></div><strong>—</strong><small>Spielstatistik noch nicht angebunden</small></article>
+            <article class="admin-metric-card"><div class="admin-metric-top"><span>Neue Nachrichten</span><span class="admin-metric-icon violet">✉</span></div><strong id="adminMetricNewMessages">0</strong><small>Ungelesene private Nachrichten</small></article>
+            <article class="admin-metric-card"><div class="admin-metric-top"><span>Neues Feedback</span><span class="admin-metric-icon amber">☷</span></div><strong id="adminMetricNewFeedback">0</strong><small>Neue Rückmeldungen</small></article>
+          </div>
+          <div class="admin-dashboard-grid">
+            <section class="admin-surface-card admin-activity-panel"><div class="admin-card-heading"><div><h3>Aktivität (letzte 7 Tage)</h3><p>Eingegangene Feedback-Nachrichten pro Tag</p></div><span class="admin-chart-legend"><i></i> Feedback</span></div><div id="adminActivityChart" class="admin-activity-chart"><div class="admin-empty-state">Aktivität wird geladen …</div></div></section>
+            <section class="admin-surface-card admin-quick-panel"><div class="admin-card-heading"><div><h3>Schnellaktionen</h3><p>Direkt zu den wichtigen Bereichen</p></div></div><button type="button" class="admin-quick-link" onclick="adminNavigate('messages')"><span class="admin-quick-icon violet">✉</span><span><strong>Nachrichten öffnen</strong><small>Private Gespräche ansehen und antworten</small></span><b>›</b></button><button type="button" class="admin-quick-link" onclick="adminNavigate('feedback')"><span class="admin-quick-icon amber">☷</span><span><strong>Feedback verwalten</strong><small>Ideen, Hinweise und Fehler bearbeiten</small></span><b>›</b></button><button type="button" class="admin-quick-link" onclick="adminRefreshAll()"><span class="admin-quick-icon blue">↻</span><span><strong>Daten aktualisieren</strong><small>Neue Nachrichten und Rückmeldungen laden</small></span><b>›</b></button><div class="admin-data-note"><span>i</span><p>Benutzer- und Spielzahlen werden erst angezeigt, wenn dafür eine sichere Statistik-Schnittstelle eingerichtet ist.</p></div></section>
+          </div>
+          <div class="admin-overview-lower-grid">
+            <section class="admin-surface-card admin-recent-panel"><div class="admin-card-heading"><div><h3>Neueste Nachrichten</h3><p>Die letzten privaten Gespräche</p></div><button type="button" class="admin-text-button" onclick="adminNavigate('messages')">Alle anzeigen →</button></div><div id="adminRecentMessages" class="admin-recent-list"><div class="admin-empty-state">Nachrichten werden geladen …</div></div></section>
+            <section class="admin-surface-card admin-recent-panel"><div class="admin-card-heading"><div><h3>Neueste Feedbacks</h3><p>Neue Ideen und gemeldete Probleme</p></div><button type="button" class="admin-text-button" onclick="adminNavigate('feedback')">Alle anzeigen →</button></div><div id="adminRecentFeedback" class="admin-recent-list"><div class="admin-empty-state">Rückmeldungen werden geladen …</div></div></section>
+          </div>
+        </section>
+
+        <section class="admin-page hidden" data-admin-panel="feedback">
+          <div class="admin-page-intro"><div><p class="admin-eyebrow">POSTEINGANG</p><h2>Feedback</h2><p class="admin-muted">Ideen, Verbesserungsvorschläge und Fehlerberichte verwalten.</p></div><button type="button" class="admin-outline-button" onclick="adminLoadFeedback(true)">↻ Aktualisieren</button></div>
+          <div class="admin-filter-bar"><label class="admin-search-box"><span>⌕</span><input id="adminSearch" type="search" placeholder="Nach Nachricht, E-Mail, Gerät oder ID suchen …" autocomplete="off"></label><label class="admin-select-wrap"><span>Status</span><select id="adminStatusFilter"><option value="">Alle Status</option><option value="new">Neu</option><option value="in_review">In Bearbeitung</option><option value="resolved">Erledigt</option></select></label><label class="admin-select-wrap"><span>Kategorie</span><select id="adminCategoryFilter"><option value="">Alle Kategorien</option><option value="bug">Fehler</option><option value="idea">Idee</option><option value="game">Spielmodus</option><option value="design">Design</option><option value="other">Sonstiges</option></select></label></div>
+          <p id="adminFeedbackStatus" class="admin-result-count" aria-live="polite"></p><div id="adminFeedbackList" class="admin-feedback-list"></div>
+        </section>
+
+        <section class="admin-page hidden" data-admin-panel="messages">
+          <div class="admin-page-intro"><div><p class="admin-eyebrow">DIREKTER KONTAKT</p><h2>Private Nachrichten</h2><p class="admin-muted">Öffne eine Unterhaltung und antworte direkt aus dem Admin-Bereich.</p></div><button type="button" class="admin-outline-button" onclick="adminLoadPrivateConversations()">↻ Aktualisieren</button></div>
+          <p id="adminPrivateStatus" class="admin-result-count" role="status"></p>
+          <div class="admin-messages-layout"><section class="admin-surface-card admin-conversations-panel"><div class="admin-card-heading"><div><h3>Unterhaltungen</h3><p>Nachrichten von registrierten Nutzern</p></div></div><div id="adminPrivateConversations" class="admin-conversation-list"><div class="admin-empty-state">Unterhaltungen werden geladen …</div></div></section><section id="adminPrivateThread" class="admin-surface-card admin-thread-panel"><div class="admin-thread-empty"><span>☷</span><h3>Gespräch auswählen</h3><p>Wähle links eine Unterhaltung aus, um den Verlauf zu lesen und zu antworten.</p></div></section></div>
+        </section>
+      </div>
+      <footer class="admin-footer"><span>MatheMeister Admin Center</span><span>Verwaltung · V10.7.1</span></footer>
+    </main>
   </div>
 </section>
-<footer class="foot">MatheMeister Pro v10.5.3 · Game Creator · Live-Spiel · Community</footer>
+<footer class="foot">MatheMeister Pro v10.7.1 · Admin Center</footer>
 </div>
 <button id="globalBackButton" type="button" onclick="goBack()" aria-label="Einen Schritt zurück"><span class="back-arrow" aria-hidden="true">←</span><span>Zurück</span></button>
 <div id="appModal" class="modal-overlay hidden" role="presentation" aria-hidden="true">
@@ -2075,7 +2433,7 @@ button:disabled,
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.5.3" defer></script>
+<script src="./app.js?v=10.7.1" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {

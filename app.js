@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * V10.4 classroom privacy, final-screen separation and end-only CSV export.
+ * V10.7.0 Admin Center visual refresh; existing learning, multiplayer and Supabase logic retained.
  * Some embedded iOS browsers may not synthesize a click consistently after a tap.
  * This delegates touch handling so it also covers buttons created later by innerHTML.
  * It avoids eval/new Function and keeps the existing application handlers intact.
@@ -202,7 +202,7 @@ async function handleFeedbackSubmit(event){
   event.preventDefault();const form=event.currentTarget, status=$('feedbackSubmitStatus'), button=form.querySelector('button[type=\"submit\"]');
   const message=$('feedbackMessage')?.value.trim()||'';if(message.length<10){if(status)status.textContent='Bitte beschreibe dein Anliegen mit mindestens 10 Zeichen.';return;}
   if(button)button.disabled=true;if(status)status.textContent='Wird sicher gesendet …';
-  try{const sb=await getSb();const {data:result,error}=await sb.rpc('mm_submit_feedback',{p_category:$('feedbackType').value,p_message:message,p_device:$('feedbackDevice').value||null,p_email:$('feedbackEmail').value.trim()||null,p_client_key:feedbackClientKey()});if(error)throw error;if(!result?.ok)throw new Error('Der Server konnte den Eingang nicht bestätigen.');form.reset();if(status)status.textContent='Vielen Dank! Deine Nachricht wurde erfolgreich gesendet. ❤️';showToast('Feedback erfolgreich gesendet.');}
+  try{const sb=await getSb();const {data:result,error}=await sb.rpc('mm_submit_feedback',{p_category:$('feedbackType').value,p_message:message,p_device:$('feedbackDevice').value||null,p_email:$('feedbackEmail')?.value.trim()||null,p_client_key:feedbackClientKey()});if(error)throw error;if(!result?.ok)throw new Error('Der Server konnte den Eingang nicht bestätigen.');form.reset();if(status)status.textContent='Vielen Dank! Deine Nachricht wurde erfolgreich gesendet. ❤️';showToast('Feedback erfolgreich gesendet.');}
   catch(e){if(status)status.textContent='Senden fehlgeschlagen: '+(e.message||'Bitte später erneut versuchen.');}
   finally{if(button)button.disabled=false;}
 }
@@ -263,7 +263,9 @@ let game= {
     startedAt:0,
     remaining:0,
     attempts:0,
-    roundErrors:[]
+    roundErrors:[],
+    lastAnswerValue:null,
+    lastAnsweredAt:0
 }
 ;
 const LEVELS= {
@@ -353,7 +355,7 @@ function openSiteInfo(topic='about'){
     privacy:{title:'Datenschutz & Sicherheit',intro:'MatheMeister soll ohne unnötige Hürden nutzbar sein. Deshalb gibt es aktuell keinen verpflichtenden Benutzeraccount.',html:`<div class="info-grid"><article class="info-card"><h3>📱 Lokale Daten</h3><p>Name, Avatar, Übungsstatistik, XP, Münzen und Shop-Käufe werden derzeit in diesem Browser gespeichert. Sie synchronisieren sich nicht automatisch zwischen Geräten und können beim Löschen der Browserdaten verloren gehen.</p></article><article class="info-card"><h3>🌐 Live-Spiel</h3><p>Live-Räume verwenden Supabase-RPC-Funktionen. Der Host verwaltet Spieler und sieht die vollständigen Ergebnisse. Spieler sehen nur die für sie bestimmte Ansicht und die öffentliche Top 10.</p></article><article class="info-card"><h3>🛡️ Schutzmaßnahmen</h3><p>Spieler- und Host-Tokens sind Sitzungsnachweise. Teile keine Host-Tokens und veröffentliche keine privaten Zugangsdaten. Veröffentlichte Browser-Anwendungen dürfen nur öffentliche Supabase-Schlüssel verwenden – niemals einen Service-Role-Schlüssel.</p></article><article class="info-card"><h3>⚠️ Gastkonto: Grenzen</h3><p>Ohne dauerhaftes Konto kann die Website noch nicht zuverlässig erkennen, dass dieselbe Person auf einem anderen Gerät weiterspielt. Browserlokale Münzen sind nicht fälschungssicher. Für eine globale Rangliste oder sichere Wallet brauchen wir später anonyme Authentifizierung oder optionale Kontoverknüpfung und serverseitige Regeln.</p></article></div><p class="muted">Die tatsächlichen Datenbankrechte hängen außerdem davon ab, welche SQL-Migrationen auf dem Supabase-Projekt installiert wurden. Diese Seite ersetzt keine technische Sicherheitsprüfung des Live-Projekts.</p>`},
     about:{title:'Über MatheMeister',intro:'MatheMeister macht Kopfrechnen zu einem kleinen Wettkampf – mit Fortschritt, Belohnungen, synchronen Klassenfarben und fairen Spielregeln.',html:`<div class="info-grid"><article class="info-card"><h3>🚀 Unser Ziel</h3><p>Ein schnelles, freundliches und motivierendes Mathe-Spiel für Lernende, Klassen und Freundesgruppen.</p></article><article class="info-card"><h3>✨ Was uns wichtig ist</h3><ul><li>Schneller Einstieg ohne Pflichtkonto</li><li>Klare, faire Punktevergabe</li><li>Private Einzelergebnisse</li><li>Belohnungen nur zur Personalisierung</li><li>Bedienbar auf Handy und Computer</li></ul></article><article class="info-card"><h3>💡 Feedback</h3><p>Notiere dir Probleme mit Spielcode, Gerät und dem genauen Schritt. So lassen sich Fehler gezielt prüfen, ohne funktionierende Bereiche unnötig zu ändern.</p></article><article class="info-card"><h3>🧭 Nächste Ausbaustufen</h3><p>Serverseitige Münz-Wallet, optionale Gerätesynchronisierung, weitere Fragetypen und ein wachsender Katalog an Spielvorlagen.</p></article></div>`}
 ,
-    developer:{title:'Über mich – der Entwickler von MatheMeister',intro:'Ich entwickle MatheMeister mit dem Ziel, Lernen einfacher, kreativer und spielerischer zu machen.',html:`<div class="info-grid"><article class="info-card" style="grid-column:1/-1"><h3>👋 Hallo und willkommen!</h3><p>Ich bin der Entwickler von MatheMeister und arbeite Schritt für Schritt daran, aus einer eigenen Idee eine Plattform für Lernen und gemeinsames Spielen zu machen. Lernen soll nicht nur aus Aufgaben und richtigen Antworten bestehen. Es darf Spaß machen, Menschen zusammenbringen und Raum für eigene Ideen geben.</p><p>Mir ist besonders wichtig, dass jeder leicht eigene Spiele erstellen kann – auch Kinder, die noch nie programmiert haben. Eine Spielidee soll reichen, um loszulegen – die Technik soll im Hintergrund helfen und nicht im Weg stehen.</p></article><article class="info-card"><h3>🎮 Was ich aufbauen möchte</h3><p>MatheMeister soll ein Ort werden, an dem Menschen eigene Quizze, Puzzle und andere Spiele erstellen, mit Freunden spielen und ihre Ideen miteinander teilen können.</p></article><article class="info-card"><h3>🛠️ Schritt für Schritt</h3><p>Ich entwickle MatheMeister weiter, teste neue Funktionen und verbessere es anhand von Rückmeldungen. Nicht alles ist schon fertig – das Projekt wächst mit seinen Nutzern.</p></article><article class="info-card" style="grid-column:1/-1"><h3>💬 Danke, dass du dabei bist!</h3><p>Wenn du einen Fehler findest oder eine Idee hast, freue ich mich über dein Feedback. So kann MatheMeister gemeinsam besser werden.</p></article></div>`}
+    developer:{title:'Über mich – der Entwickler von MatheMeister',intro:'Ich entwickle MatheMeister mit dem Ziel, Lernen einfacher, kreativer und spielerischer zu machen.',html:`<div class="info-grid"><article class="info-card" style="grid-column:1/-1"><h3>👋 Hallo und willkommen!</h3><p>Ich bin der Entwickler von MatheMeister und arbeite Schritt für Schritt daran, aus einer eigenen Idee eine Plattform für Lernen und gemeinsames Spielen zu machen. Lernen soll nicht nur aus Aufgaben und richtigen Antworten bestehen. Es darf Spaß machen, Menschen zusammenbringen und Raum für eigene Ideen geben.</p><p>Mir ist besonders wichtig, dass jeder leicht eigene Spiele erstellen kann – auch Kinder, die noch nie programmiert haben. Eine Spielidee soll reichen, um loszulegen – die Technik soll im Hintergrund helfen und nicht im Weg stehen.</p></article><article class="info-card"><h3>🎮 Was ich aufbauen möchte</h3><p>MatheMeister soll ein Ort werden, an dem Menschen eigene Quizze, Puzzle und andere Spiele erstellen, mit Freunden spielen und ihre Ideen miteinander teilen können.</p></article><article class="info-card"><h3>🛠️ Schritt für Schritt</h3><p>Ich entwickle MatheMeister weiter, teste neue Funktionen und verbessere es anhand von Rückmeldungen. Nicht alles ist schon fertig – das Projekt wächst mit seinen Nutzern.</p></article><article class="info-card" style="grid-column:1/-1"><h3>💬 Danke, dass du dabei bist!</h3><p>Wenn du einen Fehler findest oder eine Idee hast, freue ich mich über dein Feedback. So kann MatheMeister gemeinsam besser werden.</p><button type="button" class="btn primary" style="margin-top:12px" onclick="show('feedbackScreen')">💡 Idee oder Problem melden</button></article></div>`}
   };
   const page=pages[topic]||pages.about;
   $('siteInfoTitle').textContent=page.title;$('siteInfoIntro').textContent=page.intro;$('siteInfoContent').innerHTML=page.html;
@@ -361,7 +363,8 @@ function openSiteInfo(topic='about'){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('siteMenu') && !$('siteMenu').classList.contains('hidden'))toggleSiteMenu(false);});
 
-// Screen history is separate from browser history. It lets the in-app button move one step back.
+// Screen history is separate from browser history. Each entry remembers the exact scroll offset.
+// Keeping the offset on the history entry (rather than only per screen) also handles revisiting a screen.
 const mmScreenHistory=[];
 let mmActiveScreen='home';
 function updateGlobalBackButton(){
@@ -374,18 +377,22 @@ function updateGlobalBackButton(){
 }
 function show(id, options={}) {
     const current=document.querySelector('.screen.active')?.id || mmActiveScreen || 'home';
-    if(current!==id){
+    const changingScreen=current!==id;
+    if(changingScreen){
       if(options.replaceCurrent){if(mmScreenHistory.length)mmScreenHistory.pop();}
       else if(!options.fromBack && id!=='home'){
-        mmScreenHistory.push(current);
+        mmScreenHistory.push({id:current,scrollY:Math.max(0,window.scrollY||window.pageYOffset||0)});
         if(mmScreenHistory.length>40)mmScreenHistory.shift();
       }
     }
     if(id==='home')mmScreenHistory.length=0;
     mmActiveScreen=id;
+    document.body.classList.toggle('admin-mode',id==='adminScreen');
     if(current==='creator' && id!=='creator' && typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     $(id).classList.add('active');
+    document.querySelectorAll('#mobileTabbar [data-mobile-screen]').forEach(btn=>btn.classList.toggle('active',btn.dataset.mobileScreen===id));
+    document.body.classList.toggle('mobile-game-screen',id==='game');
     if(id==='home')refreshHome();
     if(id==='progress')renderProgress();
     if(id==='stats')renderStats();
@@ -393,8 +400,109 @@ function show(id, options={}) {
     if(id==='settings'){ ensureEconomy(); updateAvatarChoices(); $('profileName').value=data.name; $('profileAvatar').value=data.avatar || '🦊'; }
     if(id==='creator' && typeof creatorRenderResumeCard==='function')creatorRenderResumeCard();
     updateGlobalBackButton();
-    window.scrollTo({top:0,behavior:'smooth'});
+    if(changingScreen){
+      const restoreY=options.fromBack?Math.max(0,Number(options.restoreScrollY)||0):0;
+      // Restore only after the destination is visible and its layout has settled.
+      // A second delayed frame covers the screen entrance animation on slower devices.
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        window.scrollTo({top:restoreY,left:0,behavior:'instant'});
+        requestAnimationFrame(()=>window.scrollTo({top:restoreY,left:0,behavior:'instant'}));
+      }));
+    }
+    persistAppViewState();
 }
+
+// V10.7.1 – keep the current screen and an in-progress local exercise across refreshes.
+// sessionStorage is intentionally used: a refresh in the same tab restores the view,
+// while a fresh tab/session starts normally. Live rooms keep their existing token flow.
+const MM_APP_SCREEN_KEY='mm-app-screen-v1';
+const MM_APP_HISTORY_KEY='mm-app-history-v1';
+const MM_APP_SCROLL_KEY='mm-app-scroll-v1';
+const MM_APP_GAME_KEY='mm-app-game-v1';
+const MM_APP_RESULT_KEY='mm-app-result-v1';
+const MM_RESTORABLE_SCREENS=new Set(['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen']);
+const MM_RESULT_FIELDS=['resultIcon','resultTitle','resultSub','resCorrect','resWrong','resAccuracy','xpEarned','recordMsg'];
+function persistAppViewState(){
+  try{
+    if(new URLSearchParams(window.location.search).has('join'))return;
+    const active=document.querySelector('.screen.active')?.id||mmActiveScreen||'home';
+    if(active==='home'||active==='adminScreen'){
+      sessionStorage.removeItem(MM_APP_SCREEN_KEY);sessionStorage.removeItem(MM_APP_HISTORY_KEY);
+      sessionStorage.removeItem(MM_APP_SCROLL_KEY);sessionStorage.removeItem(MM_APP_GAME_KEY);sessionStorage.removeItem(MM_APP_RESULT_KEY);
+      return;
+    }
+    sessionStorage.setItem(MM_APP_SCREEN_KEY,active);
+    sessionStorage.setItem(MM_APP_HISTORY_KEY,JSON.stringify(mmScreenHistory.slice(-40)));
+    sessionStorage.setItem(MM_APP_SCROLL_KEY,String(Math.max(0,window.scrollY||window.pageYOffset||0)));
+    if(active==='game'){
+      const feedback=$('feedback');
+      const snapshot={v:1,mode:game.mode,level:game.level,questions:game.questions,index:game.index,correct:game.correct,wrong:game.wrong,streak:game.streak,bestStreak:game.bestStreak,answered:game.answered,correctAnswer:game.correctAnswer,question:game.question,options:game.options,startedAt:game.startedAt,remaining:game.remaining,attempts:game.attempts,roundErrors:game.roundErrors,lastAnswerValue:game.lastAnswerValue,lastAnsweredAt:game.lastAnsweredAt,screenBeforeGame,feedbackText:feedback?.textContent||'',feedbackColor:feedback?.style.color||''};
+      sessionStorage.setItem(MM_APP_GAME_KEY,JSON.stringify(snapshot));
+      sessionStorage.removeItem(MM_APP_RESULT_KEY);
+    }else if(active==='result'){
+      const result={v:1};MM_RESULT_FIELDS.forEach(id=>{const el=$(id);result[id]=el?.textContent||'';});
+      sessionStorage.setItem(MM_APP_RESULT_KEY,JSON.stringify(result));sessionStorage.removeItem(MM_APP_GAME_KEY);
+    }else{
+      sessionStorage.removeItem(MM_APP_GAME_KEY);sessionStorage.removeItem(MM_APP_RESULT_KEY);
+    }
+  }catch(_){/* Private browsing or storage restrictions must not block the app. */}
+}
+function adminOrAppRestoreGame(snapshot){
+  if(!snapshot||snapshot.v!==1||!['classic','rush','daily','mistakes'].includes(snapshot.mode)||!Array.isArray(snapshot.questions)||snapshot.questions.length>1000)return false;
+  const numberOr=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
+  game={...game,mode:snapshot.mode,level:['easy','medium','hard'].includes(snapshot.level)?snapshot.level:'medium',questions:snapshot.questions,index:Math.max(0,numberOr(snapshot.index)),correct:Math.max(0,numberOr(snapshot.correct)),wrong:Math.max(0,numberOr(snapshot.wrong)),streak:Math.max(0,numberOr(snapshot.streak)),bestStreak:Math.max(0,numberOr(snapshot.bestStreak)),answered:Boolean(snapshot.answered),correctAnswer:numberOr(snapshot.correctAnswer),question:snapshot.question&&typeof snapshot.question==='object'?snapshot.question:null,options:Array.isArray(snapshot.options)?snapshot.options.map(Number).filter(Number.isFinite).slice(0,4):[],timer:null,startedAt:numberOr(snapshot.startedAt,Date.now()),remaining:numberOr(snapshot.remaining),attempts:Math.max(0,numberOr(snapshot.attempts)),roundErrors:Array.isArray(snapshot.roundErrors)?snapshot.roundErrors.slice(0,300):[],lastAnswerValue:snapshot.lastAnswerValue===null?null:numberOr(snapshot.lastAnswerValue),lastAnsweredAt:numberOr(snapshot.lastAnsweredAt)};
+  screenBeforeGame=MM_RESTORABLE_SCREENS.has(snapshot.screenBeforeGame)||snapshot.screenBeforeGame==='home'||snapshot.screenBeforeGame==='modes'?snapshot.screenBeforeGame:'modes';
+  if(!game.question||!Number.isFinite(Number(game.question.a))||!Number.isFinite(Number(game.question.b))){loadQuestion();}
+  else{
+    const timed=game.mode==='rush'||game.mode==='daily';
+    if(timed){const total=game.mode==='daily'?120:60;game.remaining=Math.max(0,total-(Date.now()-game.startedAt)/1000);if(game.remaining<=0){finishGame();return true;}}
+    $('gameBadge').textContent=game.mode==='rush'?'⚡ Math Rush · 60 Sekunden':game.mode==='daily'?'📅 Daily Challenge · 20 Aufgaben':game.mode==='mistakes'?'🎯 Fehler-Training':'🎯 Klassisch · '+LEVELS[game.level].title;
+    $('countTitle').textContent=game.mode==='rush'?'Versuche':'Aufgabe';
+    $('qHint').textContent='Wähle die richtige Antwort. Nur eine Antwort ist korrekt.';
+    $('progressLabel').textContent=game.mode==='rush'||game.mode==='daily'?'Verbleibende Zeit':game.mode==='mistakes'?'Deine Fehler verbessern':'Dein Fortschritt';
+    const shownIndex=game.answered?Math.max(1,game.index):game.index+1;
+    $('question').textContent=game.question.a+' × '+game.question.b+' = ?';
+    $('qLabel').textContent=game.mode==='rush'?'LEVEL '+(Math.floor((60-game.remaining)/12)+1)+' · BLITZRUNDE':game.mode==='daily'?'DAILY CHALLENGE · '+shownIndex+'/20':game.mode==='mistakes'?'FEHLER-TRAINING · '+shownIndex+'/'+game.questions.length:'AUFGABE '+shownIndex+'/'+game.questions.length;
+    $('gCount').textContent=game.mode==='rush'?game.attempts+' Versuche':shownIndex+' / '+(game.mode==='daily'?20:game.questions.length);
+    $('gCorrect').textContent=game.correct;$('gStreak').textContent=game.streak;
+    const box=$('answers');box.innerHTML='';
+    game.options.forEach(value=>{const button=document.createElement('button');button.className='answer';button.type='button';button.textContent=String(value);button.setAttribute('aria-label','Antwort: '+value);if(game.answered){button.disabled=true;if(Number(value)===game.question.answer)button.classList.add('correct');if(Number(value)===Number(game.lastAnswerValue)&&Number(value)!==game.question.answer)button.classList.add('wrong');}else button.onclick=()=>answer(Number(value),button);box.appendChild(button);});
+    const feedback=$('feedback');feedback.textContent=snapshot.feedbackText||'';feedback.style.color=snapshot.feedbackColor||'';
+    const next=$('nextBtn');if(game.answered&&!timed){next.classList.remove('hidden');next.textContent=game.index>=game.questions.length?'Ergebnis ansehen →':'Nächste Aufgabe →';}else next.classList.add('hidden');
+    if(timed){$('progressBar').style.width=(game.remaining/(game.mode==='daily'?120:60)*100)+'%';$('progressText').textContent=Math.ceil(game.remaining)+' s';}
+    else{$('progressBar').style.width=(game.index/game.questions.length*100)+'%';$('progressText').textContent=Math.round(game.index/game.questions.length*100)+'%';}
+  }
+  if(game.mode==='rush'||game.mode==='daily'){
+    if(game.answered){const elapsed=Date.now()-game.lastAnsweredAt;const delay=Math.max(0,450-elapsed);if(delay===0)loadQuestion();else setTimeout(()=>{if(document.querySelector('.screen.active')?.id==='game'&&game.answered)loadQuestion();},delay);}
+    if(game.timer)clearInterval(game.timer);game.timer=setInterval(tick,100);
+  }
+  persistAppViewState();
+  return true;
+}
+function restoreAppViewState(){
+  try{
+    if(new URLSearchParams(window.location.search).has('join'))return;
+    const screen=sessionStorage.getItem(MM_APP_SCREEN_KEY);if(!screen||screen==='home'||screen==='adminScreen'||screen==='siteInfo')return;
+    let history=[];try{const saved=JSON.parse(sessionStorage.getItem(MM_APP_HISTORY_KEY)||'[]');if(Array.isArray(saved))history=saved.filter(item=>item&&typeof item.id==='string'&&item.id!=='adminScreen').slice(-40);}catch(_){history=[];}
+    const scrollY=Math.max(0,Number(sessionStorage.getItem(MM_APP_SCROLL_KEY))||0);
+    if(screen==='live')return; // restoreLiveSession() owns live-room reconnection.
+    if(screen==='game'){
+      let snapshot=null;try{snapshot=JSON.parse(sessionStorage.getItem(MM_APP_GAME_KEY)||'null');}catch(_){snapshot=null;}
+      if(!snapshot){sessionStorage.removeItem(MM_APP_SCREEN_KEY);return;}
+      show('game',{fromBack:true});mmScreenHistory.splice(0,mmScreenHistory.length,...history);adminOrAppRestoreGame(snapshot);return;
+    }
+    if(screen==='result'){
+      let result=null;try{result=JSON.parse(sessionStorage.getItem(MM_APP_RESULT_KEY)||'null');}catch(_){result=null;}
+      if(!result||result.v!==1){sessionStorage.removeItem(MM_APP_SCREEN_KEY);return;}
+      show('result',{fromBack:true});MM_RESULT_FIELDS.forEach(id=>{const el=$(id);if(el)el.textContent=String(result[id]||'');});
+      mmScreenHistory.splice(0,mmScreenHistory.length,...history);if(scrollY)requestAnimationFrame(()=>window.scrollTo(0,scrollY));persistAppViewState();return;
+    }
+    if(MM_RESTORABLE_SCREENS.has(screen)){
+      show(screen,{fromBack:true});mmScreenHistory.splice(0,mmScreenHistory.length,...history);if(scrollY)requestAnimationFrame(()=>window.scrollTo(0,scrollY));
+    }
+  }catch(_){/* Ignore stale session data and start safely on the home screen. */}
+}
+
 async function goBack(){
   const current=document.querySelector('.screen.active')?.id || mmActiveScreen;
   if(current==='creator'){
@@ -410,8 +518,8 @@ async function goBack(){
     return;
   }
   if(current==='game'){await quitGame();return;}
-  const target=mmScreenHistory.pop()||'home';
-  show(target,{fromBack:true});
+  const previous=mmScreenHistory.pop()||{id:'home',scrollY:0};
+  show(previous.id,{fromBack:true,restoreScrollY:previous.scrollY});
 }
 function editProfile() {
     show('settings')
@@ -532,9 +640,9 @@ max) {
     return shuffle([...set])
 }
 function startClassic(level) {
+    screenBeforeGame=document.querySelector('.screen.active')?.id || 'modes';
     game.mode='classic';
     game.level=level;
-    screenBeforeGame='modes';
     game.questions=[];
     const max=LEVELS[level].max;
     for(let a=1;
@@ -555,6 +663,7 @@ function startClassic(level) {
     loadQuestion()
 }
 function startRush() {
+    screenBeforeGame=document.querySelector('.screen.active')?.id || 'home';
     game.mode='rush';
     game.level='hard';
     game.questions=[];
@@ -573,6 +682,7 @@ async function startDaily() {
     if(data.daily.done&&data.daily.date===today()) {
         if(!await customConfirm({title:'Tägliche Challenge erneut spielen?',message:'Du hast die heutige Challenge schon abgeschlossen. Du kannst sie erneut spielen, erhältst den Tagesbonus aber nicht ein zweites Mal.',confirmText:'Noch einmal spielen',cancelText:'Abbrechen',icon:'📅',tone:'primary'}))return
     }
+    screenBeforeGame=document.querySelector('.screen.active')?.id || 'home';
     game.mode='daily';
     game.level='medium';
     game.questions=[];
@@ -591,6 +701,7 @@ async function startDaily() {
     100)
 }
 function startMistakes() {
+    screenBeforeGame=document.querySelector('.screen.active')?.id || 'home';
     const pairs=[];
     Object.entries(data.errors).forEach(([k,
     count])=> {
@@ -634,6 +745,7 @@ function resetGame() {
     game.remaining=0;
     game.attempts=0;
     game.roundErrors=[];
+    game.lastAnswerValue=null;game.lastAnsweredAt=0;
     $('feedback').textContent='';
     $('progressBar').style.width='0%'
 }
@@ -656,6 +768,7 @@ function loadQuestion() {
         return
     }
     game.answered=false;
+    game.lastAnswerValue=null;game.lastAnsweredAt=0;
     game.attempts++;
     let pair=null;
     if(game.mode==='classic'||game.mode==='mistakes')pair=game.questions[game.index];
@@ -695,11 +808,13 @@ function loadQuestion() {
         $('progressBar').style.width=(game.remaining/(game.mode==='daily'?120:60)*100)+'%';
         $('progressText').textContent=Math.ceil(game.remaining)+' s'
     }
+    persistAppViewState();
 }
 function answer(val,
 btn) {
     if(game.answered)return;
     game.answered=true;
+    game.lastAnswerValue=Number(val);game.lastAnsweredAt=Date.now();
     const q=game.question;
     const key=q.a+'x'+q.b;
     const buttons=[...document.querySelectorAll('#answers .answer')];
@@ -751,6 +866,7 @@ btn) {
         ,
         450)
     }
+    persistAppViewState();
 }
 function nextQuestion() {
     if(!game.answered)return;
@@ -842,7 +958,17 @@ async function quitGame() {
         clearInterval(game.timer);
         game.timer=null
     }
-    show(game.mode==='classic'?'modes':'home',{replaceCurrent:true})
+    const fallbackDestination=screenBeforeGame || (game.mode==='classic'?'modes':'home');
+    const previous=mmScreenHistory.length?mmScreenHistory[mmScreenHistory.length-1]:null;
+    // The game screen was pushed onto this stack when it opened. Pop that exact
+    // origin entry so leaving a game behaves like the global Back button.
+    if(previous){
+        mmScreenHistory.pop();
+        show(previous.id,{fromBack:true,restoreScrollY:previous.scrollY});
+    }else{
+        // Defensive fallback for entry paths that did not create a history item.
+        show(fallbackDestination,{fromBack:true,restoreScrollY:0});
+    }
 }
 function yesterday() {
     const d=new Date();
@@ -1845,6 +1971,7 @@ function rewardLiveQuestion(){
 }
 async function restoreLiveSession(){
   if(new URLSearchParams(window.location.search).get('join'))return;
+  try{const lastScreen=sessionStorage.getItem(MM_APP_SCREEN_KEY);if(lastScreen&&lastScreen!=='live')return;}catch(_){}
   let saved;try{saved=JSON.parse(localStorage.getItem('mm-live-session-v4')||'null');}catch(_){saved=null;}
   if(!saved||!saved.code||!saved.token)return;
   try{
@@ -2389,29 +2516,171 @@ function creatorRenderReaction(){const r=creatorRun,c=r.config;r.reactionCount=0
 function creatorReactionTap(){const r=creatorRun;if(!r||r.done)return;if(!r.reactionStarted){r.reactionStarted=true;r.reactionDeadline=Date.now()+r.config.settings.seconds*1000;creatorRunTimer=setInterval(()=>{if(!creatorRun||creatorRun!==r){creatorStopRunTimer();return;}r.reactionRemaining=Math.max(0,Math.ceil((r.reactionDeadline-Date.now())/1000));const t=$('creatorReactionTime');if(t)t.textContent=r.reactionRemaining;if(r.reactionRemaining<=0){creatorStopRunTimer();r.done=true;r.score=r.reactionCount*r.config.settings.points;$('creatorPlayArea').innerHTML=`<div class="creator-play-question">🏁 Zeit ist um!</div><p>Du hast ${r.reactionCount} Mal getippt.</p><div class="creator-actions-row"><button class="btn primary" onclick="creatorRenderGameEnd()">Ergebnis ansehen</button></div>`;}},200);}r.reactionCount++;r.score=r.reactionCount*r.config.settings.points;const cnt=$('creatorReactionCount');if(cnt)cnt.textContent=r.reactionCount;const b=$('creatorReactionTarget');if(b){b.style.transform=`scale(${r.reactionCount%2?.97:1}) rotate(${r.reactionCount%2?1:-1}deg)`;b.textContent=r.reactionCount%5===0?'🔥 NOCHMAL!':'⚡ TREFFER!';}}
 function creatorRenderGameEndReaction(){creatorRenderGameEnd();}
 function creatorPreviewInit(){creatorRenderTemplateGrid();creatorRenderLibrary();creatorRenderResumeCard();}
-window.addEventListener('pagehide',()=>{if(creatorAutoSaveTimer){clearTimeout(creatorAutoSaveTimer);creatorAutoSaveTimer=null;}creatorAutoSaveNow();});
+window.addEventListener('pagehide',()=>{if(creatorAutoSaveTimer){clearTimeout(creatorAutoSaveTimer);creatorAutoSaveTimer=null;}creatorAutoSaveNow();persistAppViewState();});
 
 
 
-// Admin panel: authenticated Supabase session + server-side allowlist checks.
+// V10.6.0 – optional user accounts and private admin conversations.
+let mmPrivateUser = null;
+let mmPrivateConversationId = null;
+let mmAdminPrivateRows = [];
+function feedbackChooseMode(mode){
+  const anon=$('feedbackAnonymousPanel'),priv=$('feedbackPrivatePanel');
+  anon?.classList.toggle('hidden',mode!=='anonymous');
+  priv?.classList.toggle('hidden',mode!=='private');
+  if(mode==='private')privateRefreshSession();
+}
+async function privateRefreshSession(){
+  try{const sb=await getSb();const {data,error}=await sb.auth.getSession();if(error)throw error;mmPrivateUser=data.session?.user||null;privateSetView();if(mmPrivateUser)await privateLoadMessages();}
+  catch(e){const st=$('privateAuthStatus');if(st)st.textContent=e.message||'Verbindung fehlgeschlagen.';}
+}
+function privateSetView(){
+  $('privateAuthPanel')?.classList.toggle('hidden',!!mmPrivateUser);
+  $('privateInboxPanel')?.classList.toggle('hidden',!mmPrivateUser);
+  if($('privateSignedInAs'))$('privateSignedInAs').textContent=mmPrivateUser?'Angemeldet als '+(mmPrivateUser.email||'Nutzer')+(mmPrivateUser.email_confirmed_at?'':' · E-Mail noch nicht bestätigt'):'';
+}
+async function privateSignUp(){
+  const email=$('privateEmail')?.value.trim()||'',password=$('privatePassword')?.value||'',st=$('privateAuthStatus');
+  if(!email||password.length<8){if(st)st.textContent='Bitte gib eine gültige E-Mail und ein Passwort mit mindestens 8 Zeichen ein.';return;}
+  try{const sb=await getSb();const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin+window.location.pathname+'#feedback'}});if(error)throw error;if(st)st.textContent=data.session?'Konto erstellt. Du bist jetzt angemeldet.':'Fast geschafft! Bitte bestätige deine E-Mail über den zugesendeten Link und melde dich danach an.';if(data.session){mmPrivateUser=data.user;privateSetView();}}
+  catch(e){if(st)st.textContent='Registrierung fehlgeschlagen: '+(e.message||'');}
+}
+async function privateAuthSubmit(event){event.preventDefault();const st=$('privateAuthStatus');try{const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('privateEmail').value.trim(),password:$('privatePassword').value});if(error)throw error;if(!data.user?.email_confirmed_at)throw new Error('Bitte bestätige zuerst deine E-Mail-Adresse.');mmPrivateUser=data.user;$('privatePassword').value='';privateSetView();await privateLoadMessages();}catch(e){if(st)st.textContent='Anmeldung fehlgeschlagen: '+(e.message||'');}}
+async function privateSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmPrivateUser=null;mmPrivateConversationId=null;privateSetView();$('privateMessageList').innerHTML='';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
+async function privateLoadMessages(){
+  const out=$('privateMessageList');if(!out||!mmPrivateUser)return;out.innerHTML='<article class="info-card">Nachrichten werden geladen …</article>';
+  try{const sb=await getSb();const {data,error}=await sb.rpc('mm_private_user_list_messages');if(error)throw error;const rows=Array.isArray(data)?data:[];out.innerHTML=rows.length?rows.map(m=>`<article class="info-card"><div class="row" style="justify-content:space-between;gap:8px"><strong>${m.sender_role==='admin'?'🛡️ MatheMeister-Team':'👤 Du'}</strong><span class="muted" style="font-size:12px">${esc(new Date(m.created_at).toLocaleString('de-DE'))}</span></div><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(m.body)}</p></article>`).join(''):'<article class="info-card">Noch keine Nachrichten. Du kannst oben deine erste Nachricht senden.</article>';}
+  catch(e){out.innerHTML=`<article class="info-card">Nachrichten konnten nicht geladen werden: ${esc(e.message||'')}</article>`;}
+}
+async function privateSendMessage(event){event.preventDefault();const text=$('privateMessageText')?.value.trim()||'',st=$('privateMessageStatus');if(text.length<3){if(st)st.textContent='Bitte schreibe mindestens 3 Zeichen.';return;}try{const sb=await getSb();const {error}=await sb.rpc('mm_private_user_send_message',{p_message:text});if(error)throw error;$('privateMessageText').value='';if(st)st.textContent='Deine Nachricht wurde gesendet.';await privateLoadMessages();}catch(e){if(st)st.textContent='Senden fehlgeschlagen: '+(e.message||'');}}
+async function adminLoadPrivateConversations(){
+ const out=$('adminPrivateConversations'),st=$('adminPrivateStatus');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltungen werden geladen …</div>';
+ try{const sb=await getSb();const {data,error}=await sb.rpc('mm_private_admin_list_conversations');if(error)throw error;mmAdminPrivateRows=Array.isArray(data)?data:[];out.innerHTML=mmAdminPrivateRows.length?mmAdminPrivateRows.map(r=>`<button type="button" class="admin-conversation-item" onclick="adminOpenPrivateConversation('${r.conversation_id}')"><span class="admin-conversation-head"><strong>${esc(r.email||'Nutzer')}</strong>${Number(r.unread_count)>0?`<span class="admin-unread-count">${Number(r.unread_count)}</span>`:''}</span><span class="admin-conversation-preview">${esc(r.last_message||'Noch keine Nachricht')}</span><span class="admin-conversation-time">${esc(new Date(r.last_at).toLocaleString('de-DE'))}</span></button>`).join(''):'<div class="admin-empty-state">Noch keine privaten Nachrichten.</div>';if(st)st.textContent=`${mmAdminPrivateRows.length} Unterhaltung(en) geladen.`;adminRenderOverview();}
+ catch(e){out.innerHTML=`<div class="admin-empty-state">${esc(e.message||'Fehler beim Laden')}</div>`;}
+}
+async function adminOpenPrivateConversation(id){
+ mmPrivateConversationId=id;document.querySelectorAll('.admin-conversation-item').forEach(el=>el.classList.toggle('active',el.getAttribute('onclick')?.includes(String(id))));const out=$('adminPrivateThread');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltung wird geladen …</div>';
+ try{const sb=await getSb();const {data,error}=await sb.rpc('mm_private_admin_get_messages',{p_conversation_id:id});if(error)throw error;const rows=Array.isArray(data)?data:[];out.innerHTML=`<div class="info-grid">${rows.map(m=>`<article class="info-card"><strong>${m.sender_role==='admin'?'🛡️ Admin':'👤 Nutzer'}</strong><p class="muted" style="font-size:12px">${esc(new Date(m.created_at).toLocaleString('de-DE'))}</p><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(m.body)}</p></article>`).join('')}</div><form class="feedback-form" onsubmit="adminSendPrivateReply(event)"><label for="adminPrivateReply">Antwort an Nutzer</label><textarea id="adminPrivateReply" required minlength="1" maxlength="3000" placeholder="Deine Antwort …"></textarea><button class="btn primary" type="submit">Antwort senden →</button><p id="adminPrivateReplyStatus" class="studio-field-note" role="status"></p></form>`;await adminLoadPrivateConversations();}
+ catch(e){out.innerHTML=`<p class="muted">${esc(e.message||'Fehler beim Laden')}</p>`;}
+}
+async function adminSendPrivateReply(event){event.preventDefault();const text=$('adminPrivateReply')?.value.trim()||'',st=$('adminPrivateReplyStatus');if(!mmPrivateConversationId||!text)return;try{const sb=await getSb();const {error}=await sb.rpc('mm_private_admin_reply',{p_conversation_id:mmPrivateConversationId,p_message:text});if(error)throw error;await adminOpenPrivateConversation(mmPrivateConversationId);}catch(e){if(st)st.textContent='Antwort fehlgeschlagen: '+(e.message||'');}}
+
+// Admin panel: the database RPCs are the authorization boundary; frontend visibility is not security.
 let mmAdminSession = null;
+let mmAdminFeedbackRows = [];
 function adminStatusLabel(v){return ({new:'Neu',in_review:'In Bearbeitung',resolved:'Erledigt'})[v]||v;}
 function adminCategoryLabel(v){return ({bug:'Fehler',idea:'Idee',game:'Spielmodus',design:'Design',other:'Sonstiges'})[v]||v;}
 function adminSetView(isAdmin){$('adminLoginPanel')?.classList.toggle('hidden',isAdmin);$('adminDashboard')?.classList.toggle('hidden',!isAdmin);}
+const mmAdminViewTitles={overview:'Admin Dashboard',feedback:'Feedback',messages:'Nachrichten'};
+function adminNavigate(view){
+ if(!mmAdminViewTitles[view])view='overview';
+ document.querySelectorAll('[data-admin-panel]').forEach(el=>el.classList.toggle('hidden',el.dataset.adminPanel!==view));
+ document.querySelectorAll('[data-admin-nav]').forEach(el=>el.classList.toggle('active',el.dataset.adminNav===view));
+ const title=$('adminHeaderTitle');if(title)title.textContent=mmAdminViewTitles[view];
+ adminToggleSidebar(false);
+ if(view==='messages' && mmAdminSession)adminLoadPrivateConversations();
+ if(view==='overview')adminRenderOverview();
+}
+function adminToggleSidebar(force){
+ const sidebar=$('adminSidebar'),overlay=$('adminDrawerOverlay'),button=document.querySelector('.admin-mobile-toggle');if(!sidebar||!overlay)return;
+ const open=typeof force==='boolean'?force:!sidebar.classList.contains('open');
+ sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);if(button)button.setAttribute('aria-expanded',String(open));
+}
+async function adminRefreshAll(){
+ const button=document.querySelector('[data-admin-refresh]');if(button){button.disabled=true;button.style.opacity='.55';}
+ try{await Promise.all([adminLoadFeedback(true),adminLoadPrivateConversations()]);adminRenderOverview();}
+ finally{if(button){button.disabled=false;button.style.opacity='';}}
+}
+function adminRenderOverview(){
+ const feedback=Array.isArray(mmAdminFeedbackRows)?mmAdminFeedbackRows:[];
+ const conversations=Array.isArray(mmAdminPrivateRows)?mmAdminPrivateRows:[];
+ const count=status=>feedback.filter(row=>row.status===status).length;
+ const unread=conversations.reduce((sum,row)=>sum+(Number(row.unread_count)||0),0);
+ const values={adminMetricNewFeedback:count('new'),adminMetricNewMessages:unread};
+ Object.entries(values).forEach(([id,value])=>{const el=$(id);if(el)el.textContent=String(value);});
+ const feedbackBadge=$('adminNavFeedbackBadge');if(feedbackBadge)feedbackBadge.textContent=String(count('new'));
+ const messageBadge=$('adminNavMessagesBadge');if(messageBadge)messageBadge.textContent=String(unread);
+ const dot=$('adminTopUnreadDot');if(dot)dot.classList.toggle('hidden',unread===0);
+ const recentFeedback=$('adminRecentFeedback');
+ if(recentFeedback){
+  const rows=[...feedback].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,4);
+  recentFeedback.innerHTML=rows.length?rows.map(row=>`<div class="admin-recent-item"><span class="admin-recent-symbol ${row.category==='bug'?'admin-symbol-bug':row.category==='idea'?'admin-symbol-idea':''}">${row.category==='bug'?'!':row.category==='idea'?'✦':'☷'}</span><div class="admin-recent-copy"><strong>${esc(adminCategoryLabel(row.category))} · #${Number(row.id)}</strong><p>${esc(row.message||'')}</p></div><span class="admin-recent-time">${esc(new Date(row.created_at).toLocaleDateString('de-DE'))}</span></div>`).join(''):'<div class="admin-empty-state">Noch keine Rückmeldungen vorhanden.</div>';
+ }
+ const recentMessages=$('adminRecentMessages');
+ if(recentMessages){
+  const rows=[...conversations].sort((a,b)=>new Date(b.last_at)-new Date(a.last_at)).slice(0,4);
+  recentMessages.innerHTML=rows.length?rows.map(row=>`<div class="admin-recent-item"><span class="admin-recent-symbol admin-symbol-message">✉</span><div class="admin-recent-copy"><strong>${esc(row.email||'Nutzer')}</strong><p>${esc(row.last_message||'Noch keine Nachricht')}</p></div><span class="admin-recent-time">${esc(row.last_at?new Date(row.last_at).toLocaleDateString('de-DE'):'')}</span></div>`).join(''):'<div class="admin-empty-state">Noch keine privaten Nachrichten vorhanden.</div>';
+ }
+ adminRenderActivityChart(feedback);
+}
+function adminRenderActivityChart(feedback){
+ const out=$('adminActivityChart');if(!out)return;
+ const days=[];const today=new Date();today.setHours(0,0,0,0);
+ for(let offset=6;offset>=0;offset--){const date=new Date(today);date.setDate(today.getDate()-offset);days.push({date,count:0,label:date.toLocaleDateString('de-DE',{weekday:'short'}).replace('.','')});}
+ feedback.forEach(row=>{const date=new Date(row.created_at);if(Number.isNaN(date.getTime()))return;date.setHours(0,0,0,0);const day=days.find(item=>item.date.getTime()===date.getTime());if(day)day.count++;});
+ const max=Math.max(1,...days.map(day=>day.count));const chartWidth=620,left=30,right=605,top=17,bottom=145;
+ const coords=days.map((day,index)=>({x:left+(right-left)*index/6,y:bottom-(day.count/max)*(bottom-top-12),...day}));
+ const line=coords.map((point,index)=>(index?'L':'M')+point.x.toFixed(1)+' '+point.y.toFixed(1)).join(' ');
+ const area=line+` L ${right} ${bottom} L ${left} ${bottom} Z`;
+ const ticks=max<=3?Array.from({length:max+1},(_,index)=>index):[0,Math.round(max/3),Math.round(max*2/3),max];const grid=ticks.map(val=>{const y=bottom-(val/max)*(bottom-top);return `<line class="grid-line" x1="${left}" y1="${y.toFixed(1)}" x2="${right}" y2="${y.toFixed(1)}"/><text x="8" y="${(y+4).toFixed(1)}">${val}</text>`;}).join('');
+ const labels=coords.map(point=>`<text x="${point.x.toFixed(1)}" y="169" text-anchor="middle">${esc(point.label)}</text><circle class="activity-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4.3"><title>${point.count} Feedback</title></circle>`).join('');
+ out.innerHTML=`<svg class="admin-activity-svg" viewBox="0 0 ${chartWidth} 180" role="img" aria-label="Feedback-Eingänge in den letzten sieben Tagen: ${days.map(day=>day.label+' '+day.count).join(', ')}"><defs><linearGradient id="adminActivityFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9b69f5" stop-opacity=".43"/><stop offset="1" stop-color="#9b69f5" stop-opacity=".02"/></linearGradient></defs>${grid}<path class="activity-area" d="${area}"/><path class="activity-line" d="${line}"/>${labels}</svg>`;
+}
+
+function adminRestoreScroll(y){const target=Math.max(0,Number(y)||0);requestAnimationFrame(()=>requestAnimationFrame(()=>{window.scrollTo({top:target,left:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo({top:target,left:0,behavior:'instant'}));}));setTimeout(()=>window.scrollTo({top:target,left:0,behavior:'instant'}),120);}
+async function adminCopyText(text,successMessage){try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(text);}else{throw new Error('Clipboard API nicht verfügbar');}showToast(successMessage);}catch(_){const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.left='-9999px';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();showToast(ok?successMessage:'Kopieren nicht möglich – bitte Text markieren.');}}
+async function adminCopyEmailSubject(id){const row=mmAdminFeedbackRows.find(r=>Number(r.id)===Number(id));if(!row?.contact_email){showToast('Keine E-Mail-Adresse vorhanden.');return;}await adminCopyText('Deine Nachricht an MatheMeister','Betreff wurde kopiert.');}
+async function adminCopyEmailTemplate(id){const row=mmAdminFeedbackRows.find(r=>Number(r.id)===Number(id));if(!row?.contact_email){showToast('Keine E-Mail-Adresse vorhanden.');return;}await adminCopyText('Hallo,\n\n\n\nViele Grüße\nMatheMeister','E-Mail-Vorlage wurde kopiert.');}
 async function adminLogin(event){
- event.preventDefault();const status=$('adminLoginStatus');const button=$('adminLoginForm')?.querySelector('button[type="submit"]');if(button)button.disabled=true;if(status)status.textContent='Anmeldung wird geprüft …';
- try{const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('adminEmail').value.trim(),password:$('adminPassword').value});if(error)throw error;mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');adminSetView(true);$('adminSignedInAs').textContent='Angemeldet als '+(data.user?.email||'Administrator');$('adminPassword').value='';if(status)status.textContent='';await adminLoadFeedback();}
- catch(e){if(status)status.textContent='Anmeldung fehlgeschlagen: '+(e.message||'Bitte Zugangsdaten prüfen.');adminSetView(false);}
+ event.preventDefault();const savedScrollY=window.scrollY||window.pageYOffset||0;const adminHistorySnapshot=mmScreenHistory.slice();const status=$('adminLoginStatus');const button=$('adminLoginForm')?.querySelector('button[type="submit"]');if(button)button.disabled=true;if(status)status.textContent='Anmeldung wird geprüft …';
+ try{
+  const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('adminEmail').value.trim(),password:$('adminPassword').value});if(error)throw error;
+  mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');
+  $('adminPassword').value='';
+  // Do not reveal the dashboard until the protected server-side RPC confirms admin access.
+  await adminLoadFeedback(true);
+  if(mmAdminSession)await adminLoadPrivateConversations();
+  if(!mmAdminSession)throw new Error('Dieses Konto besitzt keine Administratorrechte.');
+  $('adminSignedInAs').textContent='Angemeldet als '+(data.user?.email||'Administrator');if(status)status.textContent='';
+  // Authentication must not navigate away from the admin screen or discard its return history.
+  if((document.querySelector('.screen.active')?.id||'')!=='adminScreen'){mmScreenHistory.splice(0,mmScreenHistory.length,...adminHistorySnapshot);show('adminScreen',{fromBack:true,restoreScrollY:savedScrollY});}
+  adminRestoreScroll(savedScrollY);
+ }catch(e){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});mmAdminSession=null;adminSetView(false);if(status)status.textContent='Anmeldung fehlgeschlagen: '+(e.message||'Bitte Zugangsdaten prüfen.');if((document.querySelector('.screen.active')?.id||'')!=='adminScreen'){mmScreenHistory.splice(0,mmScreenHistory.length,...adminHistorySnapshot);show('adminScreen',{fromBack:true,restoreScrollY:savedScrollY});adminRestoreScroll(savedScrollY);}}
  finally{if(button)button.disabled=false;}
 }
-async function adminLoadFeedback(){
- const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');if(!out)return;out.innerHTML='';if(status)status.textContent='Berichte werden geladen …';
- try{const sb=await getSb();const {data:sessionData}=await sb.auth.getSession();mmAdminSession=sessionData.session;if(!mmAdminSession){adminSetView(false);if(status)status.textContent='Bitte erneut anmelden.';return;}const st=$('adminStatusFilter')?.value||null,cat=$('adminCategoryFilter')?.value||null;const {data,error}=await sb.rpc('mm_admin_list_feedback',{p_status:st,p_category:cat});if(error)throw error;const rows=Array.isArray(data)?data:[];if(status)status.textContent=rows.length+' Meldung(en) gefunden.';if(!rows.length){out.innerHTML='<article class="info-card">Noch keine Meldungen in diesem Filter.</article>';return;}out.innerHTML=rows.map(r=>`<article class="info-card" style="min-width:0"><div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap"><strong>#${Number(r.id)} · ${esc(adminCategoryLabel(r.category))}</strong><span class="pill">${esc(adminStatusLabel(r.status))}</span></div><p style="white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0">${esc(r.message)}</p><p class="muted" style="font-size:12px">${esc(new Date(r.created_at).toLocaleString('de-DE'))}${r.device?' · '+esc(r.device):''}</p>${r.contact_email?`<p><a href="mailto:${encodeURIComponent(r.contact_email)}">${esc(r.contact_email)}</a></p>`:''}<div class="row" style="gap:7px;flex-wrap:wrap;margin-top:12px"><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${Number(r.id)},'new')">Neu</button><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${Number(r.id)},'in_review')">In Bearbeitung</button><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${Number(r.id)},'resolved')">Erledigt</button><button class="btn secondary" type="button" onclick="adminDeleteFeedback(${Number(r.id)})">🗑 Löschen</button></div></article>`).join('');}
- catch(e){if(status)status.textContent='Fehler beim Laden: '+(e.message||'Zugriff verweigert.');out.innerHTML='';}
+function adminRenderFeedback(){
+ const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');if(!out)return;
+ const term=($('adminSearch')?.value||'').trim().toLocaleLowerCase('de-DE');
+ const rows=mmAdminFeedbackRows.filter(r=>!term||[r.message,r.contact_email,r.device,r.category,String(r.id)].some(v=>String(v||'').toLocaleLowerCase('de-DE').includes(term)));
+ if(status)status.textContent=`${rows.length} von ${mmAdminFeedbackRows.length} geladenen Rückmeldungen angezeigt.`;
+ if(!rows.length){out.innerHTML='<div class="admin-surface-card admin-empty-state">Keine passenden Rückmeldungen gefunden.</div>';adminRenderOverview();return;}
+ out.innerHTML=rows.map(r=>{
+  const id=Number(r.id),noteKey='mm-admin-note-'+id;let note='';try{note=localStorage.getItem(noteKey)||'';}catch(_){}
+  const created=esc(new Date(r.created_at).toLocaleString('de-DE'));
+  const statusClass=['new','in_review','resolved'].includes(r.status)?r.status:'new';
+  const contact=r.contact_email?`<p class="admin-feedback-meta">✉ ${esc(r.contact_email)}</p><div class="admin-reply-actions"><a class="btn secondary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=${encodeURIComponent(r.contact_email)}&amp;su=${encodeURIComponent('Deine Nachricht an MatheMeister')}&amp;body=${encodeURIComponent('Hallo,\n\n\n\nViele Grüße\nMatheMeister')}" target="_blank" rel="noopener noreferrer">E-Mail beantworten ↗</a><a class="btn secondary" href="mailto:${encodeURIComponent(r.contact_email)}?subject=${encodeURIComponent('Deine Nachricht an MatheMeister')}&amp;body=${encodeURIComponent('Hallo,\n\n\n\nViele Grüße\nMatheMeister')}">E-Mail-App öffnen</a><button class="btn secondary" type="button" onclick="adminCopyEmailSubject(${id})">Betreff kopieren</button><button class="btn secondary" type="button" onclick="adminCopyEmailTemplate(${id})">Vorlage kopieren</button></div><p class="admin-feedback-meta">Hinweis: Feedback ist eine einseitige Rückmeldung. Eine Antwort erfolgt nur per E-Mail, sofern eine Adresse angegeben wurde.</p>`:`<p class="admin-feedback-meta">Keine E-Mail-Adresse angegeben – eine direkte Antwort ist nicht möglich.</p>`;
+  return `<article class="admin-feedback-card"><div class="admin-feedback-head"><strong class="admin-feedback-category">#${id} · ${esc(adminCategoryLabel(r.category))}</strong><span class="admin-status-pill ${statusClass}">${esc(adminStatusLabel(r.status))}</span></div><p class="admin-feedback-message">${esc(r.message||'')}</p><p class="admin-feedback-meta">${created}${r.device?' · '+esc(r.device):''}</p>${contact}<label class="admin-note-label" for="adminNote${id}">Private Notiz <span>· nur in diesem Browser gespeichert</span></label><textarea id="adminNote${id}" class="admin-note" maxlength="1000" rows="2" placeholder="Eigene Notiz zu dieser Rückmeldung …" oninput="adminSaveNote(${id},this.value)">${esc(note)}</textarea><div class="admin-feedback-actions"><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${id},'new')">Neu</button><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${id},'in_review')">In Bearbeitung</button><button class="btn secondary" type="button" onclick="adminUpdateFeedback(${id},'resolved')">Erledigt</button><button class="btn secondary" type="button" onclick="adminDeleteFeedback(${id})">Löschen</button></div></article>`;
+ }).join('');
+ adminRenderOverview();
+}
+function adminSaveNote(id,value){try{localStorage.setItem('mm-admin-note-'+Number(id),String(value||'').slice(0,1000));}catch(_){showToast('Notiz konnte lokal nicht gespeichert werden.');}}
+function adminSaveReply(id,value){try{localStorage.setItem('mm-admin-reply-'+Number(id),String(value||'').slice(0,3000));}catch(_){showToast('Antwortentwurf konnte nicht gespeichert werden.');}}
+function adminGetReplyData(id){const row=mmAdminFeedbackRows.find(r=>Number(r.id)===Number(id));const draft=$('adminReply'+Number(id))?.value||'';return {row,draft:draft.trim()};}
+function adminOpenReply(id){const {row,draft}=adminGetReplyData(id);if(!row?.contact_email){showToast('Für diese Meldung ist keine E-Mail-Adresse vorhanden.');return;}if(!draft){showToast('Bitte schreibe zuerst deine Antwort.');$('adminReply'+Number(id))?.focus();return;}const subject='Deine Nachricht an MatheMeister';const body='Hallo,\n\n'+draft+'\n\nViele Grüße\nMatheMeister';const href='mailto:'+encodeURIComponent(row.contact_email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);window.location.href=href;}
+async function adminCopyReply(id){const {row,draft}=adminGetReplyData(id);if(!row?.contact_email){showToast('Für diese Meldung ist keine E-Mail-Adresse vorhanden.');return;}if(!draft){showToast('Bitte schreibe zuerst deine Antwort.');$('adminReply'+Number(id))?.focus();return;}const text='An: '+row.contact_email+'\nBetreff: Deine Nachricht an MatheMeister\n\nHallo,\n\n'+draft+'\n\nViele Grüße\nMatheMeister';try{await navigator.clipboard.writeText(text);showToast('Antworttext wurde kopiert.');}catch(_){const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();showToast(ok?'Antworttext wurde kopiert.':'Kopieren nicht möglich – bitte Text markieren.');}}
+async function adminLoadFeedback(keepDashboard=false){
+ const savedScrollY=window.scrollY||window.pageYOffset||0;const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');if(!out)return;out.innerHTML='';if(status)status.textContent='Berichte werden geladen …';
+ try{
+  const sb=await getSb();const {data:sessionData}=await sb.auth.getSession();mmAdminSession=sessionData.session;
+  if(!mmAdminSession){adminSetView(false);mmAdminFeedbackRows=[];if(status)status.textContent='Bitte erneut anmelden.';return;}
+  const st=$('adminStatusFilter')?.value||null,cat=$('adminCategoryFilter')?.value||null;
+  const {data,error}=await sb.rpc('mm_admin_list_feedback',{p_status:st,p_category:cat});if(error)throw error;
+  mmAdminFeedbackRows=Array.isArray(data)?data:[];adminSetView(true);adminRenderFeedback();adminRenderOverview();adminRestoreScroll(savedScrollY);
+ }catch(e){mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);out.innerHTML='';if(status)status.textContent='Kein Adminzugriff oder Fehler beim Laden: '+(e.message||'Zugriff verweigert.');if(!keepDashboard){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});}}
 }
 async function adminUpdateFeedback(id,statusValue){try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_update_feedback',{p_id:id,p_status:statusValue});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Status aktualisiert.');await adminLoadFeedback();}catch(e){showToast('Änderung fehlgeschlagen: '+(e.message||''));}}
 async function adminDeleteFeedback(id){if(!await customConfirm({title:'Meldung löschen?',message:'Diese Meldung wird dauerhaft gelöscht. Möchtest du fortfahren?',confirmText:'Endgültig löschen',cancelText:'Abbrechen',icon:'🗑️',tone:'danger'}))return;try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_delete_feedback',{p_id:id});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Meldung gelöscht.');await adminLoadFeedback();}catch(e){showToast('Löschen fehlgeschlagen: '+(e.message||''));}}
-async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmAdminSession=null;adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
+async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
 
 $('joinCode').addEventListener('input',
 e=>e.target.value=e.target.value.replace(/\D/g,
@@ -2432,10 +2701,15 @@ creatorPreviewInit();
 loadStudioFromLink();
 creatorLoadSharedLink();
 showFeedbackSuccessIfNeeded();
+restoreAppViewState();
 $('siteFeedbackForm')?.addEventListener('submit',handleFeedbackSubmit);
+$('privateAuthForm')?.addEventListener('submit',privateAuthSubmit);
+$('privateMessageForm')?.addEventListener('submit',privateSendMessage);
 $('adminLoginForm')?.addEventListener('submit',adminLogin);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')adminToggleSidebar(false);});
 $('adminStatusFilter')?.addEventListener('change',adminLoadFeedback);
 $('adminCategoryFilter')?.addEventListener('change',adminLoadFeedback);
+$('adminSearch')?.addEventListener('input',adminRenderFeedback);
 if (typeof restoreLiveSession === 'function') setTimeout(restoreLiveSession, 100);
 
 // Diagnostic marker: set only after the application initialization completed.
