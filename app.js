@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * V10.7.0 Admin Center visual refresh; existing learning, multiplayer and Supabase logic retained.
+ * V10.9.0 Einmaleins-Produktdesign; vorhandene Trainings-, Multiplayer- und Supabase-Abläufe bleiben erhalten.
  * Some embedded iOS browsers may not synthesize a click consistently after a tap.
  * This delegates touch handling so it also covers buttons created later by innerHTML.
  * It avoids eval/new Function and keeps the existing application handlers intact.
@@ -355,7 +355,7 @@ function openSiteInfo(topic='about'){
   const pages={
     how:{title:'So funktioniert MatheMeister',intro:'Lerne das Einmaleins, verbessere deine Bestleistungen und spiele live mit anderen.',html:`<div class="info-grid"><article class="info-card"><h3>🎯 Training</h3><p>Wähle Einfach, Mittel oder Schwer. Nach jeder Runde bekommst du eine Auswertung und sammelst Erfahrungspunkte.</p></article><article class="info-card"><h3>⚡ Math Rush</h3><p>Beantworte in 60 Sekunden so viele Aufgaben wie möglich. Versuche, deinen persönlichen Rekord zu schlagen.</p></article><article class="info-card"><h3>🏫 Klassenmodus</h3><p>Der Host zeigt die Frage am Computer. Auf den Handys antworten alle nur über vier Farbfelder.</p></article><article class="info-card"><h3>🌐 Freunde-Modus</h3><p>Frage und Antwortmöglichkeiten sind auf den Geräten aller Spieler sichtbar. Der Host kann die Runde verwalten und – optional – selbst mitspielen.</p></article><article class="info-card"><h3>👥 Team-Wettkampf</h3><p>Spielt als Einzelspieler oder in Teams. Es gibt eine Ergebnisrunde und eine Siegeransicht.</p></article><article class="info-card"><h3>🪙 Münzen & Shop</h3><p>Verdiene Spielmünzen und schalte kosmetische Profilrahmen, Titel, Avatare und Effekte frei. Diese Extras geben keinen Antwortvorteil.</p></article></div>`},
     privacy:{title:'Datenschutz & Sicherheit',intro:'MatheMeister soll ohne unnötige Hürden nutzbar sein. Deshalb gibt es aktuell keinen verpflichtenden Benutzeraccount.',html:`<div class="info-grid"><article class="info-card"><h3>📱 Lokale Daten</h3><p>Name, Avatar, Übungsstatistik, XP, Münzen und Shop-Käufe werden derzeit in diesem Browser gespeichert. Sie synchronisieren sich nicht automatisch zwischen Geräten und können beim Löschen der Browserdaten verloren gehen.</p></article><article class="info-card"><h3>🌐 Live-Spiel</h3><p>Live-Räume verwenden Supabase-RPC-Funktionen. Der Host verwaltet Spieler und sieht die vollständigen Ergebnisse. Spieler sehen nur die für sie bestimmte Ansicht und die öffentliche Top 10.</p></article><article class="info-card"><h3>🛡️ Schutzmaßnahmen</h3><p>Spieler- und Host-Tokens sind Sitzungsnachweise. Teile keine Host-Tokens und veröffentliche keine privaten Zugangsdaten. Veröffentlichte Browser-Anwendungen dürfen nur öffentliche Supabase-Schlüssel verwenden – niemals einen Service-Role-Schlüssel.</p></article><article class="info-card"><h3>⚠️ Gastkonto: Grenzen</h3><p>Ohne dauerhaftes Konto kann die Website noch nicht zuverlässig erkennen, dass dieselbe Person auf einem anderen Gerät weiterspielt. Browserlokale Münzen sind nicht fälschungssicher. Für eine globale Rangliste oder sichere Wallet brauchen wir später anonyme Authentifizierung oder optionale Kontoverknüpfung und serverseitige Regeln.</p></article></div><p class="muted">Die tatsächlichen Datenbankrechte hängen außerdem davon ab, welche SQL-Migrationen auf dem Supabase-Projekt installiert wurden. Diese Seite ersetzt keine technische Sicherheitsprüfung des Live-Projekts.</p>`},
-    about:{title:'Über MatheMeister',intro:'MatheMeister macht Kopfrechnen zu einem kleinen Wettkampf – mit Fortschritt, Belohnungen, synchronen Klassenfarben und fairen Spielregeln.',html:`<div class="info-grid"><article class="info-card"><h3>🚀 Unser Ziel</h3><p>Ein schnelles, freundliches und motivierendes Mathe-Spiel für Lernende, Klassen und Freundesgruppen.</p></article><article class="info-card"><h3>✨ Was uns wichtig ist</h3><ul><li>Schneller Einstieg ohne Pflichtkonto</li><li>Klare, faire Punktevergabe</li><li>Private Einzelergebnisse</li><li>Belohnungen nur zur Personalisierung</li><li>Bedienbar auf Handy und Computer</li></ul></article><article class="info-card"><h3>💡 Feedback</h3><p>Notiere dir Probleme mit Spielcode, Gerät und dem genauen Schritt. So lassen sich Fehler gezielt prüfen, ohne funktionierende Bereiche unnötig zu ändern.</p></article><article class="info-card"><h3>🧭 Nächste Ausbaustufen</h3><p>Serverseitige Münz-Wallet, optionale Gerätesynchronisierung, weitere Fragetypen und ein wachsender Katalog an Spielvorlagen.</p></article></div>`}
+    about:{title:'Über MatheMeister',intro:'MatheMeister macht das Einmaleins zu einem kleinen Wettkampf – mit Fortschritt, Belohnungen, synchronen Klassenfarben und fairen Spielregeln.',html:`<div class="info-grid"><article class="info-card"><h3>🚀 Unser Ziel</h3><p>Ein schnelles, freundliches und motivierendes Mathe-Spiel für Lernende, Klassen und Freundesgruppen.</p></article><article class="info-card"><h3>✨ Was uns wichtig ist</h3><ul><li>Schneller Einstieg ohne Pflichtkonto</li><li>Klare, faire Punktevergabe</li><li>Private Einzelergebnisse</li><li>Belohnungen nur zur Personalisierung</li><li>Bedienbar auf Handy und Computer</li></ul></article><article class="info-card"><h3>💡 Feedback</h3><p>Notiere dir Probleme mit Spielcode, Gerät und dem genauen Schritt. So lassen sich Fehler gezielt prüfen, ohne funktionierende Bereiche unnötig zu ändern.</p></article><article class="info-card"><h3>🧭 Nächste Ausbaustufen</h3><p>Serverseitige Münz-Wallet, optionale Gerätesynchronisierung, weitere Fragetypen und ein wachsender Katalog an Spielvorlagen.</p></article></div>`}
 ,
     developer:{title:'Über mich – der Entwickler von MatheMeister',intro:'Ich entwickle MatheMeister mit dem Ziel, Lernen einfacher, kreativer und spielerischer zu machen.',html:`<div class="info-grid"><article class="info-card" style="grid-column:1/-1"><h3>👋 Hallo und willkommen!</h3><p>Ich bin der Entwickler von MatheMeister und arbeite Schritt für Schritt daran, aus einer eigenen Idee eine Plattform für Lernen und gemeinsames Spielen zu machen. Lernen soll nicht nur aus Aufgaben und richtigen Antworten bestehen. Es darf Spaß machen, Menschen zusammenbringen und Raum für eigene Ideen geben.</p><p>Mir ist besonders wichtig, dass jeder leicht eigene Spiele erstellen kann – auch Kinder, die noch nie programmiert haben. Eine Spielidee soll reichen, um loszulegen – die Technik soll im Hintergrund helfen und nicht im Weg stehen.</p></article><article class="info-card"><h3>🎮 Was ich aufbauen möchte</h3><p>MatheMeister soll ein Ort werden, an dem Menschen eigene Quizze, Puzzle und andere Spiele erstellen, mit Freunden spielen und ihre Ideen miteinander teilen können.</p></article><article class="info-card"><h3>🛠️ Schritt für Schritt</h3><p>Ich entwickle MatheMeister weiter, teste neue Funktionen und verbessere es anhand von Rückmeldungen. Nicht alles ist schon fertig – das Projekt wächst mit seinen Nutzern.</p></article><article class="info-card" style="grid-column:1/-1"><h3>💬 Danke, dass du dabei bist!</h3><p>Wenn du einen Fehler findest oder eine Idee hast, freue ich mich über dein Feedback. So kann MatheMeister gemeinsam besser werden.</p><button type="button" class="btn primary" style="margin-top:12px" onclick="show('feedbackScreen')">💡 Idee oder Problem melden</button></article></div>`}
   };
@@ -1053,6 +1053,16 @@ function unlockBadges() {
 function renderProgress() {
     const l=currentLevel(),
     into=data.xp%100;
+    const attempts=(data.sessions||[]).reduce((n,s)=>n+(Number(s.attempted)||0),0);
+    const correct=(data.sessions||[]).reduce((n,s)=>n+(Number(s.correct)||0),0);
+    const accuracy=attempts?Math.round(correct/attempts*100):0;
+    const profileName=(data.name||'Einmaleins-Meister').trim();
+    if($('profileHeroAvatar'))$('profileHeroAvatar').textContent=data.avatar||'🦊';
+    if($('profileHeroName'))$('profileHeroName').textContent=profileName;
+    if($('profileHeroMeta'))$('profileHeroMeta').textContent=`Level ${l} · ${data.badges.length} Abzeichen freigeschaltet`;
+    if($('pAccuracy'))$('pAccuracy').textContent=accuracy+'%';
+    if($('pCoins'))$('pCoins').textContent=(Number(data.coins)||0)+' 🪙';
+    if($('pBadgeCount'))$('pBadgeCount').textContent=data.badges.length;
     $('pLevel').textContent=l;
     $('pXP').textContent=data.xp;
     $('pSessions').textContent=data.sessions.length;
@@ -1116,11 +1126,14 @@ async function clearStatsHistory(){
 
 function applyTeacherSettings() {
     const count=Number($('teacherCount').value),
-    sec=Number($('teacherTime').value);
+    sec=Number($('teacherTime').value),
+    difficulty=$('teacherDifficulty')?.value||'medium';
     $('liveCount').value=String(count);
     $('liveSeconds').value=String(sec);
-    showToast('Einstellungen übernommen. Du kannst jetzt einen Live-Raum erstellen.');
-    show('live')
+    $('liveDifficulty').value=difficulty;
+    if($('hostName')&&!$('hostName').value.trim())$('hostName').value=(data.name||'').slice(0,18);
+    show('live');
+    showToast('Klassenrunde vorbereitet. Erstelle jetzt den Raum und teile Code oder QR-Code mit deiner Klasse.');
 }
 function leaveLiveUI() {
     document.body.classList.remove('live-room-active','friends-player-lobby','classroom-player');
@@ -2259,16 +2272,16 @@ document.addEventListener('keydown', e => {
 const CREATOR_DRAFTS_KEY='mm-game-creator-drafts-v1';
 const CREATOR_CURRENT_KEY='mm-game-creator-current-v1';
 const CREATOR_META={
- quiz:{title:'Quiz mit Auswahl',icon:'🧠',tag:'Einsteiger',desc:'Vier Antwortmöglichkeiten, Punkte und Erklärungen.',help:'Erstelle Fragen und vier Antwortoptionen. Markiere genau eine richtige Antwort.'},
- truefalse:{title:'Richtig oder falsch',icon:'✅',tag:'Schnell',desc:'Kurze Aussagen, die Spieler bewerten müssen.',help:'Schreibe eine klare Aussage und lege fest, ob sie richtig oder falsch ist.'},
- short:{title:'Freie Texteingabe',icon:'⌨️',tag:'Wissen',desc:'Spieler tippen das Wort oder die Lösung ein.',help:'Du kannst mehrere gültige Antworten mit einem | trennen, zum Beispiel Berlin|berlin.'},
- multi:{title:'Mehrere Antworten',icon:'☑️',tag:'Knifflig',desc:'Mehrere Optionen können gleichzeitig richtig sein.',help:'Markiere jede richtige Option. Spieler müssen die vollständige Auswahl finden.'},
- matching:{title:'Paare zuordnen',icon:'🔗',tag:'Logik',desc:'Verbinde zusammengehörige Begriffe, Namen oder Bilderbeschreibungen.',help:'Lege linke und rechte Begriffe als Paare an. Spieler wählen passende Seiten nacheinander.'},
- memory:{title:'Memory',icon:'🃏',tag:'Klassiker',desc:'Decke Karten auf und finde passende Paare.',help:'Jede Zeile ist ein Paar. Verwende zum Beispiel ein Wort und seine Bedeutung oder zwei passende Begriffe.'},
- word:{title:'Wortsalat',icon:'🔤',tag:'Wörter',desc:'Entwirre Buchstaben und finde das gesuchte Wort.',help:'Lege das Zielwort und einen Hinweis an. Beim Spielen werden die Buchstaben gemischt.'},
- story:{title:'Entscheidungs-Story',icon:'🗺️',tag:'Kreativ',desc:'Spieler wählen, wie die Geschichte weitergeht.',help:'Jede Karte ist eine Szene. Jede Antwort kann eine Folge oder einen Ausgang der Geschichte zeigen.'},
- sorting:{title:'Reihenfolge-Puzzle',icon:'🧩',tag:'Puzzle',desc:'Ordne Schritte, Ereignisse oder Wörter in die richtige Reihenfolge.',help:'Schreibe die gewünschte Reihenfolge in die Liste. Im Spiel können Spieler die Elemente verschieben.'},
- reaction:{title:'Reaktions-Challenge',icon:'⚡',tag:'Arcade',desc:'Tippe möglichst oft auf das Ziel, bevor die Zeit endet.',help:'Stelle die Herausforderung ein. In dieser Version zählt jeder Klick auf die Zielschaltfläche.'}
+ quiz:{title:'Einmaleins-Quiz',icon:'🧠',tag:'Beliebt',desc:'Malaufgaben mit vier Antwortmöglichkeiten.',help:'Erstelle Multiplikationsaufgaben und markiere pro Frage genau eine richtige Lösung.'},
+ truefalse:{title:'Richtig oder falsch',icon:'✅',tag:'Schnell',desc:'Prüfe, ob eine Malaufgabe stimmt.',help:'Schreibe eine Multiplikationsaussage und lege fest, ob das Ergebnis richtig ist.'},
+ short:{title:'Lösung eintippen',icon:'⌨️',tag:'Fokus',desc:'Spieler geben das Ergebnis selbst ein.',help:'Gib die Malaufgabe ein und trage das richtige Ergebnis ein. Mehrere Schreibweisen kannst du mit | trennen.'},
+ multi:{title:'Mehrfach-Auswahl',icon:'☑️',tag:'Knifflig',desc:'Finde alle Malaufgaben mit demselben Ergebnis.',help:'Erstelle eine Frage, bei der mehrere Multiplikationsaufgaben richtig sein können.'},
+ matching:{title:'Malaufgaben zuordnen',icon:'🔗',tag:'Zuordnen',desc:'Verbinde jede Malaufgabe mit ihrem Ergebnis.',help:'Lege auf der linken Seite Malaufgaben und rechts die passenden Ergebnisse an.'},
+ memory:{title:'Einmaleins-Memory',icon:'🃏',tag:'Klassiker',desc:'Finde die passenden Paare aus Aufgabe und Ergebnis.',help:'Jede Zeile ist ein Paar: eine Multiplikationsaufgabe und ihr Produkt.'},
+ word:{title:'Zahlenmix',icon:'🔢',tag:'Zahlen',desc:'Ein Zahlenrätsel rund um Multiplikation.',help:'Erstelle eine kurze Zahlenaufgabe und beschreibe den passenden Rechenweg.'},
+ story:{title:'Mathe-Abenteuer',icon:'🗺️',tag:'Kreativ',desc:'Löse Malaufgaben, um die nächste Szene freizuschalten.',help:'Jede Szene enthält eine Multiplikationsaufgabe. Die richtige Antwort führt weiter.'},
+ sorting:{title:'Ergebnisse ordnen',icon:'🧩',tag:'Puzzle',desc:'Bringe Multiplikationsaufgaben in die richtige Reihenfolge.',help:'Schreibe die Aufgaben in der gewünschten Reihenfolge, zum Beispiel nach aufsteigendem Ergebnis.'},
+ reaction:{title:'Blitzrunde',icon:'⚡',tag:'Tempo',desc:'Eine schnelle Reaktionsrunde mit Malaufgaben.',help:'Diese ältere Vorlage bleibt für gespeicherte Entwürfe verfügbar.'}
 };
 let creatorDraft=null;
 let creatorRun=null;
@@ -2315,22 +2328,27 @@ function creatorResumeLastDraft(){
 }
 function creatorNewId(){return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function creatorBaseQuestion(type){
- if(type==='quiz')return {prompt:'Welche Antwort ist richtig?',image:'',options:['Antwort A','Antwort B','Antwort C','Antwort D'],correct:0,explanation:'Hier steht die Erklärung.'};
- if(type==='truefalse')return {prompt:'Diese Aussage ist richtig.',image:'',correct:true,explanation:'Schreibe kurz, warum.'};
- if(type==='short')return {prompt:'Wie lautet die Lösung?',image:'',answers:['Beispiel'],hint:'Ein kleiner Tipp'};
- if(type==='multi')return {prompt:'Wähle alle passenden Antworten.',image:'',options:['Auswahl A','Auswahl B','Auswahl C','Auswahl D'],correct:[0,2],explanation:'Nicht nur eine Antwort kann stimmen.'};
- if(type==='word')return {prompt:'Entwirre das Wort.',image:'',word:'PLANET',hint:'Ein Objekt im Weltraum'};
- if(type==='story')return {prompt:'Du stehst vor einer geheimnisvollen Tür. Was machst du?',image:'',options:[{text:'Ich öffne die Tür',outcome:'Du entdeckst einen hellen Raum.'},{text:'Ich suche einen Schlüssel',outcome:'Du findest eine Truhe.'},{text:'Ich gehe zurück',outcome:'Du entdeckst einen geheimen Weg.'},{text:'Ich rufe nach Hilfe',outcome:'Ein Begleiter kommt dazu.'}]};
- if(type==='sorting')return {prompt:'Ordne die Schritte in die richtige Reihenfolge.',image:'',items:['Erster Schritt','Zweiter Schritt','Dritter Schritt','Vierter Schritt']};
- return {prompt:'Neue Aufgabe',image:''};
+ if(type==='quiz')return {prompt:'Was ist 7 × 8?',image:'',options:['54','56','58','64'],correct:1,explanation:'7 mal 8 ist 56.'};
+ if(type==='truefalse')return {prompt:'6 × 7 = 42',image:'',correct:true,explanation:'6 mal 7 ist 42.'};
+ if(type==='short')return {prompt:'Wie viel ist 8 × 7?',image:'',answers:['56'],hint:'8 mal 7 …'};
+ if(type==='multi')return {prompt:'Welche Malaufgaben ergeben 24?',image:'',options:['3 × 8 = 24','6 × 4 = 24','5 × 5 = 24','2 × 12 = 24'],correct:[0,1,3],explanation:'3×8, 6×4 und 2×12 ergeben 24.'};
+ if(type==='word')return {prompt:'Löse die Malaufgabe und gib das Ergebnis ein.',image:'',word:'56',hint:'7 × 8'};
+ if(type==='story')return {prompt:'In 4 Schachteln liegen jeweils 6 Stifte. Wie viele Stifte sind es zusammen?',image:'',options:[{text:'24 Stifte',outcome:'Richtig! 4 × 6 = 24. Du kannst weitergehen.'},{text:'10 Stifte',outcome:'Nicht ganz. Überlege noch einmal: 4 Gruppen mit je 6.'},{text:'20 Stifte',outcome:'Fast! Rechne 4 × 6 noch einmal.'},{text:'46 Stifte',outcome:'Das ist keine Multiplikation. Versuche es erneut.'}]};
+ if(type==='sorting')return {prompt:'Ordne die Ergebnisse von klein nach groß.',image:'',items:['3 × 4 = 12','4 × 4 = 16','6 × 5 = 30','8 × 4 = 32']};
+ return {prompt:'Neue Malaufgabe',image:''};
 }
-function creatorBasePair(type){if(type==='memory')return {left:'Katze',right:'🐈'};return {left:'Begriff',right:'Passender Begriff'};}
+function creatorBasePair(type){return {left:'3 × 4',right:'12'};}
 function creatorStarter(type){
  const q=creatorBaseQuestion(type);const p=creatorBasePair(type);
  const cfg={v:2,id:creatorNewId(),title:`Mein ${CREATOR_META[type].title}`,description:'Ein selbst erstelltes Spiel – ändere den Inhalt nach deinen Ideen.',type,theme:'neon',settings:{seconds:20,points:100,lives:3,feedback:'after',shuffle:true,visibility:'link'},questions:[],pairs:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
- if(['matching','memory'].includes(type))cfg.pairs=[p,{left:'Hund',right:type==='memory'?'🐕':'Treues Haustier'},{left:'Sonne',right:type==='memory'?'☀️':'Unser Stern' }];
- else if(type==='reaction')cfg.challenge='Tippe so oft du kannst!';
- else cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:type==='story'?'Du findest einen Wegweiser. Wohin gehst du?':q.prompt+' (2)',...(type==='quiz'?{options:['Option 1','Option 2','Option 3','Option 4'],correct:1}:{})}];
+ if(['matching','memory'].includes(type))cfg.pairs=[p,{left:'6 × 7',right:'42'},{left:'8 × 5',right:'40'},{left:'9 × 9',right:'81'}];
+ else if(type==='reaction')cfg.challenge='Finde das richtige Ergebnis zur Malaufgabe.';
+ else if(type==='story')cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:'In 5 Reihen liegen jeweils 4 Bücher. Wie viele Bücher sind es zusammen?',options:[{text:'20 Bücher',outcome:'Richtig! 5 × 4 = 20.'},{text:'9 Bücher',outcome:'Addiere nicht nur die beiden Zahlen – multipliziere die Gruppen.'},{text:'15 Bücher',outcome:'Versuche es noch einmal: 5 Gruppen mit je 4.'},{text:'54 Bücher',outcome:'Achte auf das Malzeichen.'}]}];
+ else if(type==='sorting')cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:'Ordne die Ergebnisse von groß nach klein.',items:['9 × 4 = 36','7 × 4 = 28','5 × 4 = 20','3 × 4 = 12']}];
+ else if(type==='truefalse')cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:'8 × 6 = 48',correct:true,explanation:'8 mal 6 ist 48.'}];
+ else if(type==='short')cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:'Wie viel ist 9 × 6?',answers:['54'],hint:'9 mal 6 …'}];
+ else if(type==='multi')cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:'Welche Malaufgaben ergeben 36?',options:['4 × 9 = 36','6 × 6 = 36','5 × 7 = 36','3 × 12 = 36'],correct:[0,1,3],explanation:'4×9, 6×6 und 3×12 ergeben 36.'}];
+ else cfg.questions=[q,{...JSON.parse(JSON.stringify(q)),prompt:'Was ist 8 × 6?',options:['46','48','54','56'],correct:1,explanation:'8 mal 6 ist 48.'}];
  return cfg;
 }
 function creatorGetDrafts(){try{const a=JSON.parse(localStorage.getItem(CREATOR_DRAFTS_KEY)||'[]');return Array.isArray(a)?a.filter(creatorIsValidConfig).slice(0,30):[]}catch(_){return []}}
@@ -2366,7 +2384,8 @@ function creatorSanitizeConfig(c){
 }
 function creatorRenderTemplateGrid(){
  const grid=$('creatorTemplateGrid');if(!grid)return;
- grid.innerHTML=Object.entries(CREATOR_META).map(([type,m])=>`<button type="button" class="creator-template" onclick="creatorStartNew('${type}')"><span class="template-label">${m.tag}</span><span class="template-icon">${m.icon}</span><strong>${m.title}</strong><small>${m.desc}</small></button>`).join('');
+ const visibleTypes=['quiz','truefalse','short','multi','matching','memory','story','sorting'];
+ grid.innerHTML=visibleTypes.map(type=>[type,CREATOR_META[type]]).map(([type,m])=>`<button type="button" class="creator-template" onclick="creatorStartNew('${type}')"><span class="template-label">${m.tag}</span><span class="template-icon">${m.icon}</span><strong>${m.title}</strong><small>${m.desc}</small></button>`).join('');
 }
 function creatorRenderLibrary(){
  const root=$('creatorDraftLibrary');if(!root)return;const drafts=creatorGetDrafts();
@@ -2375,58 +2394,36 @@ function creatorRenderLibrary(){
 }
 function creatorStartNew(type){creatorAutoSaveNow();creatorDraft=creatorStarter(type);creatorCurrentStep=1;$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');creatorBindDraftToInputs();creatorGoStep(1);creatorAutoSaveNow();creatorRenderLibrary();}
 function creatorIdeaTopic(text){
- const t=text.toLocaleLowerCase('de');
- const banks=[
-  {key:/fußball|fussball|soccer|bundesliga|ball/,name:'Fußball',questions:[
-   ['Wie viele Spieler einer Mannschaft stehen normalerweise zu Beginn auf dem Feld?',['9','10','11','12'],2,'Eine Mannschaft spielt normalerweise mit elf Spielern.'],
-   ['Wie heißt der Spieler, der das Tor verteidigt?',['Stürmer','Torwart','Schiedsrichter','Trainer'],1,'Der Torwart schützt das Tor.'],
-   ['Wie lange dauert ein reguläres Fußballspiel ohne Nachspielzeit?',['60 Minuten','90 Minuten','100 Minuten','120 Minuten'],1,'Ein reguläres Spiel dauert 90 Minuten.'] ]},
-  {key:/tier|tiere|hund|katze|natur|zoo/,name:'Tiere',questions:[
-   ['Welches Tier sagt „Miau“?',['Hund','Katze','Pferd','Kuh'],1,'Eine Katze miaut.'],
-   ['Welches Tier hat einen sehr langen Hals?',['Elefant','Giraffe','Fuchs','Pinguin'],1,'Die Giraffe hat einen langen Hals.'],
-   ['Wo lebt ein Fisch?',['Im Wasser','Im Baum','In der Wüste','Im Schnee'],0,'Fische leben im Wasser.'] ]},
-  {key:/weltraum|planeten|planet|sonne|mond|universum|all/,name:'Weltraum',questions:[
-   ['Welcher Planet ist unser Zuhause?',['Mars','Erde','Jupiter','Venus'],1,'Wir leben auf der Erde.'],
-   ['Was gibt uns am Tag Licht und Wärme?',['Der Mond','Die Sonne','Der Mars','Ein Sternbild'],1,'Die Sonne gibt uns Licht und Wärme.'],
-   ['Welcher Planet ist als roter Planet bekannt?',['Mars','Saturn','Neptun','Merkur'],0,'Der Mars wird roter Planet genannt.'] ]},
-  {key:/mathe|mathematik|einmaleins|rechnen|zahlen|multipli|malnehmen/,name:'Mathe',questions:[
-   ['Was ist 5 × 5?',['10','20','25','30'],2,'5 mal 5 ist 25.'],
-   ['Was ist 8 × 3?',['21','24','27','32'],1,'8 mal 3 ist 24.'],
-   ['Was ist 9 + 6?',['14','15','16','17'],1,'9 plus 6 ist 15.'] ]},
-  {key:/geografie|geographie|länder|land|hauptstadt|welt/,name:'Geografie',questions:[
-   ['Wie heißt die Hauptstadt von Deutschland?',['Berlin','München','Hamburg','Köln'],0,'Berlin ist die Hauptstadt von Deutschland.'],
-   ['In welchem Land steht der Eiffelturm?',['Italien','Frankreich','Spanien','Deutschland'],1,'Der Eiffelturm steht in Paris.'],
-   ['Welcher ist der größte Ozean?',['Atlantik','Indischer Ozean','Pazifik','Arktischer Ozean'],2,'Der Pazifik ist der größte Ozean.'] ]},
-  {key:/dinosaur|dino/,name:'Dinosaurier',questions:[
-   ['Wie heißt der berühmte Dinosaurier mit den kleinen Armen?',['T-Rex','Triceratops','Stegosaurus','Brachiosaurus'],0,'Der Tyrannosaurus Rex hatte kurze Arme.'],
-   ['Was bedeutet „Dinosaurier“ ungefähr?',['Riesenechse','Schneller Vogel','Meeresfisch','Fliegender Hund'],0,'Das Wort kommt aus dem Griechischen und bedeutet schreckliche Echse.'],
-   ['Wann lebten Dinosaurier?',['Vor langer Zeit','Im Mittelalter','Vor 100 Jahren','Heute überall'],0,'Dinosaurier lebten vor Millionen Jahren.'] ]}
- ];
- return banks.find(x=>x.key.test(t))||null;
+ const t=String(text||'').toLocaleLowerCase('de-DE');
+ const rowMatch=t.match(/(?:^|\b)([1-9]|1[0-9]|20)\s*(?:er(?:-reihe| reihe)?|er-reihe)(?:\b|$)/);
+ const row=rowMatch?Math.max(1,Math.min(20,Number(rowMatch[1]))):null;
+ const factors=row?[2,3,4,5]:[3,4,6,7];
+ const make=(a,b)=>{const answer=a*b;const options=[answer-2,answer,answer+2,answer+8].map(n=>String(Math.max(0,n)));const unique=[...new Set(options)];while(unique.length<4)unique.push(String(answer+unique.length+3));return [`Was ist ${a} × ${b}?`,unique,unique.indexOf(String(answer)),`${a} mal ${b} ist ${answer}.`];};
+ return {name:row?`${row}er-Reihe`:'Einmaleins',row,questions:factors.map((b,i)=>make(row||[4,6,7,8][i],b))};
 }
 function creatorUseIdea(){
- const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Schreibe kurz, worum es in deinem Spiel gehen soll.');return;}
- const t=idea.toLocaleLowerCase('de');let type='quiz',reason='Quiz';
- if(/memory|gedächtnis|paare finden|karten aufdecken/.test(t)){type='memory';reason='Memory'}
- else if(/zuordnen|verbinden|matching|paar|zusammengehören/.test(t)){type='matching';reason='Paare finden'}
- else if(/wortsalat|buchstaben|wort erraten|wortspiel|word/.test(t)){type='word';reason='Wortspiel'}
- else if(/reihenfolge|sortier|ablauf|sortieren/.test(t)){type='sorting';reason='Reihenfolge-Puzzle'}
- else if(/geschichte|story|entscheidung|abenteuer/.test(t)){type='story';reason='Geschichte mit Entscheidungen'}
- else if(/tippen|reaktion|schnell|reflex|arcade|klick/.test(t)){type='reaction';reason='Reaktionsspiel'}
- else if(/mehrere richtige|alle richtigen|mehrfach/.test(t)){type='multi';reason='Mehrfachauswahl'}
- else if(/richtig oder falsch|wahr oder falsch|true.?false/.test(t)){type='truefalse';reason='Richtig oder falsch'}
- else if(/tippe|schreib|texteingabe|antwort eintippen|freie antwort/.test(t)){type='short';reason='Antwort eintippen'}
+ const idea=$('creatorIdeaInput').value.trim();
+ if(!idea){showToast('Beschreibe kurz dein Einmaleins-Spiel.');return;}
+ const t=idea.toLocaleLowerCase('de-DE');let type='quiz',reason='Einmaleins-Quiz';
+ if(/memory|gedächtnis|karten aufdecken/.test(t)){type='memory';reason='Einmaleins-Memory';}
+ else if(/zuordnen|verbinden|matching|paare/.test(t)){type='matching';reason='Malaufgaben zuordnen';}
+ else if(/reihenfolge|sortier|ordnen/.test(t)){type='sorting';reason='Ergebnisse ordnen';}
+ else if(/geschichte|story|abenteuer/.test(t)){type='story';reason='Mathe-Abenteuer';}
+ else if(/mehrere richtige|alle richtigen|mehrfach/.test(t)){type='multi';reason='Mehrfach-Auswahl';}
+ else if(/richtig oder falsch|wahr oder falsch/.test(t)){type='truefalse';reason='Richtig oder falsch';}
+ else if(/eintippen|texteingabe|freie antwort|lösung eingeben/.test(t)){type='short';reason='Lösung eintippen';}
  const topic=creatorIdeaTopic(idea);creatorStartNew(type);
- const cleanTitle=(topic?topic.name+'-Quiz':idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim()).slice(0,70);
- creatorDraft.title=cleanTitle||'Mein Spiel';creatorDraft.description=idea.slice(0,500);
- if(topic&&type==='quiz')creatorDraft.questions=topic.questions.map((q)=>({prompt:q[0],image:'',options:[...q[1]],correct:q[2],explanation:q[3]}));
- if(topic&&(type==='memory'||type==='matching'))creatorDraft.pairs=topic.questions.map(q=>({left:q[0].replace(/[?]/g,''),right:q[1][q[2]]}));
- if(topic&&type==='truefalse')creatorDraft.questions=topic.questions.map(q=>({prompt:q[0]+' '+q[1][q[2]]+'.',image:'',correct:true,explanation:q[3]}));
+ creatorDraft.title=(topic.row?`${topic.name}-Challenge`:`Mein ${reason}`).slice(0,70);
+ creatorDraft.description='Ein selbst erstelltes Spiel zum Üben des Einmaleins.';
+ if(type==='quiz')creatorDraft.questions=topic.questions.map(q=>({prompt:q[0],image:'',options:[...q[1]],correct:q[2],explanation:q[3]}));
+ if(type==='short')creatorDraft.questions=topic.questions.map(q=>({prompt:q[0],image:'',answers:[String(q[1][q[2]])],hint:'Rechne Schritt für Schritt.'}));
+ if(type==='truefalse')creatorDraft.questions=topic.questions.map((q,i)=>({prompt:i%2===0?q[0].replace('Was ist ','').replace('?','')+' = '+q[1][q[2]]:q[0].replace('Was ist ','').replace('?','')+' = '+(Number(q[1][q[2]])+1),image:'',correct:i%2===0,explanation:i%2===0?q[3]:'Prüfe das Ergebnis noch einmal.'}));
+ if(type==='matching'||type==='memory')creatorDraft.pairs=topic.questions.map(q=>({left:q[0].replace('Was ist ','').replace('?',''),right:q[1][q[2]]}));
+ if(type==='multi')creatorDraft.questions=[{prompt:'Welche Malaufgaben ergeben 24?',image:'',options:['3 × 8 = 24','6 × 4 = 24','5 × 5 = 24','2 × 12 = 24'],correct:[0,1,3],explanation:'3×8, 6×4 und 2×12 ergeben 24.'}];
+ if(type==='sorting')creatorDraft.questions=[{prompt:'Ordne die Aufgaben nach ihrem Ergebnis – klein nach groß.',image:'',items:['3 × 4 = 12','4 × 4 = 16','6 × 5 = 30','8 × 4 = 32']}];
  creatorBindDraftToInputs();
- const extra=topic&&type==='quiz'?' Wir haben drei passende Beispiel-Fragen vorbereitet.':' Du bekommst eine passende Vorlage mit Beispiel-Inhalten.';
- $('creatorIdeaStatus').textContent=`Dein Startspiel ist bereit: ${reason}.${extra} Du kannst alles ändern.`;
- creatorUpdateLivePreview();
- creatorAutoSaveNow();
+ $('creatorIdeaStatus').textContent=`Deine Vorlage „${reason}“ ist bereit. Alle Beispielinhalte drehen sich ums Multiplizieren und können bearbeitet werden.`;
+ creatorUpdateLivePreview();creatorAutoSaveNow();
 }
 function creatorBindDraftToInputs(){if(!creatorDraft)return;$('creatorSharePanel')?.classList.add('hidden');const usesQuestionAttempts=!['matching','memory','story','reaction'].includes(creatorDraft.type);$('creatorLivesCard')?.classList.toggle('hidden',!usesQuestionAttempts);$('creatorFeedbackCard')?.classList.toggle('hidden',['matching','memory','story','reaction'].includes(creatorDraft.type));$('creatorTitleInput').value=creatorDraft.title;$('creatorDescriptionInput').value=creatorDraft.description;$('creatorThemeInput').value=creatorDraft.theme;$('creatorSecondsInput').value=creatorDraft.settings.seconds;$('creatorPointsInput').value=creatorDraft.settings.points;$('creatorLivesInput').value=String(creatorDraft.settings.lives);$('creatorFeedbackInput').value=creatorDraft.settings.feedback;$('creatorShuffleInput').value=creatorDraft.settings.shuffle?'yes':'no';$('creatorVisibilityInput').value=creatorDraft.settings.visibility;creatorRenderContentEditor();creatorUpdateLivePreview();}
 function creatorUpdateBasics(){if(!creatorDraft)return;creatorDraft.title=$('creatorTitleInput').value.trim().slice(0,70)||'Mein Spiel';creatorDraft.description=$('creatorDescriptionInput').value.slice(0,500);creatorDraft.theme=$('creatorThemeInput').value;creatorDraft.updatedAt=new Date().toISOString();$('creatorEditorTitle').textContent=creatorDraft.title;creatorUpdateLivePreview();creatorQueueAutoSave();}
@@ -2437,7 +2434,7 @@ function creatorQuestionCard(q,i){
  if(type==='truefalse')fields=`<div class="field"><label>Ist die Aussage richtig?</label><select onchange="creatorSetQuestion(${i},'correct',this.value==='true')"><option value="true" ${q.correct?'selected':''}>Ja, richtig</option><option value="false" ${!q.correct?'selected':''}>Nein, falsch</option></select></div><div class="field"><label>Erklärung (optional)</label><textarea maxlength="500" oninput="creatorSetQuestion(${i},'explanation',this.value)">${esc(q.explanation||'')}</textarea></div>`;
  if(type==='short')fields=`<div class="field"><label>Gültige Antwort(en) · mit | trennen</label><input maxlength="600" value="${esc((q.answers||[]).join('|'))}" oninput="creatorSetQuestion(${i},'answers',this.value)" placeholder="Antwort eins|Alternative"></div><div class="field"><label>Hinweis (optional)</label><input maxlength="250" value="${esc(q.hint||'')}" oninput="creatorSetQuestion(${i},'hint',this.value)" placeholder="Ein kleiner Hinweis"></div>`;
  if(type==='multi')fields=`<div class="field"><label>Optionen · alle richtigen markieren</label><div class="creator-options-grid">${q.options.map((v,j)=>`<div class="creator-option-field"><input aria-label="Option ${j+1} ist richtig" type="checkbox" ${q.correct.includes(j)?'checked':''} onchange="creatorSetMultiCorrect(${i},${j},this.checked)"><input aria-label="Option ${j+1}" type="text" maxlength="180" value="${esc(v)}" oninput="creatorSetQuestion(${i},'option${j}',this.value)" placeholder="Option ${j+1}"></div>`).join('')}</div><div class="creator-field-note">Spieler müssen alle richtigen Antworten auswählen.</div></div><div class="field"><label>Erklärung (optional)</label><textarea maxlength="500" oninput="creatorSetQuestion(${i},'explanation',this.value)">${esc(q.explanation||'')}</textarea></div>`;
- if(type==='word')fields=`<div class="field"><label>Gesuchtes Wort</label><input maxlength="80" value="${esc(q.word||'')}" oninput="creatorSetQuestion(${i},'word',this.value)" placeholder="PLANET"></div><div class="field"><label>Hinweis (optional)</label><input maxlength="250" value="${esc(q.hint||'')}" oninput="creatorSetQuestion(${i},'hint',this.value)" placeholder="Ein Objekt im Weltraum"></div>`;
+ if(type==='word')fields=`<div class="field"><label>Gesuchtes Wort</label><input maxlength="80" value="${esc(q.word||'')}" oninput="creatorSetQuestion(${i},'word',this.value)" placeholder="56"></div><div class="field"><label>Hinweis (optional)</label><input maxlength="250" value="${esc(q.hint||'')}" oninput="creatorSetQuestion(${i},'hint',this.value)" placeholder="Die Lösung von 7 × 8"></div>`;
  if(type==='story')fields=`<div class="field"><label>Auswahlmöglichkeiten und Folgen</label>${q.options.map((o,j)=>`<div style="border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:8px"><label>Möglichkeit ${j+1}</label><input maxlength="180" value="${esc(o.text)}" oninput="creatorSetStoryOption(${i},${j},'text',this.value)" placeholder="Was kann man wählen?"><label style="display:block;margin-top:7px">Was passiert danach?</label><textarea maxlength="350" oninput="creatorSetStoryOption(${i},${j},'outcome',this.value)" placeholder="Die Folge der Entscheidung">${esc(o.outcome)}</textarea></div>`).join('')}</div>`;
  if(type==='sorting')fields=`<div class="field"><label>Richtige Reihenfolge · ein Eintrag pro Zeile</label><textarea maxlength="2000" oninput="creatorSetQuestion(${i},'items',this.value)" placeholder="Zuerst ...&#10;Danach ...">${esc((q.items||[]).join('\n'))}</textarea><div class="creator-field-note">Im Test werden die Einträge gemischt, und der Spieler sortiert sie wieder.</div></div>`;
  return `<article class="creator-question-card"><div class="q-head"><strong>${CREATOR_META[type].icon} ${type==='story'?'Szene':type==='word'?'Wort':type==='sorting'?'Puzzle':'Aufgabe'} ${i+1}</strong><button type="button" class="btn secondary" ${creatorDraft.questions.length<=1?'disabled':''} onclick="creatorDeleteContent(${i})">Entfernen</button></div><div class="field"><label>${type==='story'?'Beschreibung der Szene':type==='word'?'Aufgabenhinweis':type==='sorting'?'Aufgabenstellung':'Frage oder Aufgabe'}</label><textarea maxlength="500" oninput="creatorSetQuestion(${i},'prompt',this.value)" placeholder="Schreibe hier deine Aufgabe...">${esc(q.prompt||'')}</textarea></div><div class="field"><label>Bild-URL (optional, https://...)</label><input type="url" maxlength="500" value="${esc(q.image||'')}" oninput="creatorSetQuestion(${i},'image',this.value)" placeholder="https://example.com/bild.jpg"></div>${fields}</article>`;
@@ -2598,92 +2595,9 @@ async function privateLoadMessages(){
 }
 async function privateSendMessage(event){event.preventDefault();const text=$('privateMessageText')?.value.trim()||'',st=$('privateMessageStatus');if(text.length<3){if(st)st.textContent='Bitte schreibe mindestens 3 Zeichen.';return;}try{const sb=await getSb();const {error}=await sb.rpc('mm_private_user_send_message',{p_message:text});if(error)throw error;$('privateMessageText').value='';if(st)st.textContent='Deine Nachricht wurde gesendet.';await privateLoadMessages();}catch(e){if(st)st.textContent='Senden fehlgeschlagen: '+(e.message||'');}}
 async function adminLoadPrivateConversations(){
-  const out = $('adminPrivateConversations');
-  const status = $('adminPrivateStatus');
-
-  if (!out) {
-    if (status) status.textContent = 'Der Nachrichtenbereich wurde im Dokument nicht gefunden.';
-    return;
-  }
-
-  out.innerHTML = '<div class="admin-empty-state">Unterhaltungen werden geladen …</div>';
-
-  try {
-    const sb = await getSb();
-    const { data, error } = await sb.rpc('mm_private_admin_list_conversations');
-    if (error) throw error;
-
-    const rows = Array.isArray(data) ? data : (data ? [data] : []);
-    mmAdminPrivateRows = rows;
-
-    const fragment = document.createDocumentFragment();
-
-    if (!rows.length) {
-      const empty = document.createElement('div');
-      empty.className = 'admin-empty-state';
-      empty.textContent = 'Noch keine privaten Nachrichten.';
-      fragment.appendChild(empty);
-    } else {
-      rows.forEach((row) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'admin-conversation-item';
-
-        const head = document.createElement('span');
-        head.className = 'admin-conversation-head';
-
-        const email = document.createElement('strong');
-        email.textContent = row.email || 'Nutzer';
-        head.appendChild(email);
-
-        const unreadCount = Number(row.unread_count) || 0;
-        if (unreadCount > 0) {
-          const badge = document.createElement('span');
-          badge.className = 'admin-unread-count';
-          badge.textContent = String(unreadCount);
-          head.appendChild(badge);
-        }
-
-        const preview = document.createElement('span');
-        preview.className = 'admin-conversation-preview';
-        preview.textContent = row.last_message || 'Noch keine Nachricht';
-
-        const time = document.createElement('span');
-        time.className = 'admin-conversation-time';
-        const parsedDate = row.last_at ? new Date(row.last_at) : null;
-        time.textContent = parsedDate && !Number.isNaN(parsedDate.getTime())
-          ? parsedDate.toLocaleString('de-DE')
-          : '';
-
-        button.append(head, preview, time);
-        button.addEventListener('click', () => {
-          if (row.conversation_id) adminOpenPrivateConversation(String(row.conversation_id));
-        });
-        fragment.appendChild(button);
-      });
-    }
-
-    out.replaceChildren(fragment);
-    out.style.display = 'grid';
-    out.style.visibility = 'visible';
-
-    const panel = out.closest('.admin-conversations-panel');
-    if (panel) {
-      panel.style.display = 'block';
-      panel.style.visibility = 'visible';
-    }
-
-    if (status) status.textContent = `${rows.length} Unterhaltung(en) geladen.`;
-    adminRenderOverview();
-  } catch (error) {
-    const message = error && error.message ? error.message : 'Unbekannter Fehler beim Laden.';
-    out.innerHTML = '';
-    const errorBox = document.createElement('div');
-    errorBox.className = 'admin-empty-state';
-    errorBox.textContent = message;
-    out.appendChild(errorBox);
-    if (status) status.textContent = 'Nachrichten konnten nicht geladen werden: ' + message;
-  }
+ const out=$('adminPrivateConversations'),st=$('adminPrivateStatus');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltungen werden geladen …</div>';
+ try{const sb=await getSb();const {data,error}=await sb.rpc('mm_private_admin_list_conversations');if(error)throw error;mmAdminPrivateRows=Array.isArray(data)?data:[];out.innerHTML=mmAdminPrivateRows.length?mmAdminPrivateRows.map(r=>`<button type="button" class="admin-conversation-item" onclick="adminOpenPrivateConversation('${r.conversation_id}')"><span class="admin-conversation-head"><strong>${esc(r.email||'Nutzer')}</strong>${Number(r.unread_count)>0?`<span class="admin-unread-count">${Number(r.unread_count)}</span>`:''}</span><span class="admin-conversation-preview">${esc(r.last_message||'Noch keine Nachricht')}</span><span class="admin-conversation-time">${esc(new Date(r.last_at).toLocaleString('de-DE'))}</span></button>`).join(''):'<div class="admin-empty-state">Noch keine privaten Nachrichten.</div>';if(st)st.textContent=`${mmAdminPrivateRows.length} Unterhaltung(en) geladen.`;adminRenderOverview();}
+ catch(e){const message=e.message||'Fehler beim Laden';out.innerHTML=`<div class="admin-empty-state">${esc(message)}</div>`;if(st)st.textContent='Nachrichten konnten nicht geladen werden: '+message;}
 }
 async function adminOpenPrivateConversation(id){
  mmPrivateConversationId=id;document.querySelectorAll('.admin-conversation-item').forEach(el=>el.classList.toggle('active',el.getAttribute('onclick')?.includes(String(id))));const out=$('adminPrivateThread');if(!out)return;out.innerHTML='<div class="admin-empty-state">Unterhaltung wird geladen …</div>';

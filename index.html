@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b18">
-<meta name="description" content="MatheMeister Pro – trainieren, live spielen und eigene Quiz-, Puzzle- und Wortspiele ohne Programmieren bauen.">
+<meta name="description" content="MatheMeister Pro – das Einmaleins trainieren, gemeinsam spielen und eigene Multiplikationsspiele gestalten.">
 <script>
 (function(){try{var root=document.documentElement;var s=sessionStorage.getItem('mm-app-screen-v1');var valid=['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo','result'];var gameOk=s==='game'&&!!sessionStorage.getItem('mm-app-game-v1');if((valid.includes(s)||gameOk)&&s!=='live')root.classList.add('app-restoring');var adminRequested=sessionStorage.getItem('mm-admin-screen-open-v1')==='1'||localStorage.getItem('mm-admin-screen-open-v1')==='1';if(adminRequested)root.classList.add('admin-restoring');}catch(e){}})();
 </script>
-<title>MatheMeister Pro v10.8.9 · Nachrichten & Desktop-Fix 🚀</title>
+<title>MatheMeister Pro v10.9.0 · Einmaleins-Update 🚀</title>
 
 <style>
 :root {
@@ -1589,7 +1589,7 @@ body.admin-mode #globalBackButton{display:none!important}
 @media(max-width:650px){#adminScreen .admin-overview-lower-grid{grid-template-columns:1fr}#adminScreen .admin-activity-panel,#adminScreen .admin-quick-panel,#adminScreen .admin-overview-lower-grid .admin-recent-panel{padding:15px}#adminScreen .admin-user-chip{padding:5px 7px}#adminScreen .admin-user-chip small{max-width:100px}}
 
 
-/* V10.8.0 – mobile-first experience and unified violet calculator identity */
+/* V10.9.0 – mobile-first experience and unified violet product identity */
 .mm-logo-svg{display:block;width:100%;height:100%}
 .brand .logo{display:grid;place-items:center;flex:0 0 48px;padding:3px;border:1px solid #8d70ff88;border-radius:15px;background:linear-gradient(145deg,#211744,#100f25);box-shadow:0 7px 24px #7446ff40}
 #adminScreen .admin-brand-mark{padding:2px;overflow:hidden}
@@ -1629,39 +1629,189 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 @media(prefers-reduced-motion:reduce){.mobile-tabbar button,.top{transition:none!important}}
 
 
-/* V10.8.9: reliable private-message layout on desktop and mobile */
-#adminScreen [data-admin-panel="messages"]{width:100%;min-width:0}
-#adminScreen .admin-messages-layout{
-  display:grid;
-  grid-template-columns:minmax(280px,.82fr) minmax(0,1.18fr);
-  gap:16px;
-  align-items:start;
-  width:100%;
-  min-width:0;
+
+/* MatheMeister v10.9.0 — einheitliches, ruhiges Produktdesign */
+:root{
+  --bg:#080b18;
+  --panel:#11182b;
+  --panel2:#151d34;
+  --line:#29334f;
+  --text:#f4f5fb;
+  --muted:#abb5ca;
+  --accent:#a879ff;
+  --accent-strong:#8c52ed;
+  --accent-soft:#a879ff20;
+  --shadow:0 18px 48px #02040c66;
 }
-#adminScreen .admin-messages-layout > .admin-surface-card{
-  display:block;
-  min-width:0;
-  width:100%;
-  visibility:visible;
+html{scroll-behavior:smooth}
+body{
+  background:radial-gradient(ellipse at 50% -18%,#252044 0,transparent 42%),#080b18;
+  color:var(--text);
 }
-#adminScreen #adminPrivateConversations{
-  display:grid;
-  grid-auto-flow:row;
-  align-content:start;
-  gap:8px;
-  width:100%;
-  min-width:0;
-  visibility:visible;
+.wrap{width:min(1200px,100%);padding-top:20px}
+.top{
+  position:relative;z-index:45;
+  padding:12px 14px;margin:0 0 22px;
+  border:1px solid #ffffff12;border-radius:18px;
+  background:#0d1325e8;backdrop-filter:blur(18px);
+  box-shadow:0 10px 32px #0003;
 }
-#adminScreen .admin-conversation-item{
-  display:block;
-  width:100%;
-  min-width:0;
+.logo{
+  background:linear-gradient(145deg,#be9aff,#7541d7 72%);
+  box-shadow:0 8px 24px #7b4be63a;
 }
-@media(max-width:850px){
-  #adminScreen .admin-messages-layout{grid-template-columns:minmax(0,1fr)}
+.brand strong{letter-spacing:-.65px}
+.brand strong span{color:var(--accent)!important}
+.profile .avatar{padding:0;color:#fff;background:linear-gradient(145deg,#35245c,#7850bb);border:1px solid #c3a5ff55}
+.pill{background:#ffffff07;border-color:#ffffff18;color:#e5e6f2}
+.dot{box-shadow:none}
+.hero{gap:16px}
+.panel{
+  border-color:#ffffff17;
+  background:linear-gradient(145deg,#151b31f2,#0e1425f7);
+  box-shadow:var(--shadow);
 }
+.hero-copy{
+  background:linear-gradient(130deg,#17182f 0%,#171a36 58%,#251743 100%);
+  border-color:#9a70ec39;
+}
+.hero-copy:after{background:#9869ef17;filter:blur(18px)}
+.gradient{
+  background:linear-gradient(95deg,#f8f5ff 0%,#d8c2ff 52%,#a879ff 100%);
+  color:transparent;background-clip:text;
+}
+.lead{color:#c1c7d8}
+.btn{border-radius:13px;min-height:46px;letter-spacing:-.1px}
+.btn.primary{
+  background:linear-gradient(110deg,#8a4de7,#b27bff);
+  border-color:#c9a9ff55;color:#fff;
+  box-shadow:0 8px 22px #7944ce35;
+}
+.btn.primary:hover{filter:brightness(1.08);box-shadow:0 10px 26px #7944ce4a}
+.btn.purple{background:linear-gradient(110deg,#7543cf,#a879ff);color:#fff;box-shadow:0 8px 22px #7944ce27}
+.btn.secondary,.small-btn{background:#ffffff08;border-color:#ffffff1d;color:#eef0fa}
+.btn.secondary:hover,.small-btn:hover{border-color:#a879ff77;background:#a879ff12}
+.kicker{color:#c09aff;letter-spacing:1.35px}
+.visual{
+  min-height:290px;
+  background:radial-gradient(ellipse at 50% 50%,#8b5bdc29,transparent 60%),linear-gradient(145deg,#151a32,#0d1223);
+  border-color:#a879ff2c;
+}
+.visual:before,.visual:after{border-color:#b796ff25}
+.gem{color:#c29dff;text-shadow:0 0 28px #a879ff75}
+.mini-stats{gap:10px}
+.stat{background:linear-gradient(145deg,#ffffff09,#ffffff04);border-color:#ffffff16;border-radius:16px}
+.stat .y{color:#c8a6ff}
+.section-head{margin-top:26px}
+.section-head h2{letter-spacing:-.75px}
+.tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{
+  min-height:176px;padding:18px;border-radius:19px;
+  background:linear-gradient(150deg,#171e35,#111729);
+  border-color:#ffffff17;box-shadow:0 8px 22px #00000016;
+}
+.tile:hover{transform:translateY(-2px);border-color:#a879ff75;box-shadow:0 14px 28px #0004}
+.tile:after{background:#a879ff12;filter:none}
+.tile .ico{background:#a879ff18;border:1px solid #a879ff22}
+.tile b{color:#cbb5ff}
+.subpanel{
+  background:linear-gradient(145deg,#151c31,#111729);
+  border-color:#ffffff16;border-radius:18px;
+}
+.screen.panel{border-radius:23px;padding:clamp(18px,3vw,30px)}
+.screen h2{letter-spacing:-.8px}
+.level-grid{gap:12px}
+.level{
+  background:linear-gradient(145deg,#171e35,#111729);
+  border-color:#ffffff1b;border-radius:18px;transition:transform .18s,border-color .18s,background .18s;
+}
+.level:hover{transform:translateY(-2px);border-color:#a879ff70;background:#1b2140}
+.level em{color:#c3a4ff}
+input,select,textarea{
+  background:#0c1222!important;color:var(--text)!important;
+  border:1px solid #ffffff22!important;border-radius:12px!important;
+}
+input::placeholder,textarea::placeholder{color:#7f8aa5!important}
+input:focus,select:focus,textarea:focus{border-color:#a879ff!important;box-shadow:0 0 0 3px #a879ff20!important;outline:0!important}
+.site-menu{
+  border-color:#ffffff20;background:#11182bfa;
+  box-shadow:0 24px 60px #0009;
+}
+.site-menu .menu-item:hover{background:#a879ff13}
+.site-menu .menu-icon{color:#c09aff}
+.mobile-tabbar{border-color:#a879ff48;background:#101629f2}
+.mobile-tabbar button{color:#b5bfd3}
+.mobile-tabbar button.active{background:linear-gradient(145deg,#8650df,#57339e);color:#fff;box-shadow:0 4px 16px #7543cf42}
+.xpbar,.track{background:#ffffff14}
+.xpbar>div,.xpbar i{background:linear-gradient(90deg,#8950e4,#c09aff)}
+.notice{background:#a879ff0e;border-color:#a879ff38;color:#e9e2ff}
+.badge.earned{border-color:#a879ff75;background:#a879ff12}
+.shop-item,.creator-pane,.creator-template,.creator-draft-card,.studio-option,.info-card{
+  background:linear-gradient(145deg,#171e35,#111729)!important;
+  border-color:#ffffff18!important;
+}
+.shop-item:hover,.creator-template:hover{border-color:#a879ff66!important}
+.shop-item-preview{background:#0e1426;border:1px solid #ffffff13}
+.shop-wallet{background:linear-gradient(130deg,#1b1d3a,#17142c)}
+.shop-wallet-main strong{color:#d1b3ff!important}
+.creator-step.active{border-color:#a879ff80;background:#a879ff16}
+.creator-step.active b{color:#d9c4ff}
+.creator-hero,.studio-hero{border-color:#a879ff24}
+.creator-hero .pill,.studio-hero .pill{color:#d8c5ff}
+.creator-template-grid{gap:11px}
+.creator-template{border-radius:17px;transition:transform .18s,border-color .18s}
+.creator-template:hover{transform:translateY(-2px)}
+#progress .profile-identity{
+  display:flex;align-items:center;gap:15px;margin:18px 0 20px;
+  padding:17px;border:1px solid #a879ff35;border-radius:19px;
+  background:linear-gradient(115deg,#231b3d,#141a30 75%);
+}
+#progress .profile-identity-avatar{
+  width:64px;height:64px;flex:0 0 64px;display:grid;place-items:center;
+  border-radius:19px;background:#a879ff1c;border:2px solid #b58cff75;font-size:34px;
+}
+#progress .profile-identity-copy{min-width:0;flex:1}
+#progress .profile-identity-copy strong{display:block;font-size:19px;letter-spacing:-.4px}
+#progress .profile-identity-copy small{display:block;margin-top:4px;color:var(--muted)}
+.home-group{margin-top:23px}
+.home-group-label{margin:0 0 10px;color:#c09aff;font-size:10px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.home-group .section-head{margin:0 0 12px}
+.home-group .section-head h2{font-size:22px}
+.home-group .tiles{margin:0}
+.home-bottom{margin-top:22px}
+.home-bottom .subpanel{min-height:112px}
+#teacher .teacher-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:17px}
+#teacher .teacher-step{padding:14px;border:1px solid #ffffff16;border-radius:15px;background:#ffffff05}
+#teacher .teacher-step strong{display:block;margin-bottom:6px;color:#e9ddff}
+#teacher .teacher-step p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+#teacher .teacher-form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#teacher .teacher-form-grid .field{margin:0;min-width:0}
+#teacher .teacher-callout{margin-top:14px;padding:13px 15px;border-radius:14px;background:#a879ff0d;border:1px solid #a879ff2d;color:#d9d0ed;font-size:13px;line-height:1.55}
+@media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){
+  .wrap{padding:11px 12px calc(96px + env(safe-area-inset-bottom))}
+  .top{margin:0 -12px 14px;padding:9px 12px;border-radius:0;border-left:0;border-right:0;position:sticky;top:0;background:#0b1020f2}
+  .hero{gap:11px}
+  .hero-copy{border-radius:19px}
+  .visual{min-height:145px;max-height:165px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .tile{min-height:165px;padding:14px 12px;border-radius:16px}
+  .home-group{margin-top:19px}
+  .home-group .section-head h2{font-size:19px}
+  .home-bottom{margin-top:17px}
+  #teacher .teacher-form-grid{grid-template-columns:1fr}
+  #teacher .teacher-steps{grid-template-columns:1fr}
+  #progress .profile-identity{padding:13px;gap:11px}
+  #progress .profile-identity-avatar{width:52px;height:52px;flex-basis:52px;font-size:28px;border-radius:15px}
+  #progress .profile-identity-copy strong{font-size:16px}
+}
+@media(max-width:390px){
+  .tiles{gap:8px}.tile{min-height:158px;padding:12px 10px}
+  .tile .ico{width:35px;height:35px;font-size:19px;margin-bottom:10px}
+  .tile h3{font-size:13px}.tile p{font-size:10px}
+  #progress .profile-identity .btn{padding:9px 10px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 </style>
 
@@ -1683,7 +1833,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </i>
 <span id="statusText">Dein Lernabenteuer</span>
 </span>
-<div class="avatar" id="avatar">🧑‍🚀</div>
+<button class="avatar" id="avatar" type="button" onclick="show('progress')" aria-label="Profil öffnen">🧑‍🚀</button>
 <button id="profileSettingsToggle" class="small-btn" type="button" onclick="editProfile()" aria-label="Profil & Einstellungen öffnen" aria-expanded="false">⚙️</button>
 </div>
 <div class="menu-area">
@@ -1696,8 +1846,9 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
   <button class="menu-item" onclick="menuNavigate('home')"><span class="menu-icon">🏠</span><span class="menu-copy">Startseite<small>Dein Lernabenteuer</small></span></button>
   <button class="menu-item" onclick="menuNavigate('modes')"><span class="menu-icon">🎯</span><span class="menu-copy">Training<small>Einfach, mittel, schwer und Fehlertraining</small></span></button>
   <button class="menu-item" onclick="menuNavigate('live')"><span class="menu-icon">👥</span><span class="menu-copy">Live-Spiel<small>Klassenmodus oder online mit Freunden</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('teacher')"><span class="menu-icon">🧑‍🏫</span><span class="menu-copy">Klassenmodus<small>Einmaleins-Runden für deine Klasse vorbereiten</small></span></button>
   <button class="menu-item" onclick="menuNavigate('shop')"><span class="menu-icon">🪙</span><span class="menu-copy">Shop & Belohnungen<small>Münzen, Rahmen, Titel und Avatare</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('progress')"><span class="menu-icon">🏆</span><span class="menu-copy">Erfolge & Level<small>XP, Rekorde und Abzeichen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('progress')"><span class="menu-icon">🏆</span><span class="menu-copy">Profil & Erfolge<small>Level, XP, Rekorde und Abzeichen</small></span></button>
   <button class="menu-item" onclick="menuNavigate('stats')"><span class="menu-icon">📊</span><span class="menu-copy">Statistiken<small>Runden ansehen, exportieren oder löschen</small></span></button>
   <button class="menu-item" onclick="menuNavigate('settings')"><span class="menu-icon">⚙️</span><span class="menu-copy">Profil & Einstellungen<small>Name, Avatar und lokale Daten</small></span></button>
   <button class="menu-item" onclick="openSiteInfo('how')"><span class="menu-icon">📘</span><span class="menu-copy">So funktioniert MatheMeister<small>Spielregeln und Tipps</small></span></button>
@@ -1705,7 +1856,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
   <button class="menu-item" onclick="openSiteInfo('about')"><span class="menu-icon">🚀</span><span class="menu-copy">Über MatheMeister<small>Ziel, Funktionen und Feedback</small></span></button>
   <button class="menu-item" onclick="openSiteInfo('developer')"><span class="menu-icon">👨‍💻</span><span class="menu-copy">Über mich<small>Der Entwickler von MatheMeister</small></span></button>
   <button class="menu-item" onclick="menuNavigate('studio')"><span class="menu-icon">🧪</span><span class="menu-copy">Spielstudio<small>Eigene Mathe-Runde erstellen und teilen</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('creator')"><span class="menu-icon">🎮</span><span class="menu-copy">Game Creator<small>Eigene Quizze, Puzzle und Spiele bauen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('creator')"><span class="menu-icon">🎮</span><span class="menu-copy">Game Creator<small>Eigene Multiplikations-Quizze und Lernspiele bauen</small></span></button>
   <button class="menu-item" onclick="menuNavigate('adminScreen')"><span class="menu-icon">🛡️</span><span class="menu-copy">Admin-Bereich<small>Feedback und Meldungen verwalten</small></span></button>
   <button class="menu-item" onclick="menuNavigate('feedbackScreen')"><span class="menu-icon">💡</span><span class="menu-copy">Feedback & Ideen<small>Probleme melden und Wünsche teilen</small></span></button>
   <div class="site-menu-note">Gastmodus: Du kannst direkt spielen, ohne ein Konto anzulegen. Hinweis: Lokale Münzen und Käufe sind dadurch noch nicht zwischen Geräten synchronisiert.</div>
@@ -1714,120 +1865,55 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
   <button type="button" data-mobile-screen="home" class="active" onclick="show('home')"><span>⌂</span><small>Home</small></button>
   <button type="button" data-mobile-screen="modes" onclick="show('modes')"><span>◎</span><small>Training</small></button>
   <button type="button" data-mobile-screen="live" onclick="show('live')"><span>♧</span><small>Live</small></button>
-  <button type="button" data-mobile-screen="progress" onclick="show('progress')"><span>♛</span><small>Erfolge</small></button>
+  <button type="button" data-mobile-screen="progress" onclick="show('progress')"><span>♛</span><small>Profil</small></button>
   <button type="button" data-mobile-more onclick="toggleSiteMenu()" aria-label="Mehr öffnen"><span>☰</span><small>Mehr</small></button>
 </nav>
 <section id="home" class="screen active">
-<div class="hero">
-<div class="panel hero-copy">
-<span class="pill">✨ DEIN MATHE-LEVEL-UP</span>
-<h1>
-<span class="gradient">Rechnen.</span>
-<br>
-<span class="gradient">Meistern.</span>
-</h1>
-<p class="lead">Mach das Einmaleins zu deinem Spiel. Sammle XP, knacke Rekorde, trainiere deine Fehler und fordere deine Freunde heraus.</p>
-<div class="row">
-<button class="btn primary" onclick="show('modes')">Jetzt spielen <span>→</span>
-</button>
-<button class="btn secondary" onclick="show('live')">👥 Live-Spiel</button>
-</div>
-<div style="margin-top:25px;color:var(--muted);font-size:12px">🏆 Persönliche Bestleistung · ⚡ 60-Sekunden-Rush · 🎮 Multiplayer</div>
-</div>
-<div class="visual" aria-label="Bunte Zahlen und Mathe-Symbole">
-<span class="num n1">1</span>
-<span class="num n2">3</span>
-<span class="num n3">8</span>
-<span class="num n4">4</span>
-<span class="num n5">6</span>
-<div class="gem">✦</div>
-</div>
-</div>
-<div class="mini-stats">
-<div class="stat">
-<span>Dein Level</span>
-<strong id="homeLevel">Level 1</strong>
-</div>
-<div class="stat">
-<span>Gesamt-XP</span>
-<strong class="y" id="homeXP">0 XP</strong>
-</div>
-<div class="stat">
-<span>Beste Quote</span>
-<strong class="g" id="homeAccuracy">0%</strong>
-</div>
-</div>
-<div class="section-head">
-<div>
-<h2>Wähle dein Abenteuer</h2>
-<p>Alle deine Werkzeuge an einem Ort.</p>
-</div>
-</div>
-<div class="tiles">
-<button class="tile" style="--tint:#39dfa021" onclick="show('modes')">
-<span class="ico">🎯</span>
-<h3>Klassisches Training</h3>
-<p>Einfach, Mittel oder Schwer – in deinem Tempo.</p>
-<b>Training starten →</b>
-</button>
-<button class="tile" style="--tint:#a866ff2b" onclick="startRush()">
-<span class="ico">⚡</span>
-<h3>Math Rush</h3>
-<p>60 Sekunden. So viele richtige Antworten wie möglich.</p>
-<b>Bestwert: <span id="rushBest">0</span> →</b>
-</button>
-<button class="tile" style="--tint:#ff964f26" onclick="show('live')">
-<span class="ico">👥</span>
-<h3>Live-Modus</h3>
-<p>Erstelle einen Raum oder tritt mit Code bei.</p>
-<b>Wie Kahoot! spielen →</b>
-</button>
-<button class="tile" style="--tint:#549aff26" onclick="startDaily()">
-<span class="ico">📅</span>
-<h3>Tägliche Challenge</h3>
-<p>20 Aufgaben in 2 Minuten. Schaffst du es?</p>
-<b id="dailyCardLabel">Heutige Challenge →</b>
-</button>
+  <div class="hero">
+    <div class="panel hero-copy">
+      <span class="pill">✦ DEIN EINMALEINS-ABENTEUER</span>
+      <h1><span class="gradient">Meistere das</span><br><span class="gradient">Einmaleins!</span></h1>
+      <p class="lead">Trainiere das 1×1, verbessere deine Bestleistungen und fordere Freunde oder deine Klasse heraus. Jeder Schritt bringt dich weiter.</p>
+      <div class="row">
+        <button class="btn primary" onclick="show('modes')">Training starten <span>→</span></button>
+        <button class="btn secondary" onclick="show('live')">👥 Zusammen spielen</button>
+      </div>
+      <div style="margin-top:22px;color:var(--muted);font-size:12px">🎯 1×1-Training · ⚡ Zeit-Challenges · 🏆 Dein Fortschritt</div>
+    </div>
+    <div class="visual" aria-label="Mathe-Symbole und Multiplikationsaufgaben">
+      <span class="num n1">7</span><span class="num n2">8</span><span class="num n3">4</span><span class="num n4">9</span><span class="num n5">6</span><div class="gem">×</div>
+    </div>
+  </div>
+  <div class="mini-stats">
+    <div class="stat"><span>Dein Level</span><strong id="homeLevel">Level 1</strong></div>
+    <div class="stat"><span>Gesamt-XP</span><strong class="y" id="homeXP">0 XP</strong></div>
+    <div class="stat"><span>Beste Quote</span><strong class="g" id="homeAccuracy">0%</strong></div>
+  </div>
 
+  <div class="home-group">
+    <div class="section-head"><div><h2>Einmaleins trainieren</h2><p>Finde den Trainingsmodus, der heute zu dir passt.</p></div></div>
+    <div class="tiles">
+      <button class="tile" style="--tint:#a879ff22" onclick="show('modes')"><span class="ico">🎯</span><h3>Klassisches Training</h3><p>Übe die Reihen von 1×1 bis 10×10 – in deinem Tempo.</p><b>Training auswählen →</b></button>
+      <button class="tile" style="--tint:#a879ff22" onclick="startRush()"><span class="ico">⚡</span><h3>Math Rush</h3><p>60 Sekunden. Wie viele Malaufgaben schaffst du richtig?</p><b>Bestwert: <span id="rushBest">0</span> →</b></button>
+      <button class="tile" style="--tint:#a879ff22" onclick="startDaily()"><span class="ico">📅</span><h3>Tägliche Challenge</h3><p>20 neue Multiplikationsaufgaben als Tagesziel.</p><b id="dailyCardLabel">Heutige Challenge →</b></button>
+      <button class="tile" style="--tint:#a879ff22" onclick="startMistakes()"><span class="ico">🧠</span><h3>Fehler-Training</h3><p>Wiederhole gezielt die Malaufgaben, die dir schwerfallen.</p><b id="mistakeCardLabel">0 offene Fehler →</b></button>
+    </div>
+  </div>
 
-<button class="tile" style="--tint:#48e4ef26" onclick="startMistakes()">
-<span class="ico">🎯</span>
-<h3>Fehler-Training</h3>
-<p>Übe genau die Aufgaben, die dir schwerfallen.</p>
-<b id="mistakeCardLabel">0 offene Fehler →</b>
-</button>
-<button class="tile" style="--tint:#ff579b22" onclick="show('teacher')">
-<span class="ico">🧑‍🏫</span>
-<h3>Klassen-Modus</h3>
-<p>Bereite eine Runde für deine Klasse oder Freunde vor.</p>
-<b>Spiel erstellen →</b>
-</button>
-<button class="tile" style="--tint:#a866ff22" onclick="show('studio')">
-<span class="ico">🧪</span><h3>Spielstudio</h3><p>Gestalte deine eigene Runde und teile die Vorlage mit Freunden.</p><b>Spiel nach deinen Regeln →</b></button>
-<button class="tile" style="--tint:#48e4ef26" onclick="show('creator')"><span class="ico">🎮</span><h3>Game Creator</h3><p>Erstelle eigene Quizze, Wortspiele, Puzzle, Memory und Story-Spiele – ohne Programmieren.</p><b>Ein Spiel von Grund auf bauen →</b></button>
+  <div class="home-group">
+    <div class="section-head"><div><h2>Gemeinsam spielen & gestalten</h2><p>Mach aus dem Einmaleins eine Herausforderung mit anderen.</p></div></div>
+    <div class="tiles">
+      <button class="tile" style="--tint:#a879ff22" onclick="show('live')"><span class="ico">👥</span><h3>Multiplayer</h3><p>Erstelle einen Raum, teile den Code und spiele live – allein oder im Team.</p><b>Spielraum öffnen →</b></button>
+      <button class="tile" style="--tint:#a879ff22" onclick="show('teacher')"><span class="ico">🧑‍🏫</span><h3>Klassen-Modus</h3><p>Erstelle ein Einmaleins-Quiz für deine Klasse. Schüler brauchen keine E-Mail.</p><b>Klassenrunde vorbereiten →</b></button>
+      <button class="tile" style="--tint:#a879ff22" onclick="show('studio')"><span class="ico">🧪</span><h3>Spielstudio</h3><p>Lege Aufgaben, Zeit und Teamregeln für deine eigene Multiplikationsrunde fest.</p><b>Eigene Runde gestalten →</b></button>
+      <button class="tile" style="--tint:#a879ff22" onclick="show('creator')"><span class="ico">🎮</span><h3>Game Creator</h3><p>Erstelle dein eigenes Multiplikations-Quiz, Memory oder Zuordnungsspiel.</p><b>Spiel selbst bauen →</b></button>
+    </div>
+  </div>
 
-
-
-</div>
-<div class="section two">
-<div class="subpanel">
-<div class="section-head" style="margin:0 0 12px">
-<div>
-<h3>Dein Level-Aufstieg</h3>
-<p id="xpCaption">Sammle XP mit jeder Runde.</p>
-</div>
-<strong id="xpNumbers">0 / 100 XP</strong>
-</div>
-<div class="xpbar">
-<div id="xpFill">
-</div>
-</div>
-</div>
-<div class="subpanel">
-<h3>🔥 Deine Serie</h3>
-<p class="muted" style="margin:8px 0 0" id="streakCaption">Starte heute eine Runde, um deine tägliche Serie aufzubauen.</p>
-</div>
-</div>
+  <div class="section two home-bottom">
+    <div class="subpanel"><div class="section-head" style="margin:0 0 12px"><div><h3>Dein Level-Aufstieg</h3><p id="xpCaption">Sammle XP mit jeder Runde.</p></div><strong id="xpNumbers">0 / 100 XP</strong></div><div class="xpbar"><div id="xpFill"></div></div><div style="margin-top:12px"><button class="btn secondary" onclick="show('progress')">Profil & Erfolge ansehen →</button></div></div>
+    <div class="subpanel"><h3>🔥 Deine Serie</h3><p class="muted" style="margin:8px 0 13px" id="streakCaption">Starte heute eine Runde, um deine tägliche Serie aufzubauen.</p><button class="btn secondary" onclick="show('shop')">Shop & Belohnungen ansehen →</button></div>
+  </div>
 </section>
 <section id="modes" class="screen panel">
 <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
@@ -1926,8 +2012,9 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <section id="progress" class="screen panel">
 <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">DEIN PROFIL</span>
-<h2>Level, XP & Abzeichen</h2>
-<p class="muted">Jede Runde zählt. Dein Fortschritt wird auf diesem Gerät gespeichert.</p>
+<h2>Dein Lernprofil</h2>
+<p class="muted">Deine Entwicklung im Einmaleins – mit Level, Erfahrung und Erfolgen.</p>
+<div class="profile-identity"><div class="profile-identity-avatar" id="profileHeroAvatar">🦊</div><div class="profile-identity-copy"><strong id="profileHeroName">Einmaleins-Meister</strong><small id="profileHeroMeta">Level 1 · Noch am Anfang</small></div><button class="btn secondary" type="button" onclick="show('settings')">Bearbeiten</button></div>
 <div class="mini-stats">
 <div class="stat">
 <span>Aktuelles Level</span>
@@ -1941,6 +2028,11 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <span>Gespielte Runden</span>
 <strong id="pSessions">0</strong>
 </div>
+</div>
+<div class="mini-stats profile-extra-stats">
+<div class="stat"><span>Trefferquote</span><strong id="pAccuracy">0%</strong></div>
+<div class="stat"><span>Deine Münzen</span><strong id="pCoins">250 🪙</strong></div>
+<div class="stat"><span>Abzeichen</span><strong id="pBadgeCount">0</strong></div>
 </div>
 <div class="subpanel">
 <div class="section-head" style="margin:0">
@@ -2138,50 +2230,31 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 </section>
 <section id="teacher" class="screen panel">
-<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
-<span class="kicker">KLASSEN-MODUS</span>
-<h2>Erstelle deine Quiz-Runde</h2>
-<p class="muted">Wähle den Fragentyp, die Anzahl und das Tempo. Anschließend kannst du im Live-Modus einen Raum eröffnen.</p>
-<div class="subpanel" style="margin-top:20px">
-<div class="formrow">
-<div class="field">
-<label for="teacherDifficulty">Fragentyp</label>
-<select id="teacherDifficulty">
-<option value="easy">Einfach (1–5)</option>
-<option value="medium" selected>Mittel (1–10)</option>
-<option value="hard">Schwer (1–20)</option>
-</select>
-</div>
-<div class="field">
-<label for="teacherCount">Anzahl der Fragen</label>
-<select id="teacherCount">
-<option>10</option>
-<option selected>15</option>
-<option>20</option>
-</select>
-</div>
-<div class="field">
-<label for="teacherTime">Zeit pro Frage</label>
-<select id="teacherTime">
-<option>10</option>
-<option selected>15</option>
-<option>20</option>
-</select>
-</div>
-<div class="field">
-<label>Antworten</label>
-<div class="pill" style="width:100%;justify-content:center">🔀 Zufällige Reihenfolge</div>
-</div>
-</div>
-<button class="btn purple" onclick="applyTeacherSettings()">Einstellungen übernehmen →</button>
-</div>
-<div class="notice" style="margin-top:16px">Hinweis: Für echte Live-Runden müssen Host und Spieler online sein. Im Einzelspieler-Modus können alle anderen Trainings- und Fortschrittsfunktionen sofort verwendet werden.</div>
+  <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
+  <span class="kicker">LEHRERBEREICH · EINMALEINS</span>
+  <h2>Eine Klassenrunde vorbereiten</h2>
+  <p class="muted">Stelle eine Multiplikationsrunde zusammen und spiele sie live mit deiner Klasse. Die Schüler treten mit einem Spielcode und ihrem Namen bei – ohne E-Mail und ohne eigenes Konto.</p>
+  <div class="teacher-steps">
+    <article class="teacher-step"><strong>1 · Runde einstellen</strong><p>Wähle Zahlenbereich, Anzahl der Aufgaben und die Antwortzeit.</p></article>
+    <article class="teacher-step"><strong>2 · Raum eröffnen</strong><p>Du erhältst einen fünfstelligen Code und einen QR-Code für deine Klasse.</p></article>
+    <article class="teacher-step"><strong>3 · Gemeinsam spielen</strong><p>Die Klasse antwortet am eigenen Gerät. Du steuerst die Runde am Host-Bildschirm.</p></article>
+  </div>
+  <div class="subpanel" style="margin-top:18px">
+    <div class="section-head" style="margin:0 0 14px"><div><h3>⚙️ Einstellungen der Klassenrunde</h3><p>Alle Aufgaben sind Multiplikationsaufgaben.</p></div></div>
+    <div class="teacher-form-grid">
+      <div class="field"><label for="teacherDifficulty">Zahlenbereich</label><select id="teacherDifficulty"><option value="easy">Einfach · 1 bis 5</option><option value="medium" selected>Standard · 1 bis 10</option><option value="hard">Anspruchsvoll · 1 bis 20</option></select></div>
+      <div class="field"><label for="teacherCount">Anzahl der Aufgaben</label><select id="teacherCount"><option>10</option><option selected>15</option><option>20</option></select></div>
+      <div class="field"><label for="teacherTime">Zeit pro Aufgabe</label><select id="teacherTime"><option>10</option><option selected>15</option><option>20</option></select></div>
+    </div>
+    <div class="teacher-callout">🔒 <strong>Einfacher Einstieg:</strong> Schüler müssen sich nicht registrieren und keine E-Mail-Adresse angeben. Der Spielcode reicht aus.</div>
+    <button class="btn primary" style="margin-top:16px" onclick="applyTeacherSettings()">Einstellungen übernehmen und Raum öffnen →</button>
+  </div>
 </section>
 <section id="settings" class="screen panel">
 <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">EINSTELLUNGEN</span>
 <h2>Dein Profil</h2>
-<p class="muted">Dein Name und deine Lernstatistik werden nur lokal in diesem Browser gespeichert.</p>
+<p class="muted">Name und Avatar werden auf diesem Gerät gespeichert. Deine Lernstatistik, XP und Käufe bleiben in dieser Version ebenfalls lokal.</p>
 <div class="subpanel" style="margin-top:18px">
 <div class="field">
 <label for="profileName">Spielername</label>
@@ -2203,7 +2276,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <section id="shop" class="screen panel">
 <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">PROFIL & BELONUNGEN</span>
-<h2>Dein Profil-Shop 🪙</h2>
+<h2>Shop & Belohnungen 🪙</h2>
 <p class="muted">Verdiene Münzen durch Training und Live-Runden. Kaufe kosmetische Extras – sie verändern nur dein Profil, nicht die Spielchancen.</p>
 <div class="shop-wallet subpanel"><div class="shop-avatar-preview" id="shopAvatarPreview">🦊</div><div class="shop-wallet-main"><div class="muted">Dein Guthaben</div><strong><span id="shopCoins">250</span> 🪙</strong><div class="muted" id="shopProfileSummary">Level 1 · Einsteiger</div></div><button class="btn secondary" onclick="show('settings')">Profil bearbeiten</button></div>
 <div class="shop-missions subpanel"><div class="section-head" style="margin:0 0 12px"><div><h3>🎯 Tägliche Missionen</h3><p class="muted">Jeden Tag neue Ziele und Münzbelohnungen.</p></div></div><div id="missionList" class="mission-list"></div></div>
@@ -2211,7 +2284,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <div class="section-head"><div><h3>🏷️ Titel neben deinem Namen</h3><p class="muted">Zeige deinen Stil in der Spieler-Liste.</p></div></div><div id="titleShop" class="shop-grid"></div>
 <div class="section-head"><div><h3>🐺 Seltene Avatare</h3><p class="muted">Schalte neue Spielfiguren frei.</p></div></div><div id="avatarShop" class="shop-grid"></div>
 <div class="section-head"><div><h3>🎉 Feier-Effekte</h3><p class="muted">Ein visueller Effekt für deine eigene Siegeransicht.</p></div></div><div id="effectShop" class="shop-grid"></div>
-<div class="notice" style="margin-top:18px">ℹ️ Dein Münzestand und deine gekauften Extras werden aktuell auf diesem Gerät gespeichert. Für ein geräteübergreifendes, fälschungssicheres Konto braucht MatheMeister später eine richtige Anmeldung.</div>
+<div class="notice" style="margin-top:18px">ℹ️ Dein Münzestand und deine gekauften Extras werden in dieser Version auf diesem Gerät gespeichert. Für ein geräteübergreifendes, fälschungssicheres Konto braucht MatheMeister später eine richtige Anmeldung.</div>
 </section>
 
 <section id="studio" class="screen panel">
@@ -2246,9 +2319,9 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
   <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
   <div class="creator-hero">
     <span class="pill">🎮 MATHEMEISTER · GAME CREATOR</span>
-    <h2>Deine Idee. Dein Spiel.</h2>
-    <p>Baue ein Spiel Schritt für Schritt – ganz ohne Programmieren. Wähle eine Vorlage, ändere Inhalte und Regeln, teste dein Spiel direkt und teile den Bauplan mit Freunden.</p>
-    <div class="creator-tagline"><span>⚡ Einfach starten</span><span>🧩 10 Spieltypen</span><span>📱 Handyfreundlich</span><span>💾 Ohne Pflichtkonto</span></div>
+    <h2>Deine Malaufgaben. Dein Spiel.</h2>
+    <p>Erstelle dein eigenes Spiel rund ums Einmaleins. Wähle ein Format, bearbeite deine Malaufgaben, teste dein Spiel direkt und teile den Bauplan mit Freunden.</p>
+    <div class="creator-tagline"><span>⚡ Einfach starten</span><span>🧩 8 Multiplikationsformate</span><span>📱 Handyfreundlich</span><span>💾 Ohne Pflichtkonto</span></div>
   </div>
   <div id="creatorHomePanel">
     <div id="creatorResumeCard" class="creator-resume-card hidden">
@@ -2257,9 +2330,9 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
     </div>
     <div class="creator-prompt-box">
       <span class="kicker">DU HAST SCHON EINE IDEE?</span>
-      <h3 style="margin:8px 0 3px">Was für ein Spiel möchtest du machen?</h3>
-      <p class="muted" style="margin:0;font-size:13px;line-height:1.55">Schreibe zum Beispiel: „Ein Quiz über Fußball“ oder „Ein Memory mit Tieren“. Wir wählen eine passende Vorlage und fügen bei bekannten Themen Beispiel-Fragen ein. Du kannst alles ganz leicht ändern.</p>
-      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Zum Beispiel: Ein Quiz über Tiere …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Spiel starten</button></div>
+      <h3 style="margin:8px 0 3px">Welche Art von Einmaleins-Spiel möchtest du erstellen?</h3>
+      <p class="muted" style="margin:0;font-size:13px;line-height:1.55">Schreibe zum Beispiel: „Ein Quiz zur 7er-Reihe“ oder „Ein Memory mit Malaufgaben“. Wir erstellen eine passende Multiplikationsvorlage mit Beispielaufgaben, die du anschließend bearbeiten kannst.</p>
+      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Zum Beispiel: Ein Quiz zur 7er-Reihe …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Spiel starten</button></div>
       <p id="creatorIdeaStatus" class="creator-status" aria-live="polite"></p>
     </div>
     <div class="creator-section-head"><div><h3>1. Wähle ein Spiel</h3><p>Tippe auf ein Spiel. Danach zeigen wir dir Schritt für Schritt, was du tun kannst.</p></div></div>
@@ -2456,11 +2529,11 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
           <div class="admin-messages-layout"><section class="admin-surface-card admin-conversations-panel"><div class="admin-card-heading"><div><h3>Unterhaltungen</h3><p>Nachrichten von registrierten Nutzern</p></div></div><div id="adminPrivateConversations" class="admin-conversation-list"><div class="admin-empty-state">Unterhaltungen werden geladen …</div></div></section><section id="adminPrivateThread" class="admin-surface-card admin-thread-panel"><div class="admin-thread-empty"><span>☷</span><h3>Gespräch auswählen</h3><p>Wähle links eine Unterhaltung aus, um den Verlauf zu lesen und zu antworten.</p></div></section></div>
         </section>
       </div>
-      <footer class="admin-footer"><span>MatheMeister Admin Center</span><span>Verwaltung · V10.8.9</span></footer>
+      <footer class="admin-footer"><span>MatheMeister Admin Center</span><span>Verwaltung · V10.7.1</span></footer>
     </main>
   </div>
 </section>
-<footer class="foot">MatheMeister Pro v10.8.9 · Admin Center</footer>
+<footer class="foot">MatheMeister Pro v10.7.1 · Admin Center</footer>
 </div>
 <button id="globalBackButton" type="button" onclick="goBack()" aria-label="Einen Schritt zurück"><span class="back-arrow" aria-hidden="true">←</span><span>Zurück</span></button>
 <div id="appModal" class="modal-overlay hidden" role="presentation" aria-hidden="true">
@@ -2477,7 +2550,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.8.9" defer></script>
+<script src="./app.js?v=10.9.0" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {
