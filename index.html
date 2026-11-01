@@ -2306,7 +2306,12 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
   <section id="feedbackPrivatePanel" class="subpanel hidden" style="margin-top:16px">
     <div class="row" style="justify-content:space-between;align-items:center;gap:10px"><h3>💬 Private Nachrichten</h3><button class="btn secondary" type="button" onclick="feedbackChooseMode('choose')">← Zur Auswahl</button></div>
     <p class="muted">Melde dich an oder erstelle ein kostenloses Konto. Nach der E-Mail-Bestätigung kannst du private Nachrichten senden und Antworten lesen.</p>
-    <div id="privateAuthPanel" class="feedback-grid">
+    <div id="privateAuthGate" class="info-card">
+      <h3>🔐 Persönliche Antwort erhalten</h3>
+      <p>Für private Nachrichten brauchst du ein kostenloses Konto. Deine E-Mail-Adresse wird erst im nächsten Schritt abgefragt.</p>
+      <button class="btn primary" type="button" onclick="privateShowAuth()">Mit Konto anmelden oder registrieren →</button>
+    </div>
+    <div id="privateAuthPanel" class="feedback-grid hidden">
       <form id="privateAuthForm" class="feedback-form subpanel">
         <div class="field"><label for="privateEmail">E-Mail-Adresse</label><input id="privateEmail" type="email" autocomplete="email" required maxlength="254" placeholder="name@example.com"></div>
         <div class="field"><label for="privatePassword">Passwort</label><input id="privatePassword" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="Mindestens 8 Zeichen"></div>

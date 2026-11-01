@@ -376,6 +376,8 @@ function updateGlobalBackButton(){
   button.setAttribute('aria-hidden',String(!visible));
 }
 function show(id, options={}) {
+    // V10.8.1: Any screen change closes the global menu/drawer so it cannot cover another tab.
+    if(typeof toggleSiteMenu==='function')toggleSiteMenu(false);
     const current=document.querySelector('.screen.active')?.id || mmActiveScreen || 'home';
     const changingScreen=current!==id;
     if(changingScreen){
@@ -420,7 +422,9 @@ const MM_APP_HISTORY_KEY='mm-app-history-v1';
 const MM_APP_SCROLL_KEY='mm-app-scroll-v1';
 const MM_APP_GAME_KEY='mm-app-game-v1';
 const MM_APP_RESULT_KEY='mm-app-result-v1';
-const MM_RESTORABLE_SCREENS=new Set(['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen']);
+const MM_APP_INFO_KEY='mm-app-info-v1';
+// Every normal app section is restorable after a refresh in the same browser tab.
+const MM_RESTORABLE_SCREENS=new Set(['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo']);
 const MM_RESULT_FIELDS=['resultIcon','resultTitle','resultSub','resCorrect','resWrong','resAccuracy','xpEarned','recordMsg'];
 function persistAppViewState(){
   try{
@@ -428,13 +432,16 @@ function persistAppViewState(){
     const active=document.querySelector('.screen.active')?.id||mmActiveScreen||'home';
     if(active==='home'||active==='adminScreen'){
       sessionStorage.removeItem(MM_APP_SCREEN_KEY);sessionStorage.removeItem(MM_APP_HISTORY_KEY);
-      sessionStorage.removeItem(MM_APP_SCROLL_KEY);sessionStorage.removeItem(MM_APP_GAME_KEY);sessionStorage.removeItem(MM_APP_RESULT_KEY);
+      sessionStorage.removeItem(MM_APP_SCROLL_KEY);sessionStorage.removeItem(MM_APP_GAME_KEY);sessionStorage.removeItem(MM_APP_RESULT_KEY);sessionStorage.removeItem(MM_APP_INFO_KEY);
       return;
     }
     sessionStorage.setItem(MM_APP_SCREEN_KEY,active);
     sessionStorage.setItem(MM_APP_HISTORY_KEY,JSON.stringify(mmScreenHistory.slice(-40)));
     sessionStorage.setItem(MM_APP_SCROLL_KEY,String(Math.max(0,window.scrollY||window.pageYOffset||0)));
-    if(active==='game'){
+    if(active==='siteInfo'){
+      sessionStorage.setItem(MM_APP_INFO_KEY,JSON.stringify({title:$('siteInfoTitle')?.textContent||'',intro:$('siteInfoIntro')?.textContent||'',content:$('siteInfoContent')?.innerHTML||''}));
+      sessionStorage.removeItem(MM_APP_GAME_KEY);sessionStorage.removeItem(MM_APP_RESULT_KEY);
+    }else if(active==='game'){
       const feedback=$('feedback');
       const snapshot={v:1,mode:game.mode,level:game.level,questions:game.questions,index:game.index,correct:game.correct,wrong:game.wrong,streak:game.streak,bestStreak:game.bestStreak,answered:game.answered,correctAnswer:game.correctAnswer,question:game.question,options:game.options,startedAt:game.startedAt,remaining:game.remaining,attempts:game.attempts,roundErrors:game.roundErrors,lastAnswerValue:game.lastAnswerValue,lastAnsweredAt:game.lastAnsweredAt,screenBeforeGame,feedbackText:feedback?.textContent||'',feedbackColor:feedback?.style.color||''};
       sessionStorage.setItem(MM_APP_GAME_KEY,JSON.stringify(snapshot));
@@ -482,7 +489,7 @@ function adminOrAppRestoreGame(snapshot){
 function restoreAppViewState(){
   try{
     if(new URLSearchParams(window.location.search).has('join'))return;
-    const screen=sessionStorage.getItem(MM_APP_SCREEN_KEY);if(!screen||screen==='home'||screen==='adminScreen'||screen==='siteInfo')return;
+    const screen=sessionStorage.getItem(MM_APP_SCREEN_KEY);if(!screen||screen==='home'||screen==='adminScreen')return;
     let history=[];try{const saved=JSON.parse(sessionStorage.getItem(MM_APP_HISTORY_KEY)||'[]');if(Array.isArray(saved))history=saved.filter(item=>item&&typeof item.id==='string'&&item.id!=='adminScreen').slice(-40);}catch(_){history=[];}
     const scrollY=Math.max(0,Number(sessionStorage.getItem(MM_APP_SCROLL_KEY))||0);
     if(screen==='live')return; // restoreLiveSession() owns live-room reconnection.
@@ -498,6 +505,10 @@ function restoreAppViewState(){
       mmScreenHistory.splice(0,mmScreenHistory.length,...history);if(scrollY)requestAnimationFrame(()=>window.scrollTo(0,scrollY));persistAppViewState();return;
     }
     if(MM_RESTORABLE_SCREENS.has(screen)){
+      if(screen==='siteInfo'){
+        let info=null;try{info=JSON.parse(sessionStorage.getItem(MM_APP_INFO_KEY)||'null');}catch(_){info=null;}
+        if(info){$('siteInfoTitle').textContent=String(info.title||'');$('siteInfoIntro').textContent=String(info.intro||'');$('siteInfoContent').innerHTML=String(info.content||'');}
+      }
       show(screen,{fromBack:true});mmScreenHistory.splice(0,mmScreenHistory.length,...history);if(scrollY)requestAnimationFrame(()=>window.scrollTo(0,scrollY));
     }
   }catch(_){/* Ignore stale session data and start safely on the home screen. */}
@@ -2523,19 +2534,31 @@ window.addEventListener('pagehide',()=>{if(creatorAutoSaveTimer){clearTimeout(cr
 // V10.6.0 – optional user accounts and private admin conversations.
 let mmPrivateUser = null;
 let mmPrivateConversationId = null;
+let mmPrivateAuthExpanded = false;
+function privateShowAuth(){
+  mmPrivateAuthExpanded=true;
+  const gate=$('privateAuthGate'),panel=$('privateAuthPanel');
+  gate?.classList.add('hidden');panel?.classList.remove('hidden');
+  $('privateEmail')?.focus();
+}
 let mmAdminPrivateRows = [];
 function feedbackChooseMode(mode){
   const anon=$('feedbackAnonymousPanel'),priv=$('feedbackPrivatePanel');
   anon?.classList.toggle('hidden',mode!=='anonymous');
   priv?.classList.toggle('hidden',mode!=='private');
-  if(mode==='private')privateRefreshSession();
+  if(mode!=='private')return;
+  mmPrivateAuthExpanded=false;
+  $('privateAuthGate')?.classList.remove('hidden');
+  $('privateAuthPanel')?.classList.add('hidden');
+  privateRefreshSession();
 }
 async function privateRefreshSession(){
   try{const sb=await getSb();const {data,error}=await sb.auth.getSession();if(error)throw error;mmPrivateUser=data.session?.user||null;privateSetView();if(mmPrivateUser)await privateLoadMessages();}
   catch(e){const st=$('privateAuthStatus');if(st)st.textContent=e.message||'Verbindung fehlgeschlagen.';}
 }
 function privateSetView(){
-  $('privateAuthPanel')?.classList.toggle('hidden',!!mmPrivateUser);
+  $('privateAuthGate')?.classList.toggle('hidden',!!mmPrivateUser||mmPrivateAuthExpanded);
+  $('privateAuthPanel')?.classList.toggle('hidden',!!mmPrivateUser||!mmPrivateAuthExpanded);
   $('privateInboxPanel')?.classList.toggle('hidden',!mmPrivateUser);
   if($('privateSignedInAs'))$('privateSignedInAs').textContent=mmPrivateUser?'Angemeldet als '+(mmPrivateUser.email||'Nutzer')+(mmPrivateUser.email_confirmed_at?'':' · E-Mail noch nicht bestätigt'):'';
 }
