@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#080b18">
 <meta name="description" content="MatheMeister Pro – trainieren, live spielen und eigene Quiz-, Puzzle- und Wortspiele ohne Programmieren bauen.">
 <script>
-(function(){try{var s=sessionStorage.getItem('mm-app-screen-v1');var valid=['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo','result'];var gameOk=s==='game'&&!!sessionStorage.getItem('mm-app-game-v1');if((valid.includes(s)||gameOk)&&s!=='live')document.documentElement.classList.add('app-restoring');}catch(e){}})();
+(function(){try{var root=document.documentElement;var s=sessionStorage.getItem('mm-app-screen-v1');var valid=['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo','result'];var gameOk=s==='game'&&!!sessionStorage.getItem('mm-app-game-v1');if((valid.includes(s)||gameOk)&&s!=='live')root.classList.add('app-restoring');var adminRequested=sessionStorage.getItem('mm-admin-screen-open-v1')==='1'||localStorage.getItem('mm-admin-screen-open-v1')==='1';if(adminRequested)root.classList.add('admin-restoring');}catch(e){}})();
 </script>
-<title>MatheMeister Pro v10.7.1 · Admin Dashboard & Refresh Restore 🚀</title>
+<title>MatheMeister Pro v10.8.6 · Stabilität, Login & mobile UX 🚀</title>
 
 <style>
 :root {
@@ -32,7 +32,7 @@
 * {
   box-sizing:border-box
 }
-.app-restoring .screen.active { visibility:hidden !important; }
+.app-restoring .screen.active,.admin-restoring .screen.active { visibility:hidden !important; }
 body {
   margin:0;
   min-height:100vh;
@@ -1649,7 +1649,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <span id="statusText">Dein Lernabenteuer</span>
 </span>
 <div class="avatar" id="avatar">🧑‍🚀</div>
-<button class="small-btn" onclick="editProfile()" aria-label="Profil ändern">⚙️</button>
+<button id="profileSettingsToggle" class="small-btn" type="button" onclick="editProfile()" aria-label="Profil & Einstellungen öffnen" aria-expanded="false">⚙️</button>
 </div>
 <div class="menu-area">
 <button id="siteMenuToggle" class="menu-toggle" type="button" onclick="toggleSiteMenu()" aria-label="Hauptmenü öffnen" aria-expanded="false" aria-controls="siteMenu">☰</button>
@@ -1795,7 +1795,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 </section>
 <section id="modes" class="screen panel">
-<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">TRAININGSZENTRUM</span>
 <h2>Wie möchtest du trainieren?</h2>
 <p class="muted">Wähle den Schwierigkeitsgrad für deinen nächsten Level-Aufstieg.</p>
@@ -1889,7 +1889,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 </section>
 <section id="progress" class="screen panel">
-<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">DEIN PROFIL</span>
 <h2>Level, XP & Abzeichen</h2>
 <p class="muted">Jede Runde zählt. Dein Fortschritt wird auf diesem Gerät gespeichert.</p>
@@ -1930,7 +1930,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 </section>
 <section id="stats" class="screen panel">
-<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">PERFORMANCE CENTER</span>
 <h2>Deine Statistiken</h2>
 <p class="muted">Deine persönliche Entwicklung auf diesem Gerät.</p>
@@ -2103,7 +2103,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 </section>
 <section id="teacher" class="screen panel">
-<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">KLASSEN-MODUS</span>
 <h2>Erstelle deine Quiz-Runde</h2>
 <p class="muted">Wähle den Fragentyp, die Anzahl und das Tempo. Anschließend kannst du im Live-Modus einen Raum eröffnen.</p>
@@ -2143,7 +2143,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <div class="notice" style="margin-top:16px">Hinweis: Für echte Live-Runden müssen Host und Spieler online sein. Im Einzelspieler-Modus können alle anderen Trainings- und Fortschrittsfunktionen sofort verwendet werden.</div>
 </section>
 <section id="settings" class="screen panel">
-<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">EINSTELLUNGEN</span>
 <h2>Dein Profil</h2>
 <p class="muted">Dein Name und deine Lernstatistik werden nur lokal in diesem Browser gespeichert.</p>
@@ -2166,7 +2166,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <p class="muted" style="font-size:12px;margin-top:18px">Achtung: Ein Zurücksetzen löscht lokal gespeicherte XP, Rekorde, Statistiken und Fehlerlisten auf diesem Gerät.</p>
 </section>
 <section id="shop" class="screen panel">
-<button class="small-btn back" onclick="show('home')">← Startseite</button>
+<button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
 <span class="kicker">PROFIL & BELONUNGEN</span>
 <h2>Dein Profil-Shop 🪙</h2>
 <p class="muted">Verdiene Münzen durch Training und Live-Runden. Kaufe kosmetische Extras – sie verändern nur dein Profil, nicht die Spielchancen.</p>
@@ -2180,7 +2180,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </section>
 
 <section id="studio" class="screen panel">
-  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
   <div class="studio-hero"><span class="pill">🧪 MATHEMEISTER SPIELSTUDIO</span><h2>Dein Spiel. Deine Regeln.</h2><p>Gestalte eine eigene Mathe-Runde, wähle Tempo und Spielweise, schreibe deine eigenen Aufgaben und teile die Vorlage mit Freunden. Alle können ohne Pflichtkonto mitmachen.</p></div>
   <div class="subpanel">
     <div class="field"><label for="studioName">Name deines Spiels</label><input id="studioName" maxlength="42" placeholder="z. B. 7er-Reihe-Challenge" value="Meine Mathe-Challenge"></div>
@@ -2208,7 +2208,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 
 
 <section id="creator" class="screen panel">
-  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
   <div class="creator-hero">
     <span class="pill">🎮 MATHEMEISTER · GAME CREATOR</span>
     <h2>Deine Idee. Dein Spiel.</h2>
@@ -2283,7 +2283,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </section>
 
 <section id="feedbackScreen" class="screen panel">
-  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
   <div class="studio-hero" style="border-color:#48e4ef44;background:radial-gradient(ellipse at 90% 0%,#48e4ef20,transparent 42%),linear-gradient(135deg,#1b2b46,#11182b 70%)"><span class="pill">💡 DEINE IDEE ZÄHLT</span><h2>Was sollen wir besser machen?</h2><p>Fehler gefunden, neue Spielidee oder Wunsch für eine kommende Funktion? Schreib uns genau, was passiert ist. Hilfreiche Rückmeldungen machen MatheMeister besser für alle.</p></div>
   <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin:18px 0">
     <button type="button" class="info-card" style="text-align:left;cursor:pointer;border:1px solid #48e4ef66" onclick="feedbackChooseMode('anonymous')"><h3>💡 Feedback senden</h3><p>Teile uns deine Meinung, Ideen oder Probleme mit.</p><p class="studio-field-note">Deine Nachricht wird als Feedback an das Team gesendet. Eine persönliche Antwort über MatheMeister ist nicht möglich.</p><strong>Ohne Konto · Keine private Antwort</strong></button>
@@ -2319,7 +2319,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
       <form id="privateAuthForm" class="feedback-form subpanel">
         <div class="field"><label for="privateEmail">E-Mail-Adresse</label><input id="privateEmail" type="email" autocomplete="email" required maxlength="254" placeholder="name@example.com"></div>
         <div class="field"><label for="privatePassword">Passwort</label><input id="privatePassword" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="Mindestens 8 Zeichen"></div>
-        <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">Anmelden</button><button class="btn secondary" type="button" onclick="privateSignUp()">Konto erstellen</button><button class="btn secondary" type="button" onclick="privateResendConfirmation()">Bestätigungs-E-Mail erneut senden</button></div>
+        <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">Anmelden</button><button class="btn secondary" type="button" onclick="privateSignUp()">Konto erstellen</button></div><p class="studio-field-note" style="margin-top:9px">Nach dem Deaktivieren von „Confirm email“ in Supabase kannst du dich direkt nach der Registrierung anmelden – ohne Bestätigungslink.</p>
         <p id="privateAuthStatus" class="studio-field-note" role="status" aria-live="polite"></p>
       </form>
       <aside class="feedback-side"><article class="info-card"><h3>🔐 Deine Privatsphäre</h3><p>Nur du und der Administrator können eure Unterhaltung sehen. Andere Nutzer haben keinen Zugriff.</p></article><article class="info-card"><h3>📬 Antworten jederzeit lesen</h3><p>Deine Nachrichten bleiben in deinem Konto gespeichert – auch wenn du ein anderes Gerät verwendest.</p></article></aside>
@@ -2333,7 +2333,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </section>
 
 <section id="siteInfo" class="screen panel">
-  <button class="small-btn back" onclick="show('home')">← Startseite</button>
+  <button class="small-btn back" type="button" onclick="goBack()">← Zurück</button>
   <span class="kicker">MATHEMEISTER WISSENSBEREICH</span>
   <h2 id="siteInfoTitle">Über MatheMeister</h2>
   <p class="muted" id="siteInfoIntro"></p>
@@ -2442,7 +2442,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.8.4" defer></script>
+<script src="./app.js?v=10.8.6" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {

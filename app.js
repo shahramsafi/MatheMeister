@@ -391,12 +391,15 @@ function show(id, options={}) {
     }
     if(id==='home')mmScreenHistory.length=0;
     mmActiveScreen=id;
+    if(id==='adminScreen'){try{sessionStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-screen-open-v1','1');}catch(_){}}
+    else if(current==='adminScreen'){try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}}
     if(id==='feedbackScreen' && current!=='feedbackScreen' && typeof feedbackChooseMode==='function')feedbackChooseMode('choose');
     document.body.classList.toggle('admin-mode',id==='adminScreen');
     if(current==='creator' && id!=='creator' && typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     $(id).classList.add('active');
     document.querySelectorAll('#mobileTabbar [data-mobile-screen]').forEach(btn=>btn.classList.toggle('active',btn.dataset.mobileScreen===id));
+    const profileSettingsToggle=$('profileSettingsToggle');if(profileSettingsToggle){profileSettingsToggle.setAttribute('aria-expanded',String(id==='settings'));profileSettingsToggle.setAttribute('aria-label',id==='settings'?'Einstellungen schließen':'Profil & Einstellungen öffnen');}
     const moreTab=document.querySelector('#mobileTabbar [data-mobile-more]');
     if(moreTab)moreTab.classList.toggle('active',!['home','modes','live','progress'].includes(id));
     document.body.classList.toggle('mobile-game-screen',id==='game');
@@ -539,7 +542,9 @@ async function goBack(){
   show(previous.id,{fromBack:true,restoreScrollY:previous.scrollY});
 }
 function editProfile() {
-    show('settings')
+    const active=document.querySelector('.screen.active')?.id;
+    if(active==='settings'){goBack();return;}
+    show('settings');
 }
 function saveProfile() {
     ensureEconomy(); updateAvatarChoices();
@@ -551,7 +556,7 @@ function saveProfile() {
     data.avatar=(avatarUnlocks[chosenAvatar]&&!data.inventory.includes(avatarUnlocks[chosenAvatar]))?'🦊':chosenAvatar;
     saveData();
     showToast('Profil gespeichert!');
-    show('home')
+    goBack()
 }
 async function resetData() {
     if(!await customConfirm({title:'Alle lokalen Daten zurücksetzen?',message:'Deine XP, Münzen, Rekorde, Übungsstatistik und Fehlerliste auf diesem Gerät werden gelöscht. Das kann nicht rückgängig gemacht werden.',confirmText:'Daten zurücksetzen',cancelText:'Abbrechen',icon:'🧹',tone:'danger'}))return;
@@ -1497,7 +1502,7 @@ async function getSb() {
     }
     if (!live.sb) {
         const mod = await import('https://esm.sh/@supabase/supabase-js@2.118.0');
-        live.sb = mod.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        live.sb = mod.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true } });
     }
     return live.sb;
 }
@@ -2566,12 +2571,12 @@ function privateSetView(){
   $('privateAuthGate')?.classList.toggle('hidden',!!mmPrivateUser||mmPrivateAuthExpanded);
   $('privateAuthPanel')?.classList.toggle('hidden',!!mmPrivateUser||!mmPrivateAuthExpanded);
   $('privateInboxPanel')?.classList.toggle('hidden',!mmPrivateUser);
-  if($('privateSignedInAs'))$('privateSignedInAs').textContent=mmPrivateUser?'Angemeldet als '+(mmPrivateUser.email||'Nutzer')+(mmPrivateUser.email_confirmed_at?'':' · E-Mail noch nicht bestätigt'):'';
+  if($('privateSignedInAs'))$('privateSignedInAs').textContent=mmPrivateUser?'Angemeldet als '+(mmPrivateUser.email||'Nutzer'):'';
 }
 async function privateSignUp(){
   const email=$('privateEmail')?.value.trim()||'',password=$('privatePassword')?.value||'',st=$('privateAuthStatus');
   if(!email||password.length<8){if(st)st.textContent='Bitte gib eine gültige E-Mail und ein Passwort mit mindestens 8 Zeichen ein.';return;}
-  try{const sb=await getSb();const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin+window.location.pathname+'#feedback'}});if(error)throw error;if(st)st.textContent=data.session?'Konto erstellt. Du bist jetzt angemeldet.':'Fast geschafft! Bitte bestätige deine E-Mail über den zugesendeten Link und melde dich danach an.';if(data.session){mmPrivateUser=data.user;privateSetView();}}
+  try{const sb=await getSb();const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin+window.location.pathname+'#feedback'}});if(error)throw error;if(st)st.textContent=data.session?'Konto erstellt. Du bist jetzt angemeldet.':'Konto wurde erstellt, aber Supabase hat noch keine Sitzung ausgegeben. Für den Zugang ohne E-Mail-Bestätigung muss „Confirm email“ in Supabase deaktiviert sein.';if(data.session){mmPrivateUser=data.user;privateSetView();await privateLoadMessages();}}
   catch(e){if(st)st.textContent='Registrierung fehlgeschlagen: '+(e.message||'');}
 }
 async function privateResendConfirmation(){
@@ -2584,7 +2589,7 @@ async function privateResendConfirmation(){
     if(st)st.textContent='Falls für diese Adresse eine unbestätigte Registrierung besteht, wurde eine neue Bestätigungs-E-Mail angefordert. Bitte prüfe auch den Spam-Ordner.';
   }catch(e){if(st)st.textContent='E-Mail konnte nicht erneut angefordert werden: '+(e.message||'');}
 }
-async function privateAuthSubmit(event){event.preventDefault();const st=$('privateAuthStatus');try{const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('privateEmail').value.trim(),password:$('privatePassword').value});if(error)throw error;if(!data.user?.email_confirmed_at)throw new Error('Bitte bestätige zuerst deine E-Mail-Adresse.');mmPrivateUser=data.user;$('privatePassword').value='';privateSetView();await privateLoadMessages();}catch(e){if(st)st.textContent='Anmeldung fehlgeschlagen: '+(e.message||'');}}
+async function privateAuthSubmit(event){event.preventDefault();const st=$('privateAuthStatus');try{const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('privateEmail').value.trim(),password:$('privatePassword').value});if(error)throw error;mmPrivateUser=data.user;$('privatePassword').value='';privateSetView();await privateLoadMessages();}catch(e){if(st)st.textContent='Anmeldung fehlgeschlagen: '+(e.message||'');}}
 async function privateSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmPrivateUser=null;mmPrivateConversationId=null;privateSetView();$('privateMessageList').innerHTML='';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
 async function privateLoadMessages(){
   const out=$('privateMessageList');if(!out||!mmPrivateUser)return;out.innerHTML='<article class="info-card">Nachrichten werden geladen …</article>';
@@ -2674,7 +2679,7 @@ async function adminLogin(event){
  event.preventDefault();const savedScrollY=window.scrollY||window.pageYOffset||0;const adminHistorySnapshot=mmScreenHistory.slice();const status=$('adminLoginStatus');const button=$('adminLoginForm')?.querySelector('button[type="submit"]');if(button)button.disabled=true;if(status)status.textContent='Anmeldung wird geprüft …';
  try{
   const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('adminEmail').value.trim(),password:$('adminPassword').value});if(error)throw error;
-  mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');
+  mmAdminSession=data.session;if(!mmAdminSession)throw new Error('Keine gültige Sitzung erhalten.');try{sessionStorage.setItem('mm-admin-screen-open-v1','1');localStorage.setItem('mm-admin-screen-open-v1','1');}catch(_){}
   $('adminPassword').value='';
   // Do not reveal the dashboard until the protected server-side RPC confirms admin access.
   await adminLoadFeedback(true);
@@ -2687,6 +2692,39 @@ async function adminLogin(event){
  }catch(e){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});mmAdminSession=null;adminSetView(false);if(status)status.textContent='Anmeldung fehlgeschlagen: '+(e.message||'Bitte Zugangsdaten prüfen.');if((document.querySelector('.screen.active')?.id||'')!=='adminScreen'){mmScreenHistory.splice(0,mmScreenHistory.length,...adminHistorySnapshot);show('adminScreen',{fromBack:true,restoreScrollY:savedScrollY});adminRestoreScroll(savedScrollY);}}
  finally{if(button)button.disabled=false;}
 }
+async function adminRestoreSessionAfterRefresh(){
+ const root=document.documentElement;
+ let requested=false;
+ try{requested=sessionStorage.getItem('mm-admin-screen-open-v1')==='1'||localStorage.getItem('mm-admin-screen-open-v1')==='1';}catch(_){requested=false;}
+ if(!requested){root.classList.remove('admin-restoring');return;}
+ // Reveal the Admin login/dashboard shell immediately so the public Home screen never flashes.
+ show('adminScreen',{fromBack:true});
+ const status=$('adminLoginStatus');
+ try{
+  const sb=await getSb();
+  const {data,error}=await sb.auth.getSession();
+  if(error)throw error;
+  if(!data.session){
+   mmAdminSession=null;adminSetView(false);
+   try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}
+   if(status)status.textContent='Deine Admin-Sitzung ist abgelaufen. Bitte melde dich erneut an.';
+   return;
+  }
+  mmAdminSession=data.session;
+  $('adminSignedInAs').textContent='Angemeldet als '+(data.session.user?.email||'Administrator');
+  if(status)status.textContent='Sitzung wird wiederhergestellt …';
+  await adminLoadFeedback(true);
+  if(mmAdminSession)await adminLoadPrivateConversations();
+  if(status)status.textContent='';
+ }catch(e){
+  // Keep the auth session and restoration marker; transient network failures must not silently send the user Home.
+  adminSetView(Boolean(mmAdminSession));
+  if(status)status.textContent='Admin-Bereich geöffnet, aber die Sitzung konnte nicht vollständig geladen werden: '+(e.message||'Bitte Verbindung prüfen.');
+ }finally{
+  root.classList.remove('admin-restoring');
+ }
+}
+
 function adminRenderFeedback(){
  const out=$('adminFeedbackList'),status=$('adminFeedbackStatus');if(!out)return;
  const term=($('adminSearch')?.value||'').trim().toLocaleLowerCase('de-DE');
@@ -2715,11 +2753,11 @@ async function adminLoadFeedback(keepDashboard=false){
   const st=$('adminStatusFilter')?.value||null,cat=$('adminCategoryFilter')?.value||null;
   const {data,error}=await sb.rpc('mm_admin_list_feedback',{p_status:st,p_category:cat});if(error)throw error;
   mmAdminFeedbackRows=Array.isArray(data)?data:[];adminSetView(true);adminRenderFeedback();adminRenderOverview();adminRestoreScroll(savedScrollY);
- }catch(e){mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);out.innerHTML='';if(status)status.textContent='Kein Adminzugriff oder Fehler beim Laden: '+(e.message||'Zugriff verweigert.');if(!keepDashboard){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});}}
+ }catch(e){mmAdminFeedbackRows=[];out.innerHTML='';if(status)status.textContent='Admin-Sitzung vorhanden, aber Daten konnten nicht geladen werden: '+(e.message||'Bitte Verbindung und Admin-Berechtigung prüfen.');if(keepDashboard&&mmAdminSession){adminSetView(true);}else{adminSetView(false);if(!keepDashboard){const sb=await getSb().catch(()=>null);if(sb)await sb.auth.signOut().catch(()=>{});mmAdminSession=null;}}}
 }
 async function adminUpdateFeedback(id,statusValue){try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_update_feedback',{p_id:id,p_status:statusValue});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Status aktualisiert.');await adminLoadFeedback();}catch(e){showToast('Änderung fehlgeschlagen: '+(e.message||''));}}
 async function adminDeleteFeedback(id){if(!await customConfirm({title:'Meldung löschen?',message:'Diese Meldung wird dauerhaft gelöscht. Möchtest du fortfahren?',confirmText:'Endgültig löschen',cancelText:'Abbrechen',icon:'🗑️',tone:'danger'}))return;try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_delete_feedback',{p_id:id});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Meldung gelöscht.');await adminLoadFeedback();}catch(e){showToast('Löschen fehlgeschlagen: '+(e.message||''));}}
-async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
+async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
 
 $('joinCode').addEventListener('input',
 e=>e.target.value=e.target.value.replace(/\D/g,
@@ -2750,6 +2788,7 @@ $('adminStatusFilter')?.addEventListener('change',adminLoadFeedback);
 $('adminCategoryFilter')?.addEventListener('change',adminLoadFeedback);
 $('adminSearch')?.addEventListener('input',adminRenderFeedback);
 if (typeof restoreLiveSession === 'function') setTimeout(restoreLiveSession, 100);
+setTimeout(adminRestoreSessionAfterRefresh, 0);
 
 // Diagnostic marker: set only after the application initialization completed.
 document.documentElement.setAttribute('data-mathemeister-ready', 'true');
