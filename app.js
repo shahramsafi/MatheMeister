@@ -344,10 +344,12 @@ function toggleSiteMenu(force) {
   const open=typeof force==='boolean'?force:!currentlyOpen;
   menu.classList.toggle('hidden',!open);overlay.classList.toggle('hidden',!open);
   menu.setAttribute('aria-hidden',String(!open));btn.setAttribute('aria-expanded',String(open));
+  const moreTab=document.querySelector('#mobileTabbar [data-mobile-more]');
+  if(moreTab)moreTab.classList.toggle('active',open || !['home','modes','live','progress'].includes(document.querySelector('.screen.active')?.id||mmActiveScreen||'home'));
   btn.setAttribute('aria-label',open?'Hauptmenü schließen':'Hauptmenü öffnen');
   if(open){const first=menu.querySelector('button.menu-item');if(first)first.focus();}
 }
-function menuNavigate(id){toggleSiteMenu(false);show(id);}
+function menuNavigate(id){toggleSiteMenu(false);if(id==='feedbackScreen')feedbackChooseMode('choose');show(id);}
 function openSiteInfo(topic='about'){
   toggleSiteMenu(false);
   const pages={
@@ -389,11 +391,14 @@ function show(id, options={}) {
     }
     if(id==='home')mmScreenHistory.length=0;
     mmActiveScreen=id;
+    if(id==='feedbackScreen' && current!=='feedbackScreen' && typeof feedbackChooseMode==='function')feedbackChooseMode('choose');
     document.body.classList.toggle('admin-mode',id==='adminScreen');
     if(current==='creator' && id!=='creator' && typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     $(id).classList.add('active');
     document.querySelectorAll('#mobileTabbar [data-mobile-screen]').forEach(btn=>btn.classList.toggle('active',btn.dataset.mobileScreen===id));
+    const moreTab=document.querySelector('#mobileTabbar [data-mobile-more]');
+    if(moreTab)moreTab.classList.toggle('active',!['home','modes','live','progress'].includes(id));
     document.body.classList.toggle('mobile-game-screen',id==='game');
     if(id==='home')refreshHome();
     if(id==='progress')renderProgress();
@@ -512,6 +517,7 @@ function restoreAppViewState(){
       show(screen,{fromBack:true});mmScreenHistory.splice(0,mmScreenHistory.length,...history);if(scrollY)requestAnimationFrame(()=>window.scrollTo(0,scrollY));
     }
   }catch(_){/* Ignore stale session data and start safely on the home screen. */}
+  finally{document.documentElement.classList.remove('app-restoring');}
 }
 
 async function goBack(){
@@ -2567,6 +2573,16 @@ async function privateSignUp(){
   if(!email||password.length<8){if(st)st.textContent='Bitte gib eine gültige E-Mail und ein Passwort mit mindestens 8 Zeichen ein.';return;}
   try{const sb=await getSb();const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin+window.location.pathname+'#feedback'}});if(error)throw error;if(st)st.textContent=data.session?'Konto erstellt. Du bist jetzt angemeldet.':'Fast geschafft! Bitte bestätige deine E-Mail über den zugesendeten Link und melde dich danach an.';if(data.session){mmPrivateUser=data.user;privateSetView();}}
   catch(e){if(st)st.textContent='Registrierung fehlgeschlagen: '+(e.message||'');}
+}
+async function privateResendConfirmation(){
+  const email=$('privateEmail')?.value.trim()||'',st=$('privateAuthStatus');
+  if(!email){if(st)st.textContent='Bitte gib zuerst deine E-Mail-Adresse ein.';return;}
+  try{
+    const sb=await getSb();
+    const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:window.location.origin+window.location.pathname+'#feedback'}});
+    if(error)throw error;
+    if(st)st.textContent='Falls für diese Adresse eine unbestätigte Registrierung besteht, wurde eine neue Bestätigungs-E-Mail angefordert. Bitte prüfe auch den Spam-Ordner.';
+  }catch(e){if(st)st.textContent='E-Mail konnte nicht erneut angefordert werden: '+(e.message||'');}
 }
 async function privateAuthSubmit(event){event.preventDefault();const st=$('privateAuthStatus');try{const sb=await getSb();const {data,error}=await sb.auth.signInWithPassword({email:$('privateEmail').value.trim(),password:$('privatePassword').value});if(error)throw error;if(!data.user?.email_confirmed_at)throw new Error('Bitte bestätige zuerst deine E-Mail-Adresse.');mmPrivateUser=data.user;$('privatePassword').value='';privateSetView();await privateLoadMessages();}catch(e){if(st)st.textContent='Anmeldung fehlgeschlagen: '+(e.message||'');}}
 async function privateSignOut(){try{const sb=await getSb();await sb.auth.signOut();mmPrivateUser=null;mmPrivateConversationId=null;privateSetView();$('privateMessageList').innerHTML='';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}

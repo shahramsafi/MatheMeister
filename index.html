@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b18">
 <meta name="description" content="MatheMeister Pro – trainieren, live spielen und eigene Quiz-, Puzzle- und Wortspiele ohne Programmieren bauen.">
+<script>
+(function(){try{var s=sessionStorage.getItem('mm-app-screen-v1');var valid=['modes','progress','stats','teacher','settings','shop','studio','creator','feedbackScreen','siteInfo','result'];var gameOk=s==='game'&&!!sessionStorage.getItem('mm-app-game-v1');if((valid.includes(s)||gameOk)&&s!=='live')document.documentElement.classList.add('app-restoring');}catch(e){}})();
+</script>
 <title>MatheMeister Pro v10.7.1 · Admin Dashboard & Refresh Restore 🚀</title>
 
 <style>
@@ -29,6 +32,7 @@
 * {
   box-sizing:border-box
 }
+.app-restoring .screen.active { visibility:hidden !important; }
 body {
   margin:0;
   min-height:100vh;
@@ -1676,7 +1680,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
   <button type="button" data-mobile-screen="modes" onclick="show('modes')"><span>◎</span><small>Training</small></button>
   <button type="button" data-mobile-screen="live" onclick="show('live')"><span>♧</span><small>Live</small></button>
   <button type="button" data-mobile-screen="progress" onclick="show('progress')"><span>♛</span><small>Erfolge</small></button>
-  <button type="button" onclick="toggleSiteMenu(true)"><span>☰</span><small>Mehr</small></button>
+  <button type="button" data-mobile-more onclick="toggleSiteMenu()" aria-label="Mehr öffnen"><span>☰</span><small>Mehr</small></button>
 </nav>
 <section id="home" class="screen active">
 <div class="hero">
@@ -2315,7 +2319,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
       <form id="privateAuthForm" class="feedback-form subpanel">
         <div class="field"><label for="privateEmail">E-Mail-Adresse</label><input id="privateEmail" type="email" autocomplete="email" required maxlength="254" placeholder="name@example.com"></div>
         <div class="field"><label for="privatePassword">Passwort</label><input id="privatePassword" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="Mindestens 8 Zeichen"></div>
-        <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">Anmelden</button><button class="btn secondary" type="button" onclick="privateSignUp()">Konto erstellen</button></div>
+        <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">Anmelden</button><button class="btn secondary" type="button" onclick="privateSignUp()">Konto erstellen</button><button class="btn secondary" type="button" onclick="privateResendConfirmation()">Bestätigungs-E-Mail erneut senden</button></div>
         <p id="privateAuthStatus" class="studio-field-note" role="status" aria-live="polite"></p>
       </form>
       <aside class="feedback-side"><article class="info-card"><h3>🔐 Deine Privatsphäre</h3><p>Nur du und der Administrator können eure Unterhaltung sehen. Andere Nutzer haben keinen Zugriff.</p></article><article class="info-card"><h3>📬 Antworten jederzeit lesen</h3><p>Deine Nachrichten bleiben in deinem Konto gespeichert – auch wenn du ein anderes Gerät verwendest.</p></article></aside>
@@ -2438,7 +2442,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.7.1" defer></script>
+<script src="./app.js?v=10.8.4" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {
