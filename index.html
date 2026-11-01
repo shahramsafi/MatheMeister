@@ -13,16 +13,16 @@
 <style>
 :root {
   color-scheme:dark;
-  --bg:#080b18;
-  --panel:#11182b;
-  --panel2:#171f38;
-  --line:#293858;
-  --text:#f6f7ff;
-  --muted:#aab6d1;
-  --cyan:#48e4ef;
-  --blue:#549aff;
-  --purple:#a866ff;
-  --pink:#ff579b;
+  --bg:#080713;
+  --panel:#111020;
+  --panel2:#19152b;
+  --line:#33254d;
+  --text:#f8f6ff;
+  --muted:#b7aecb;
+  --cyan:#b18aff;
+  --blue:#8e68e8;
+  --purple:#a855f7;
+  --pink:#c084fc;
   --green:#39dfa0;
   --yellow:#ffd05a;
   --orange:#ff964f;
@@ -36,7 +36,7 @@
 body {
   margin:0;
   min-height:100vh;
-  background:radial-gradient(ellipse at 10% 0%,#182651 0,transparent 34%),radial-gradient(ellipse at 95% 75%,#21133e 0,transparent 30%),var(--bg);
+  background:radial-gradient(ellipse at 12% 0%,#24143f 0,transparent 32%),radial-gradient(ellipse at 92% 78%,#1c1230 0,transparent 34%),var(--bg);
   color:var(--text);
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif
 }
@@ -47,7 +47,7 @@ button {
   cursor:pointer
 }
 button:focus-visible,input:focus-visible,select:focus-visible {
-  outline:3px solid var(--cyan);
+  outline:3px solid #bd8cff;
   outline-offset:3px
 }
 .wrap {
@@ -74,7 +74,7 @@ button:focus-visible,input:focus-visible,select:focus-visible {
   display:grid;
   place-items:center;
   font-size:27px;
-  background:linear-gradient(135deg,#27d6c8,#7d69ff 75%);
+  background:linear-gradient(135deg,#d9b8ff,#8427e8 75%);
   box-shadow:0 8px 30px #5f5cff45
 }
 .brand strong {
@@ -1629,34 +1629,30 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 @media(prefers-reduced-motion:reduce){.mobile-tabbar button,.top{transition:none!important}}
 
 
-/* V10.8.8 layout refinement: consistent information hierarchy across every app area */
-.site-menu-group-label{padding:13px 16px 6px;color:#a99acb;font-size:10px;font-weight:850;letter-spacing:1.25px;text-transform:uppercase}
-.site-menu .menu-item{display:flex;align-items:center;gap:12px;min-height:56px}
-.site-menu .menu-icon{width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px;border-radius:11px;background:#ffffff0b;font-size:17px}
-.site-menu .menu-copy{display:flex;flex-direction:column;gap:3px;font-weight:750}
-.site-menu .menu-copy small{font-size:10px;font-weight:500;color:#9ba5c0;line-height:1.35}
-/* Consistent page rhythm: headings, panels, grids and controls align across screens. */
-.screen.panel{width:100%;max-width:1120px;margin-inline:auto}
-.screen.panel>.kicker{display:block;margin-top:8px}
-.screen.panel>.section-head:first-of-type{margin-top:22px}
-.screen.panel .subpanel{min-width:0}
-.screen.panel .two,.screen.panel .section.two{align-items:stretch}
-.screen.panel .two>*{min-width:0}
-.screen.panel .btn{white-space:normal}
-.tiles .tile{height:100%;text-align:left}
-@media(min-width:701px){
- .wrap{max-width:1240px;margin-inline:auto}
- .tiles{grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch}
- .hero{align-items:stretch}
- .hero-copy{display:flex;flex-direction:column;justify-content:center}
-}
-@media(max-width:700px){
- .tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
- .tiles .tile{min-height:154px;display:flex;flex-direction:column;align-items:flex-start}
- .tiles .tile b{margin-top:auto;padding-top:10px}
- .screen.panel{margin-bottom:12px}
- .site-menu-group-label{padding-top:15px}
-}
+/* V10.8.8 layout pass — shared visual system across every learner-facing screen */
+:root{--purple:#a855f7;--pink:#c084fc;--cyan:#bd8cff;--line:#382650;--shadow:0 18px 52px #0008}
+body{background-color:#080713;background-image:radial-gradient(ellipse at 8% 0%,#26123f 0,transparent 34%),radial-gradient(ellipse at 94% 80%,#1b1230 0,transparent 34%)}
+.screen:not(#adminScreen){border:1px solid #3b2a55;border-radius:24px;background:linear-gradient(160deg,#151126f5,#0e0c1bf7 72%);box-shadow:0 18px 55px #0007, inset 0 1px #ffffff0a}
+.screen h1,.screen h2,.screen h3{letter-spacing:-.025em}
+.panel,.subpanel,.tile,.level,.stat,.shop-item,.creator-template,.creator-setting-card{border-color:#38284f}
+.subpanel,.stat{background:linear-gradient(145deg,#1b1730,#121020)}
+.tile,.level{background:linear-gradient(145deg,#1b1730,#111020);border:1px solid #38284f;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.tile:hover,.level:hover{transform:translateY(-2px);border-color:#a855f7;box-shadow:0 12px 30px #8b35d533}
+.btn.primary,.primary,.mobile-tabbar button.active{background:linear-gradient(110deg,#8b2be2,#bd55f6);border-color:#c084fc;color:#fff;box-shadow:0 7px 24px #922be744}
+.btn.secondary,.small-btn{background:#211a35;border-color:#44305f;color:#eee6ff}
+input,select,textarea{background:#100e1d!important;border-color:#403056!important;color:#f8f6ff!important}
+.kicker,.muted{color:#b8adce}
+.mobile-tabbar{background:#0d0a18ed;border-top:1px solid #3a2852;backdrop-filter:blur(18px)}
+.mobile-tabbar button{color:#a99dbd;transition:color .18s ease,transform .18s ease}
+.mobile-tabbar button.active{color:#fff;transform:translateY(-2px);border-radius:13px}
+.progress-container,.xpbar{background:#29203b}
+#progress-Bar,#xpFill,#pXPFill{background:linear-gradient(90deg,#8b2be2,#d18cff)}
+.answer{background:#211b35;border:1px solid #42315b;color:#f8f6ff;transition:transform .16s,border-color .16s,background .16s}
+.answer:focus-visible,.answer.selected{outline:0;border:2px solid #c084fc;background:linear-gradient(120deg,#7424c4,#a63fe5);box-shadow:0 0 0 3px #a855f733}
+.answer.correct{background:#166b4b;border-color:#39dfa0}.answer.wrong{background:#7e263c;border-color:#ff7188}
+@media(max-width:700px){.wrap{padding:14px 12px 100px}.screen:not(#adminScreen){border-radius:20px;padding:18px 14px}.tile,.level{min-width:0}.mobile-tabbar{padding-bottom:max(8px,env(safe-area-inset-bottom))}.screen h2{font-size:clamp(21px,6vw,28px)}}
+@media(min-width:701px){.screen:not(#adminScreen){padding:28px}.wrap{max-width:1180px}}
+@media(prefers-reduced-motion:reduce){.tile,.level,.mobile-tabbar button,.answer{transition:none!important}}
 
 </style>
 
@@ -1688,24 +1684,22 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <div id="siteMenuOverlay" class="site-menu-overlay hidden" onclick="toggleSiteMenu(false)" aria-hidden="true"></div>
 <nav id="siteMenu" class="site-menu hidden" aria-label="Hauptmenü" aria-hidden="true">
   <div class="site-menu-heading"><strong>MatheMeister-Menü</strong><button class="site-menu-close" onclick="toggleSiteMenu(false)" aria-label="Menü schließen">×</button></div>
-  <div class="site-menu-group-label">LERNEN & SPIELEN</div>
-  <button class="menu-item" onclick="menuNavigate('home')"><span class="menu-icon">🏠</span><span class="menu-copy">Startseite<small>Dein Lern-Dashboard</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('modes')"><span class="menu-icon">✖️</span><span class="menu-copy">Einmaleins trainieren<small>Übungs-, Zeit- und Perfektmodus</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('live')"><span class="menu-icon">👥</span><span class="menu-copy">Multiplayer<small>Gemeinsam spielen und Teams bilden</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('creator')"><span class="menu-icon">🎮</span><span class="menu-copy">Game Creator<small>Eigene Einmaleins-Spiele erstellen</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('teacher')"><span class="menu-icon">🧑‍🏫</span><span class="menu-copy">Klassen-Modus<small>Runden für deine Klasse vorbereiten</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('studio')"><span class="menu-icon">🧪</span><span class="menu-copy">Spielstudio<small>Spielregeln und eigene Malaufgaben</small></span></button>
-  <div class="site-menu-group-label">MEIN KONTO</div>
-  <button class="menu-item" onclick="menuNavigate('settings')"><span class="menu-icon">👤</span><span class="menu-copy">Mein Profil<small>Name und Avatar verwalten</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('progress')"><span class="menu-icon">🏅</span><span class="menu-copy">Erfolge & Level<small>XP, Serien und Abzeichen</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('stats')"><span class="menu-icon">📊</span><span class="menu-copy">Statistiken<small>Leistung und Fehler ansehen</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('shop')"><span class="menu-icon">🛍️</span><span class="menu-copy">Shop<small>Avatare, Rahmen und Titel</small></span></button>
-  <div class="site-menu-group-label">HILFE & VERWALTUNG</div>
-  <button class="menu-item" onclick="menuNavigate('feedbackScreen')"><span class="menu-icon">💡</span><span class="menu-copy">Feedback & Ideen<small>Probleme melden und Vorschläge teilen</small></span></button>
-  <button class="menu-item" onclick="openSiteInfo('how')"><span class="menu-icon">📘</span><span class="menu-copy">Hilfe & Spielregeln<small>So funktioniert MatheMeister</small></span></button>
-  <button class="menu-item" onclick="openSiteInfo('privacy')"><span class="menu-icon">🔐</span><span class="menu-copy">Datenschutz<small>Lokale und Online-Daten</small></span></button>
-  <button class="menu-item" onclick="menuNavigate('adminScreen')"><span class="menu-icon">🛡️</span><span class="menu-copy">Admin-Bereich<small>Website verwalten</small></span></button>
-  <div class="site-menu-note">Du kannst als Gast direkt spielen. Für dauerhaft gespeicherten Fortschritt und zusätzliche Kontofunktionen kannst du dich freiwillig registrieren.</div>
+  <button class="menu-item" onclick="menuNavigate('home')"><span class="menu-icon">🏠</span><span class="menu-copy">Startseite<small>Dein Lernabenteuer</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('modes')"><span class="menu-icon">🎯</span><span class="menu-copy">Training<small>Einfach, mittel, schwer und Fehlertraining</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('live')"><span class="menu-icon">👥</span><span class="menu-copy">Live-Spiel<small>Klassenmodus oder online mit Freunden</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('shop')"><span class="menu-icon">🪙</span><span class="menu-copy">Shop & Belohnungen<small>Münzen, Rahmen, Titel und Avatare</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('progress')"><span class="menu-icon">🏆</span><span class="menu-copy">Erfolge & Level<small>XP, Rekorde und Abzeichen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('stats')"><span class="menu-icon">📊</span><span class="menu-copy">Statistiken<small>Runden ansehen, exportieren oder löschen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('settings')"><span class="menu-icon">⚙️</span><span class="menu-copy">Profil & Einstellungen<small>Name, Avatar und lokale Daten</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('how')"><span class="menu-icon">📘</span><span class="menu-copy">So funktioniert MatheMeister<small>Spielregeln und Tipps</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('privacy')"><span class="menu-icon">🔐</span><span class="menu-copy">Datenschutz & Sicherheit<small>Was lokal und online gespeichert wird</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('about')"><span class="menu-icon">🚀</span><span class="menu-copy">Über MatheMeister<small>Ziel, Funktionen und Feedback</small></span></button>
+  <button class="menu-item" onclick="openSiteInfo('developer')"><span class="menu-icon">👨‍💻</span><span class="menu-copy">Über mich<small>Der Entwickler von MatheMeister</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('studio')"><span class="menu-icon">🧪</span><span class="menu-copy">Spielstudio<small>Eigene Mathe-Runde erstellen und teilen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('creator')"><span class="menu-icon">🎮</span><span class="menu-copy">Game Creator<small>Eigene Quizze, Puzzle und Spiele bauen</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('adminScreen')"><span class="menu-icon">🛡️</span><span class="menu-copy">Admin-Bereich<small>Feedback und Meldungen verwalten</small></span></button>
+  <button class="menu-item" onclick="menuNavigate('feedbackScreen')"><span class="menu-icon">💡</span><span class="menu-copy">Feedback & Ideen<small>Probleme melden und Wünsche teilen</small></span></button>
+  <div class="site-menu-note">Gastmodus: Du kannst direkt spielen, ohne ein Konto anzulegen. Hinweis: Lokale Münzen und Käufe sind dadurch noch nicht zwischen Geräten synchronisiert.</div>
 </nav>
 <nav class="mobile-tabbar" id="mobileTabbar" aria-label="Schnellnavigation">
   <button type="button" data-mobile-screen="home" class="active" onclick="show('home')"><span>⌂</span><small>Home</small></button>
@@ -1767,13 +1761,32 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 <p>Einfach, Mittel oder Schwer – in deinem Tempo.</p>
 <b>Training starten →</b>
 </button>
+<button class="tile" style="--tint:#a866ff2b" onclick="startRush()">
+<span class="ico">⚡</span>
+<h3>Math Rush</h3>
+<p>60 Sekunden. So viele richtige Antworten wie möglich.</p>
+<b>Bestwert: <span id="rushBest">0</span> →</b>
+</button>
 <button class="tile" style="--tint:#ff964f26" onclick="show('live')">
 <span class="ico">👥</span>
 <h3>Live-Modus</h3>
 <p>Erstelle einen Raum oder tritt mit Code bei.</p>
 <b>Wie Kahoot! spielen →</b>
 </button>
-<button class="tile" style="--tint:#48e4ef26" onclick="show('creator')"><span class="ico">🎮</span><h3>Game Creator</h3><p>Erstelle eigene Einmaleins-Quizze, Rechen-Challenges und Memory-Spiele – ohne Programmieren.</p><b>Ein Spiel von Grund auf bauen →</b></button>
+<button class="tile" style="--tint:#549aff26" onclick="startDaily()">
+<span class="ico">📅</span>
+<h3>Tägliche Challenge</h3>
+<p>20 Aufgaben in 2 Minuten. Schaffst du es?</p>
+<b id="dailyCardLabel">Heutige Challenge →</b>
+</button>
+
+
+<button class="tile" style="--tint:#48e4ef26" onclick="startMistakes()">
+<span class="ico">🎯</span>
+<h3>Fehler-Training</h3>
+<p>Übe genau die Aufgaben, die dir schwerfallen.</p>
+<b id="mistakeCardLabel">0 offene Fehler →</b>
+</button>
 <button class="tile" style="--tint:#ff579b22" onclick="show('teacher')">
 <span class="ico">🧑‍🏫</span>
 <h3>Klassen-Modus</h3>
@@ -1782,24 +1795,10 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </button>
 <button class="tile" style="--tint:#a866ff22" onclick="show('studio')">
 <span class="ico">🧪</span><h3>Spielstudio</h3><p>Gestalte deine eigene Runde und teile die Vorlage mit Freunden.</p><b>Spiel nach deinen Regeln →</b></button>
-<button class="tile" style="--tint:#a866ff2b" onclick="startRush()">
-<span class="ico">⚡</span>
-<h3>Math Rush</h3>
-<p>60 Sekunden. So viele richtige Antworten wie möglich.</p>
-<b>Bestwert: <span id="rushBest">0</span> →</b>
-</button>
-<button class="tile" style="--tint:#549aff26" onclick="startDaily()">
-<span class="ico">📅</span>
-<h3>Tägliche Challenge</h3>
-<p>20 Aufgaben in 2 Minuten. Schaffst du es?</p>
-<b id="dailyCardLabel">Heutige Challenge →</b>
-</button>
-<button class="tile" style="--tint:#48e4ef26" onclick="startMistakes()">
-<span class="ico">🎯</span>
-<h3>Fehler-Training</h3>
-<p>Übe genau die Aufgaben, die dir schwerfallen.</p>
-<b id="mistakeCardLabel">0 offene Fehler →</b>
-</button>
+<button class="tile" style="--tint:#48e4ef26" onclick="show('creator')"><span class="ico">🎮</span><h3>Game Creator</h3><p>Erstelle eigene Multiplikations-Quizze, Memorys und Rechen-Challenges – ohne Programmieren.</p><b>Ein Spiel von Grund auf bauen →</b></button>
+
+
+
 </div>
 <div class="section two">
 <div class="subpanel">
@@ -2251,7 +2250,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
       <span class="kicker">DU HAST SCHON EINE IDEE?</span>
       <h3 style="margin:8px 0 3px">Was für ein Spiel möchtest du machen?</h3>
       <p class="muted" style="margin:0;font-size:13px;line-height:1.55">Schreibe zum Beispiel: „Ein Quiz über Fußball“ oder „Ein Memory mit Tieren“. Wir wählen eine passende Vorlage und fügen bei bekannten Themen Beispiel-Fragen ein. Du kannst alles ganz leicht ändern.</p>
-      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Zum Beispiel: Ein Quiz mit schwierigen Malaufgaben …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Spiel starten</button></div>
+      <div class="creator-prompt-row"><input id="creatorIdeaInput" maxlength="500" placeholder="Zum Beispiel: Ein Team-Quiz mit schwierigen Malaufgaben …" aria-label="Beschreibe deine Spielidee"><button class="btn primary" type="button" onclick="creatorUseIdea()">✨ Spiel starten</button></div>
       <p id="creatorIdeaStatus" class="creator-status" aria-live="polite"></p>
     </div>
     <div class="creator-section-head"><div><h3>1. Wähle ein Spiel</h3><p>Tippe auf ein Spiel. Danach zeigen wir dir Schritt für Schritt, was du tun kannst.</p></div></div>
@@ -2268,7 +2267,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
         <div id="creatorBasicsFields">
           <h3>🎨 Mach das Spiel zu deinem Spiel</h3>
           <div class="creator-field-grid" style="margin-top:14px">
-            <div class="field"><label for="creatorTitleInput">Wie soll dein Spiel heißen?</label><input id="creatorTitleInput" maxlength="70" placeholder="z. B. Das große Tierduell" oninput="creatorUpdateBasics()"></div>
+            <div class="field"><label for="creatorTitleInput">Wie soll dein Spiel heißen?</label><input id="creatorTitleInput" maxlength="70" placeholder="z. B. Die große Einmaleins-Challenge" oninput="creatorUpdateBasics()"></div>
             <div class="field"><label for="creatorThemeInput">Farbwelt</label><select id="creatorThemeInput" onchange="creatorUpdateBasics()"><option value="neon">Neon & futuristisch</option><option value="ocean">Ocean & frisch</option><option value="sunset">Sunset & warm</option><option value="forest">Forest & ruhig</option><option value="candy">Candy & bunt</option></select></div>
             <div class="field" style="grid-column:1/-1"><label for="creatorDescriptionInput">Worum geht es in deinem Spiel? (freiwillig)</label><textarea id="creatorDescriptionInput" maxlength="500" placeholder="Worum geht es? Was sollen die Spieler schaffen?" oninput="creatorUpdateBasics()"></textarea></div>
           </div>
@@ -2469,7 +2468,7 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./app.js?v=10.8.6" defer></script>
+<script src="./app.js?v=10.8.8-layout1" defer></script>
 <script>
   // If the application bundle is blocked or crashes during startup, explain why the page appears inactive.
   window.setTimeout(function () {
