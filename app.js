@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * V10.7.0 Admin Center visual refresh; existing learning, multiplayer and Supabase logic retained.
+ * V10.9.14 – Information architecture and category navigation; mobile taps and feedback form navigation retained.
  * Some embedded iOS browsers may not synthesize a click consistently after a tap.
  * This delegates touch handling so it also covers buttons created later by innerHTML.
  * It avoids eval/new Function and keeps the existing application handlers intact.
@@ -371,7 +371,39 @@ function openSiteInfo(topic='about'){
     privacy:{title:'Datenschutz & Sicherheit',intro:'MatheMeister soll ohne unnötige Hürden nutzbar sein. Deshalb gibt es aktuell keinen verpflichtenden Benutzeraccount.',html:`<div class="info-grid"><article class="info-card"><h3>📱 Lokale Daten</h3><p>Name, Avatar, Übungsstatistik, XP, Münzen und Shop-Käufe werden derzeit in diesem Browser gespeichert. Sie synchronisieren sich nicht automatisch zwischen Geräten und können beim Löschen der Browserdaten verloren gehen.</p></article><article class="info-card"><h3>🌐 Live-Spiel</h3><p>Live-Räume verwenden Supabase-RPC-Funktionen. Der Host verwaltet Spieler und sieht die vollständigen Ergebnisse. Spieler sehen nur die für sie bestimmte Ansicht und die öffentliche Top 10.</p></article><article class="info-card"><h3>🛡️ Schutzmaßnahmen</h3><p>Spieler- und Host-Tokens sind Sitzungsnachweise. Teile keine Host-Tokens und veröffentliche keine privaten Zugangsdaten. Veröffentlichte Browser-Anwendungen dürfen nur öffentliche Supabase-Schlüssel verwenden – niemals einen Service-Role-Schlüssel.</p></article><article class="info-card"><h3>⚠️ Gastkonto: Grenzen</h3><p>Ohne dauerhaftes Konto kann die Website noch nicht zuverlässig erkennen, dass dieselbe Person auf einem anderen Gerät weiterspielt. Browserlokale Münzen sind nicht fälschungssicher. Für eine globale Rangliste oder sichere Wallet brauchen wir später anonyme Authentifizierung oder optionale Kontoverknüpfung und serverseitige Regeln.</p></article></div><p class="muted">Die tatsächlichen Datenbankrechte hängen außerdem davon ab, welche SQL-Migrationen auf dem Supabase-Projekt installiert wurden. Diese Seite ersetzt keine technische Sicherheitsprüfung des Live-Projekts.</p>`},
     about:{title:'Über MatheMeister',intro:'MatheMeister macht Kopfrechnen zu einem kleinen Wettkampf – mit Fortschritt, Belohnungen, synchronen Klassenfarben und fairen Spielregeln.',html:`<div class="info-grid"><article class="info-card"><h3>🚀 Unser Ziel</h3><p>Ein schnelles, freundliches und motivierendes Mathe-Spiel für Lernende, Klassen und Freundesgruppen.</p></article><article class="info-card"><h3>✨ Was uns wichtig ist</h3><ul><li>Schneller Einstieg ohne Pflichtkonto</li><li>Klare, faire Punktevergabe</li><li>Private Einzelergebnisse</li><li>Belohnungen nur zur Personalisierung</li><li>Bedienbar auf Handy und Computer</li></ul></article><article class="info-card"><h3>💡 Feedback</h3><p>Notiere dir Probleme mit Spielcode, Gerät und dem genauen Schritt. So lassen sich Fehler gezielt prüfen, ohne funktionierende Bereiche unnötig zu ändern.</p></article><article class="info-card"><h3>🧭 Nächste Ausbaustufen</h3><p>Serverseitige Münz-Wallet, optionale Gerätesynchronisierung, weitere Fragetypen und ein wachsender Katalog an Spielvorlagen.</p></article></div>`}
 ,
-    developer:{title:'Über mich – der Entwickler von MatheMeister',intro:'Ich entwickle MatheMeister mit dem Ziel, Lernen einfacher, kreativer und spielerischer zu machen.',html:`<div class="info-grid"><article class="info-card" style="grid-column:1/-1"><h3>👋 Hallo und willkommen!</h3><p>Ich bin der Entwickler von MatheMeister und arbeite Schritt für Schritt daran, aus einer eigenen Idee eine Plattform für Lernen und gemeinsames Spielen zu machen. Lernen soll nicht nur aus Aufgaben und richtigen Antworten bestehen. Es darf Spaß machen, Menschen zusammenbringen und Raum für eigene Ideen geben.</p><p>Mir ist besonders wichtig, dass jeder leicht eigene Spiele erstellen kann – auch Kinder, die noch nie programmiert haben. Eine Spielidee soll reichen, um loszulegen – die Technik soll im Hintergrund helfen und nicht im Weg stehen.</p></article><article class="info-card"><h3>🎮 Was ich aufbauen möchte</h3><p>MatheMeister soll ein Ort werden, an dem Menschen eigene Quizze, Puzzle und andere Spiele erstellen, mit Freunden spielen und ihre Ideen miteinander teilen können.</p></article><article class="info-card"><h3>🛠️ Schritt für Schritt</h3><p>Ich entwickle MatheMeister weiter, teste neue Funktionen und verbessere es anhand von Rückmeldungen. Nicht alles ist schon fertig – das Projekt wächst mit seinen Nutzern.</p></article><article class="info-card" style="grid-column:1/-1"><h3>💬 Danke, dass du dabei bist!</h3><p>Wenn du einen Fehler findest oder eine Idee hast, freue ich mich über dein Feedback. So kann MatheMeister gemeinsam besser werden.</p><button type="button" class="btn primary" style="margin-top:12px" onclick="show('feedbackScreen')">💡 Idee oder Problem melden</button></article></div>`}
+    developer:{title:'Über mich – Shahri, der Entwickler von MatheMeister',intro:'Hinter MatheMeister steckt eine persönliche Geschichte: eine Idee aus dem Alltag, die Schritt für Schritt zu einem eigenen Lernprojekt wurde.',html:`<div class="info-grid">
+      <article class="info-card" style="grid-column:1/-1">
+        <h3>👋 Hallo, ich bin Shahri!</h3>
+        <p>Ich bin der Gründer und Entwickler von MatheMeister. Ich mag es, eigene Ideen zu entwickeln, Neues zu lernen und Dinge zu bauen, die anderen Menschen im Alltag wirklich helfen können. MatheMeister ist ein Projekt, das ich Schritt für Schritt selbst aufbaue – mit viel Neugier, Geduld und dem Wunsch, immer besser zu werden.</p>
+      </article>
+      <article class="info-card" style="grid-column:1/-1">
+        <h3>💡 Wie alles angefangen hat</h3>
+        <p>Die Idee entstand durch zwei Erlebnisse, die mich zum Nachdenken gebracht haben. In meiner Klasse gab es jemanden, dem das Einmaleins nicht leichtfiel. Gleichzeitig hatte ich noch keine einfache und wirklich unterhaltsame Website gefunden, mit der man das Multiplizieren spielerisch üben kann.</p>
+        <p>Ein Gespräch mit meinem Lehrer, Herrn Neidel, hat mich zusätzlich inspiriert. Als wir zusammen auf dem Markt waren, erzählte er mir, dass er gerne eine App entwickeln würde, mit der Menschen das Einmaleins leichter lernen können – bisher hatte er diese Idee aber nicht umsetzen können. Als ich später nach Hause kam, ging mir dieses Gespräch nicht mehr aus dem Kopf.</p>
+        <p>Ich begann darüber nachzudenken, wie man daraus etwas Einfaches und Motivierendes machen könnte. So entstand die Idee zu MatheMeister. Ich habe angefangen, mich damit zu beschäftigen, Neues zu lernen und die Website Schritt für Schritt selbst zu entwickeln. Herr Neidel möchte ich für dieses inspirierende Gespräch herzlich danken.</p>
+      </article>
+      <article class="info-card">
+        <h3>🎯 Was ich damit erreichen möchte</h3>
+        <p>Ich möchte zeigen, dass Lernen nicht langweilig sein muss. MatheMeister soll Menschen helfen, das Einmaleins mit Freude zu üben, sich selbst herauszufordern und gemeinsam mit Freunden oder der Klasse zu spielen.</p>
+      </article>
+      <article class="info-card">
+        <h3>🚀 Meine Vision</h3>
+        <p>Langfristig soll jeder seine eigenen Lernspiele und Quizze erstellen und mit anderen teilen können – auch ohne Programmierkenntnisse. Eine gute Idee soll reichen; die Technik soll im Hintergrund helfen und nicht im Weg stehen.</p>
+      </article>
+      <article class="info-card">
+        <h3>🌱 Woran ich glaube</h3>
+        <ul><li>Man muss nicht warten, bis eine Idee perfekt ist – man kann einfach anfangen.</li><li>Jeder kleine Fortschritt zählt.</li><li>An sich selbst zu glauben und nicht aufzugeben, ist wichtig.</li><li>Man sollte den eigenen Wert kennen und auf sich achten.</li></ul>
+      </article>
+      <article class="info-card">
+        <h3>🏃 Sport, Gesundheit und Balance</h3>
+        <p>Sport und Bewegung sind für mich mehr als nur Training. Sie können das Leben positiv verändern. Deshalb finde ich es wichtig, auf die eigene Gesundheit zu achten, sich ausgewogen zu ernähren und Bewegung nicht aufzugeben – auch dann nicht, wenn der Alltag einmal stressig ist.</p>
+      </article>
+      <article class="info-card" style="grid-column:1/-1">
+        <h3>💬 Gemeinsam wird MatheMeister besser</h3>
+        <p>MatheMeister wächst Schritt für Schritt. Nicht alles ist schon fertig, und genau deshalb freue ich mich über ehrliche Rückmeldungen, neue Ideen und Hinweise auf Fehler. Danke, dass du dabei bist und dieses Projekt unterstützt!</p>
+        <button type="button" class="btn primary" style="margin-top:12px" onclick="show('feedbackScreen')">💡 Idee oder Problem melden</button>
+      </article>
+    </div>`}
   };
   const page=pages[topic]||pages.about;
   $('siteInfoTitle').textContent=page.title;$('siteInfoIntro').textContent=page.intro;$('siteInfoContent').innerHTML=page.html;
@@ -388,7 +420,7 @@ let leaderboardPeriod='week';
 function mobileNavTargetForScreen(id){
   if(id==='home')return 'home';
   if(id==='leaderboard')return 'leaderboard';
-  if(['profile','progress','stats','settings','shop'].includes(id))return 'profile';
+  if(id==='profile')return 'profile';
   if(['modes','live','teacher','studio','creator','game','result'].includes(id))return 'modes';
   return '';
 }
@@ -501,7 +533,7 @@ function show(id,options={}){
  if(current==='creator'&&id!=='creator'&&typeof creatorAutoSaveNow==='function')creatorAutoSaveNow();
  document.querySelectorAll('.screen').forEach(screen=>screen.classList.toggle('active',screen.id===id));
  updateMobileTabbar(id);document.body.classList.toggle('mobile-game-screen',id==='game');
- if(id==='home')refreshHome();if(id==='profile')renderProfile();if(id==='leaderboard')renderLeaderboard();if(id==='progress')renderProgress();if(id==='stats')renderStats();if(id==='shop')renderShop();
+ if(id==='home')refreshHome();if(id==='profile')renderProfile();if(id==='leaderboard'){renderLeaderboard();mmSetCompetitionTab(window.mmCompetitionTab||'performance');}if(id==='progress')renderProgress();if(id==='stats'){renderStats();mmSetStatsTab(window.mmStatsTab||'history');}if(id==='shop'){renderShop();mmSetShopTab(window.mmShopTab||'avatars');}if(id==='modes')mmSetPlayTab(window.mmPlayTab||'quick');if(id==='live')mmSetLiveTab(window.mmLiveTab||'host');if(id==='creator')mmSetCreatorTab(window.mmCreatorTab||'new');
  if(id==='settings'){ensureEconomy();updateAvatarChoices();if($('profileName'))$('profileName').value=data.name||'';if($('profileAvatar'))$('profileAvatar').value=data.avatar||'🦊';}
  if(id==='creator'&&typeof creatorRenderResumeCard==='function')creatorRenderResumeCard();
  updateGlobalBackButton();
@@ -618,7 +650,6 @@ async function goBack(){
  }
  if(current==='live'&&live.room){if(live.host&&live.room.status==='lobby'){await cancelLiveRoom();return;}if(await customConfirm({title:'Live-Spiel verlassen?',message:'Möchtest du diesen Live-Raum wirklich verlassen?',confirmText:'Spiel verlassen',cancelText:'Bleiben',icon:'↩️',tone:'danger'}))await leaveLiveRoom();return;}
  if(current==='game'){await quitGame();return;}
- if(['settings','progress','stats','shop'].includes(current)){if(show('profile',{fromBack:true,replaceCurrent:true}))return;}
  let previous=null;
  while(mmScreenHistory.length&&!previous){const c=mmScreenHistory.pop();if(c&&typeof c.id==='string'&&c.id!==current&&document.getElementById(c.id)?.classList.contains('screen'))previous=c;}
  if(!previous)previous={id:'home',scrollY:0};
@@ -1194,15 +1225,25 @@ async function clearStatsHistory(){
 }
 
 function applyTeacherSettings() {
-    const count=Number($('teacherCount').value),
-    sec=Number($('teacherTime').value);
+    const count=Number($('teacherCount').value);
+    const sec=Number($('teacherTime').value);
+    const difficulty=$('teacherDifficulty').value||'medium';
     $('liveCount').value=String(count);
     $('liveSeconds').value=String(sec);
-    showToast('Einstellungen übernommen. Du kannst jetzt einen Live-Raum erstellen.');
-    show('live')
+    $('liveDifficulty').value=difficulty;
+    window.mmLivePreset='classroom';
+    if($('liveDisplayMode'))$('liveDisplayMode').value='classroom';
+    if($('hostPlayToggle'))$('hostPlayToggle').checked=false;
+    updateLiveOptionsUI();
+    mmOpenLiveMode('classroom','host');
+    showToast('Klassenrunde vorbereitet. Im nächsten Schritt den Klassenraum erstellen und den Code teilen.');
 }
 function leaveLiveUI() {
     document.body.classList.remove('live-room-active','friends-player-lobby','classroom-player');
+    window.mmLivePreset='friends';
+    window.mmLiveTab='host';
+    if ($('liveDisplayMode')) $('liveDisplayMode').value='friends';
+    $('live')?.classList.remove('classroom-live-mode');
     if (live.poll) {
         clearInterval(live.poll);
         live.poll = null;
@@ -1296,7 +1337,7 @@ function renderShop(){
     return `<div class="shop-item"><div class="shop-item-preview ${kind==='frame'?i.css:''}">${kind==='frame'?esc(data.avatar||'🦊'):esc(i.preview)}</div><strong>${esc(i.name)} ${equipped?'✓':''}</strong><small>${esc(i.desc)}</small><button class="btn ${equipped?'secondary':'primary'}" ${locked?'disabled':''} onclick="handleShopItem('${i.id}')">${label}</button></div>`;
   }).join('');};
   renderItems('frame','frameShop');renderItems('title','titleShop');renderItems('avatar','avatarShop');renderItems('effect','effectShop');
-  updateAvatarChoices();
+  updateAvatarChoices();if(window.mmShopTab==='collection')mmRenderShopCollection();
 }
 function handleShopItem(id){
   ensureEconomy();const item=SHOP_ITEMS.find(x=>x.id===id);if(!item)return;
@@ -1359,7 +1400,12 @@ const live = {
     answerCounts: [],
     colorQuestionIndex: null,
     selectedColorIndex: null,
-    customGame: null
+    customGame: null,
+    personalSavedQuestionKey: null,
+    isRush: false,
+    rushSelf: null,
+    rushAnswers: [],
+    rushHostToken: null,
 };
 
 const TEAM_NAMES = ['Team Blau','Team Rot','Team Grün','Team Gelb','Team Lila','Team Orange','Team Türkis','Team Pink','Team Weiß','Team Schwarz'];
@@ -1405,6 +1451,15 @@ async function checkJoinRoomSettings() {
     }
     try {
         const sb = await getSb();
+        try {
+          const rushPreview = await sb.rpc('mm_rush_preview_room', { p_code: code });
+          if (!rushPreview.error && rushPreview.data?.is_rush) {
+            const info = rushPreview.data; live.joinRoomInfo = { ...info, is_rush: true };
+            if (info.team_mode && info.team_assignment === 'choose') { const count=Math.max(2,Math.min(10,Number(info.team_count)||2)); [...$('joinTeam').options].forEach((option,i)=>option.hidden=i>=count); wrap.classList.remove('hidden'); note.textContent='⚡ Math Rush mit Team-Auswahl: Wähle dein Team und tritt bei.'; }
+            else { wrap.classList.add('hidden'); note.textContent=info.team_mode?'⚡ Math Rush: Du wirst automatisch einem Team zugeteilt.':'⚡ Math Rush: Du kannst dem Raum beitreten.'; }
+            return;
+          }
+        } catch (_) { /* SQL migration may not be installed yet; try classic Live. */ }
         const { data: info, error } = await sb.rpc('mm_room_info_v4', { p_code: code });
         if (error) throw error;
         live.joinRoomInfo = info;
@@ -1580,8 +1635,11 @@ async function getSb() {
         throw new Error('Live-Modus ist noch nicht eingerichtet. Bitte Supabase URL und Publishable Key eintragen und die SQL-Datei ausführen.');
     }
     if (!live.sb) {
-        const mod = await import('https://esm.sh/@supabase/supabase-js@2.118.0');
-        live.sb = mod.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true } });
+        const supabaseSdk = window.supabase;
+        if (!supabaseSdk || typeof supabaseSdk.createClient !== 'function') {
+            throw new Error('Supabase-SDK konnte nicht geladen werden. Bitte prüfe die Internetverbindung und lade die Seite erneut.');
+        }
+        live.sb = supabaseSdk.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true } });
         live.sb.auth.onAuthStateChange((event) => { if (event === 'PASSWORD_RECOVERY') { setTimeout(adminShowRecoveryPanel, 0); } });
     }
     return live.sb;
@@ -1615,7 +1673,253 @@ function token() {
     throw new Error('Sichere Sitzungs-Token sind in diesem Browser nicht verfügbar. Bitte nutze HTTPS und einen aktuellen Browser.');
 }
 
+
+function mmUpdateLiveGameTypeUI(){
+  const rush = $('liveGameType')?.value === 'rush';
+  document.querySelectorAll('.classic-only').forEach(el=>el.classList.toggle('hidden',rush));
+  document.querySelectorAll('.rush-only').forEach(el=>el.classList.toggle('hidden',!rush));
+  const heading=$('liveGameTypeHint');
+  if(heading) heading.textContent = rush
+    ? '⚡ Math Rush: möglichst viele Aufgaben in der gewählten Zeit lösen. Die Schwierigkeit steigt automatisch.'
+    : 'Klassisches Live-Quiz mit fester Fragenanzahl und Zeit pro Frage.';
+}
+
+function mmClearJoinRoomQuery(){
+  try{
+    const url=new URL(window.location.href);
+    if(!url.searchParams.has('join'))return;
+    url.searchParams.delete('join');
+    window.history.replaceState(window.history.state,'',url.toString());
+  }catch(_){}
+}
+
+function mmRushSessionPayload(){
+  return {
+    isRush:true, kind:live.host?'host':'player', code:live.room?.code,
+    token:live.host?live.rushHostToken:live.token,
+    playerToken:live.host?live.hostPlayerToken:null,
+    hostPlaying:Boolean(live.hostPlaying), displayMode:live.displayMode,
+    name:live.player?.nickname||data.name||'Spieler', avatar:live.player?.avatar||data.avatar||'🦊'
+  };
+}
+
+async function createMathRushRoom(){
+  try{
+    const sb=await getSb(); ensureEconomy();
+    const code=String(10000+secureRandomInt(90000));
+    const name=($('hostName').value.trim()||data.name||'Meister').slice(0,18);
+    const hostToken=token();
+    const displayMode=mmIsClassroomPreset()?'classroom':($('liveDisplayMode').value||'friends');
+    const hostPlays=displayMode==='friends'&&Boolean($('hostPlayToggle')?.checked);
+    const hostPlayerToken=hostPlays?token():null;
+    const teamMode=$('liveGameMode')?.value==='team';
+    const teamAssignment=teamMode?($('liveTeamAssignment')?.value||'random'):'random';
+    const teamCount=teamMode?Number($('liveTeamCount')?.value||2):2;
+    const chosenTeam=teamMode&&teamAssignment==='choose'?Number($('liveHostTeam')?.value||1):null;
+    const {data:created,error}=await sb.rpc('mm_rush_create_room',{
+      p_code:code,p_host_token:hostToken,p_host_name:name,p_display_mode:displayMode,
+      p_duration_seconds:Number($('rushDuration')?.value||180),
+      p_start_difficulty:$('rushDifficulty')?.value||'easy',
+      p_escalation:$('rushEscalation')?.value||'normal',
+      p_team_mode:teamMode,p_team_assignment:teamAssignment,p_team_count:teamCount,
+      p_host_plays:hostPlays,p_host_player_token:hostPlayerToken,
+      p_host_avatar:data.avatar||'🦊',p_host_team:chosenTeam
+    });
+    if(error) throw error;
+    live.isRush=true; live.rushHostToken=hostToken; live.host=true; live.hostPlaying=hostPlays;
+    live.hostPlayerToken=hostPlayerToken; live.token=hostToken; live.sb=sb;
+    live.displayMode=displayMode; live.room={code}; live.player={room_code:code,token:hostPlayerToken,nickname:name,avatar:data.avatar||'🦊',team_number:chosenTeam};
+    live.players=[]; live.rushSelf=null; live.rushAnswers=[]; live.teamTotals=[];
+    live.renderSignature=null;
+    localStorage.removeItem('mm-live-session-v4');
+    localStorage.setItem('mm-live-rush-session',JSON.stringify(mmRushSessionPayload()));
+    await subscribeRoom();
+    showToast(hostPlays?'Math Rush erstellt – du spielst mit!':'Math Rush-Raum erstellt. Teile den fünfstelligen Code.');
+  }catch(e){
+    showToast(e.message||'Math Rush konnte nicht erstellt werden.');
+    if($('liveNotice'))$('liveNotice').textContent='Fehler: '+(e.message||'Unbekannter Fehler');
+  }
+}
+
+async function joinMathRushRoom(sb,code,name,playerToken,teamNumber){
+  const {data:joined,error}=await sb.rpc('mm_rush_join_room',{
+    p_code:code,p_token:playerToken,p_nickname:name,p_avatar:data.avatar||'🦊',p_team_number:teamNumber
+  });
+  if(error) throw error;
+  live.isRush=true; live.sb=sb; live.host=false; live.hostPlaying=false;
+  live.rushHostToken=null; live.hostPlayerToken=null; live.token=playerToken;
+  live.displayMode=joined.display_mode||live.joinRoomInfo?.display_mode||'friends';
+  live.room={code}; live.player={room_code:code,token:playerToken,nickname:name,avatar:data.avatar||'🦊',team_number:joined.team_number,active:true};
+  live.players=[]; live.rushSelf=null; live.rushAnswers=[]; live.teamTotals=[]; live.renderSignature=null;
+  localStorage.removeItem('mm-live-session-v4');
+  localStorage.setItem('mm-live-rush-session',JSON.stringify(mmRushSessionPayload()));
+  mmClearJoinRoomQuery();
+  await subscribeRoom();
+  showToast(joined.team_number?`Du bist ${teamName(joined.team_number)} beigetreten!`:'Du bist bei Math Rush dabei!');
+}
+
+async function refreshMathRush(){
+  if(!live.sb||!live.room||!live.token)return;
+  const {data,error}=await live.sb.rpc('mm_rush_state',{
+    p_code:live.room.code,p_token:live.host?live.rushHostToken:live.token,
+    p_player_token:live.host&&live.hostPlaying?live.hostPlayerToken:null
+  });
+  if(error) throw error;
+  live.room=data.room||live.room;
+  live.players=Array.isArray(data.players)?data.players:[];
+  live.rushSelf=data.self||null;
+  live.rushAnswers=Array.isArray(data.self_answers)?data.self_answers:[];
+  live.teamTotals=Array.isArray(data.teams)?data.teams:[];
+  live.displayMode=live.room.display_mode||live.displayMode;
+  if(live.room.status==='finished') saveRushPersonalSummary();
+  const signature=JSON.stringify([live.room,live.players,live.rushSelf,live.teamTotals,live.rushAnswers]);
+  if(signature!==live.renderSignature){live.renderSignature=signature;renderLiveRoom();}
+  updateLiveTimer();
+  if(live.room.status==='finished'){
+    if(live.poll){clearInterval(live.poll);live.poll=null;}
+    if(live.timerInterval){clearInterval(live.timerInterval);live.timerInterval=null;}
+  }
+}
+
+async function rushAdvanceQuestion(){
+  if(!live.isRush||!live.room||live.room.status!=='playing'||live.advancing)return;
+  live.advancing=true;
+  try{
+    const {error}=await live.sb.rpc('mm_rush_advance_question',{
+      p_code:live.room.code,p_token:live.host?live.rushHostToken:live.token
+    });
+    if(error)throw error;
+  }catch(e){/* another client may have advanced the question first */}
+  finally{live.advancing=false;}
+}
+
+async function subscribeRushRoom(){
+  if(live.poll)clearInterval(live.poll);
+  if(live.timerInterval)clearInterval(live.timerInterval);
+  live.renderSignature=null;
+  await refreshMathRush();
+  live.timerInterval=setInterval(updateLiveTimer,250);
+  live.poll=setInterval(async()=>{
+    try{await refreshMathRush();if(live.room?.status==='playing')await rushAdvanceQuestion();}
+    catch(e){/* recover on next poll; keep the saved room session */}
+  },850);
+}
+
+async function startMathRush(){
+  if(!live.isRush||!live.host||live.room?.status!=='lobby')return;
+  try{
+    const {error}=await live.sb.rpc('mm_rush_start',{p_code:live.room.code,p_host_token:live.rushHostToken});
+    if(error)throw error;
+    await refreshMathRush();
+  }catch(e){showToast(e.message||'Math Rush konnte nicht gestartet werden.');}
+}
+
+async function answerMathRush(value){
+  if(!live.isRush||!live.room||live.room.status!=='playing')return;
+  if(live.host&&!live.hostPlaying)return;
+  if(live.rushSelf&&Number(live.rushSelf.last_answered_index)>=Number(live.room.question_index))return;
+  const answerToken=live.hostPlaying?live.hostPlayerToken:live.token;
+  try{
+    const {error}=await live.sb.rpc('mm_rush_submit_answer',{
+      p_code:live.room.code,p_token:answerToken,p_answer:Number(value)
+    });
+    if(error)throw error;
+    await refreshMathRush();
+  }catch(e){showToast(e.message||'Antwort konnte nicht gesendet werden.');}
+}
+
+function saveRushPersonalSummary(){
+  if(!live.isRush||live.room?.status!=='finished'||!live.rushSelf)return;
+  data.mathRushPersonal=data.mathRushPersonal||{best:0,rounds:0,wrongQuestions:[]};
+  const personal=data.mathRushPersonal;
+  personal.wrongQuestions=Array.isArray(personal.wrongQuestions)?personal.wrongQuestions:[];
+  personal.savedRounds=Array.isArray(personal.savedRounds)?personal.savedRounds:[];
+  const score=Number(live.rushSelf.correct_count)||0;
+  personal.best=Math.max(Number(personal.best)||0,score);
+  const key=`rush:${live.room.code}:finished`;
+  if(!personal.savedRounds.includes(key)){
+    personal.rounds=(Number(personal.rounds)||0)+1;
+    personal.savedRounds.push(key); personal.savedRounds=personal.savedRounds.slice(-30);
+    const wrong=live.rushAnswers.filter(a=>a.is_correct===false).map(a=>({
+      a:Number(a.q_a),b:Number(a.q_b),answer:Number(a.correct_answer),
+      given:Number(a.submitted_answer),date:a.answered_at||new Date().toISOString(),roomCode:String(live.room.code)
+    }));
+    wrong.forEach(item=>{
+      personal.wrongQuestions.unshift(item);
+      const pairKey=`${item.a}x${item.b}`;data.errors=data.errors||{};
+      data.errors[pairKey]=Math.min(99,(Number(data.errors[pairKey])||0)+1);
+    });
+    personal.wrongQuestions=personal.wrongQuestions.slice(0,100);
+    saveData();
+  }
+}
+
+function renderMathRushRoom(){
+  const room=live.room;if(!room)return;
+  document.body.classList.add('live-room-active');
+  const classPhone=!live.host&&room.display_mode==='classroom';
+  document.body.classList.toggle('classroom-player',classPhone);
+  document.body.classList.toggle('friends-player-lobby',!live.host&&room.display_mode==='friends'&&room.status==='lobby');
+  document.body.classList.toggle('friends-player-playing',!live.host&&room.display_mode==='friends'&&room.status==='playing');
+  $('liveStart').classList.add('hidden');$('liveRoom').classList.remove('hidden');
+  ['liveBackBtn','liveKicker','liveHeading','liveIntro','liveNotice'].forEach(id=>$(id)?.classList.add('hidden'));
+  const players=live.players||[];const self=live.rushSelf||{};
+  const answered=Number(self.last_answered_index)>=Number(room.question_index)&&Number(room.question_index)>0;
+  const left=room.ends_at?Math.max(0,Math.ceil((new Date(room.ends_at).getTime()-Date.now())/1000)):0;
+  const qLeft=room.question_ends_at?Math.max(0,Math.ceil((new Date(room.question_ends_at).getTime()-Date.now())/1000)):0;
+  const mm=String(Math.floor(left/60)).padStart(2,'0'),ss=String(left%60).padStart(2,'0');
+  const remainingPct=Number(room.duration_seconds)>0?Math.max(0,Math.min(100,left/Number(room.duration_seconds)*100)):0;
+  const scores=room.team_mode?`<div class="rush-team-board">${(live.teamTotals||[]).map((t,i)=>`<div class="rush-team-row"><span>${i===0?'🏆 ':''}${teamEmoji(t.team_number)} ${esc(teamName(t.team_number))}</span><b>${Number(t.score)||0} ✓</b></div>`).join('')}</div>`:'';
+  const leaderboard=[...players].sort((a,b)=>Number(b.correct_count)-Number(a.correct_count));
+  const ranks=`<div class="rush-leaderboard"><h3>🏆 Live-Rangliste</h3>${leaderboard.slice(0,10).map((p,i)=>`<div class="rush-rank-row ${p.is_self?'is-self':''}"><span>${i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}.`} ${esc(p.avatar||'🦊')} ${esc(p.nickname)}</span><b>${Number(p.correct_count)||0} richtig${Number(p.current_streak)>=2?` · 🔥${Number(p.current_streak)}`:''}</b></div>`).join('')||'<p class="muted">Noch keine Spieler.</p>'}</div>`;
+  let html=`<div class="subpanel live-room-shell rush-room-shell ${live.host?'is-host':'is-player'}">
+    <div class="rush-topline"><div><span class="rush-kicker">⚡ MATH RUSH LIVE</span><h2>${room.status==='lobby'?'Warteraum':room.status==='playing'?'Blitzrunde läuft':'Runde beendet'}</h2></div><div class="rush-round-timer"><strong id="rushTimerText">${mm}:${ss}</strong><small>Gesamtzeit</small></div></div>
+    <div class="rush-round-track"><span id="rushTimerFill" style="width:${remainingPct}%"></span></div>
+    <div class="rush-meta"><span>🎮 ${room.display_mode==='classroom'?'Klasse':'Freunde'}</span><span>❓ ${Number(room.question_index)||0} Aufgaben</span><span>👥 ${players.length} Spieler</span>${room.team_mode?'<span>👥 Team Rush</span>':''}</div>`;
+  if(room.status==='lobby'){
+    html+=`<div class="rush-code-card"><small>DEIN SPIELCODE</small><strong>${esc(room.code)}</strong><div id="rushQrCode"></div><button class="btn secondary" onclick="copyRoomCode()">Code kopieren</button></div>`;
+    if(live.host){
+      html+=scores+`<div class="rush-player-grid">${players.map(p=>`<div class="rush-player-chip">${esc(p.avatar||'🦊')} ${esc(p.nickname)}${p.is_host_player?' · Host':''}${p.team_number?` · ${esc(teamName(p.team_number))}`:''}</div>`).join('')||'<p class="muted">Noch wartet niemand im Raum.</p>'}</div>`;
+      html+=`<button class="btn purple full" onclick="startMathRush()" ${players.filter(p=>!p.is_host_player).length<1?'disabled':''}>⚡ Math Rush starten</button><p class="muted">Die Runde dauert ${Math.round(Number(room.duration_seconds)/60)} Minuten. Die Aufgaben wechseln automatisch.</p><button class="btn danger full" style="margin-top:10px" onclick="leaveLiveRoom()">Raum verlassen</button>`;
+    }else html+=`<div class="live-status-card"><div style="font-size:34px">⏳</div><h3>Du bist dabei!</h3><p class="muted">Warte, bis der Gastgeber Math Rush startet.</p></div><button class="btn secondary full" onclick="leaveLiveRoom()">Spiel verlassen</button>`;
+  }else if(room.status==='playing'){
+    html+=`<div class="rush-question-progress"><span>FRAGE ${Number(room.question_index)||1}</span><span>⏱ <b id="rushQuestionTimerText">${qLeft}s</b> bis zum nächsten Wechsel</span></div>`;
+    if(room.display_mode==='classroom'&&!live.host){
+      html+=`<div class="rush-color-answer-grid">${[0,1,2,3].map(i=>`<button class="color-answer color-${i}" type="button" aria-label="Antwortfarbe ${i+1}" ${answered?'disabled':''} onclick="answerMathRush(${Number(room.options?.[i])||0})"></button>`).join('')}</div><p class="muted">Wähle das Farbfeld auf dem Lehrerbildschirm. Deine Antwort bleibt privat.</p>`;
+    }else{
+      html+=`<div class="rush-question-card"><small>${room.display_mode==='classroom'?'AUFGABE AM LEHRERBILDSCHIRM':'LÖSE SO VIELE AUFGABEN WIE MÖGLICH'}</small><div class="rush-equation">${room.q_a} × ${room.q_b} = ?</div></div>`;
+      if(!live.host||live.hostPlaying){
+        html+=`<div class="rush-answer-grid">${(room.options||[]).map(v=>`<button class="rush-answer-btn" type="button" ${answered?'disabled':''} onclick="answerMathRush(${Number(v)})">${Number(v)}</button>`).join('')}</div>${answered?'<p class="rush-waiting-answer">✅ Antwort gespeichert – nächste Aufgabe kommt gleich.</p>':''}`;
+      }else{
+        html+=`<div class="rush-answer-grid host-preview">${(room.options||[]).map(v=>`<div class="rush-answer-preview">${Number(v)}</div>`).join('')}</div>`;
+      }
+    }
+    if(!classPhone)html+=`<div class="rush-personal-line">Dein Ergebnis: <strong>${Number(self.correct_count)||0} richtig</strong> · Serie: <strong>${Number(self.current_streak)||0} 🔥</strong> · Beste Serie: <strong>${Number(self.best_streak)||0}</strong></div>`;
+    html+=scores+ranks;
+    if(live.host)html+=`<div class="rush-host-note">Die Runde endet automatisch bei 00:00. Richtige Antworten und Serien werden live synchronisiert.</div>`;
+    html+=`<button class="btn secondary full" style="margin-top:14px" onclick="leaveLiveRoom()">Spiel verlassen</button>`;
+  }else if(room.status==='finished'){
+    html+=`<div class="rush-finish-hero"><span>🏁</span><h2>Math Rush beendet!</h2><p>Du hast ${Number(self.correct_count)||0} Aufgaben richtig gelöst.</p><div class="rush-personal-line">Deine beste Serie: <strong>${Number(self.best_streak)||0} 🔥</strong> · Fehler: <strong>${Number(self.wrong_count)||0}</strong></div></div>`;
+    if(room.team_mode)html+=scores;
+    html+=ranks;
+    if(!live.host||live.hostPlaying){
+      const personal=data.mathRushPersonal||{best:0,wrongQuestions:[]};const wrong=(personal.wrongQuestions||[]).length;
+      html+=`<section class="questionbox live-personal-summary"><div class="q-label">NUR FÜR DICH · PERSÖNLICHE AUSWERTUNG</div><h3>Dein Math-Rush-Rückblick</h3><div class="live-personal-stats"><div><strong>${Number(self.correct_count)||0}</strong><span>Richtig in dieser Runde</span></div><div><strong>${Number(personal.best)||0}</strong><span>Persönlicher Bestwert</span></div><div><strong>${wrong}</strong><span>Gespeicherte Fehler</span></div></div>${wrong?'<button class="btn secondary full" onclick="leaveLiveRoom();setTimeout(()=>startMistakes(),80)">🎯 Falsche Aufgaben wiederholen</button>':'<p class="muted">Keine gespeicherten Fehler zum Wiederholen.</p>'}<p class="muted">Bestwert und Fehlerliste werden nur in deinem persönlichen Browserprofil gespeichert.</p></section>`;
+    }
+    html+=`<button class="btn purple full" style="margin-top:12px" onclick="leaveLiveRoom()">Zur Live-Arena</button>`;
+  }else{
+    html+=`<div class="player-removed-notice"><h2>Raum geschlossen</h2><button class="btn secondary" onclick="leaveLiveRoom()">Zurück</button></div>`;
+  }
+  html+=`</div>`;
+  $('liveRoom').innerHTML=html;
+  if(live.host&&room.status==='lobby'){
+    const qr=$('rushQrCode');if(qr&&window.QRCode){qr.innerHTML='';new QRCode(qr,{text:liveJoinUrl(room.code),width:180,height:180,correctLevel:QRCode.CorrectLevel.H});}
+  }
+  updateLiveTimer();
+}
+
 async function createLiveRoom() {
+    if ($('liveGameType')?.value === 'rush') return createMathRushRoom();
     try {
         const sb = await getSb();
         ensureEconomy();
@@ -1628,15 +1932,16 @@ async function createLiveRoom() {
         const code = String(10000 + secureRandomInt(90000));
         if (live.customGame) localStorage.setItem('mm-live-game-' + code, JSON.stringify(live.customGame));
         const hostToken = token();
-        const hostPlayerToken = ($('liveDisplayMode').value === 'friends' && $('hostPlayToggle').checked) ? token() : null;
+        const hostPlayerToken = (!mmIsClassroomPreset() && $('liveDisplayMode').value === 'friends' && $('hostPlayToggle').checked) ? token() : null;
         const questionCount = Number($('liveCount').value);
         const secondsPerQuestion = Number($('liveSeconds').value);
         const teamMode = $('liveGameMode').value === 'team';
         const teamAssignment = teamMode ? $('liveTeamAssignment').value : 'random';
         const teamCount = teamMode ? Number($('liveTeamCount').value) : 2;
-        const displayMode = $('liveDisplayMode').value || 'friends';
+        const displayMode = mmIsClassroomPreset() ? 'classroom' : ($('liveDisplayMode').value || 'friends');
+        if ($('liveDisplayMode')) $('liveDisplayMode').value = displayMode;
         const scoringMode = $('liveScoringMode')?.value || 'classic';
-        const hostPlays = Boolean(hostPlayerToken);
+        const hostPlays = displayMode === 'classroom' ? false : Boolean(hostPlayerToken);
         const { data: room, error } = await sb.rpc('mm_create_room_v4', {
             p_code: code, p_host_token: hostToken, p_host_name: name,
             p_question_count: questionCount, p_seconds_per_question: secondsPerQuestion,
@@ -1644,6 +1949,10 @@ async function createLiveRoom() {
             p_display_mode: displayMode, p_scoring_mode: scoringMode, p_host_plays: hostPlays, p_host_player_token: hostPlayerToken
         });
         if (error) throw error;
+        const createdRoomMode = Array.isArray(room) ? room[0]?.display_mode : (room?.display_mode || room?.room?.display_mode);
+        if (displayMode === 'classroom' && createdRoomMode && createdRoomMode !== 'classroom') {
+            throw new Error('Der Server hat keinen Klassenraum erstellt. Die Supabase-Funktion mm_create_room_v4 muss den Modus „classroom“ unterstützen.');
+        }
         live.room = room;
         live.player = { room_code: code, token: hostPlayerToken, nickname: name, avatar: data.avatar || '🦊', frame_id: data.equippedFrame || 'frame_basic', profile_title: data.equippedTitle || 'title_none', profile_level: currentLevel() };
         live.players = [];
@@ -1689,6 +1998,7 @@ async function joinLiveRoom() {
         const playerToken = token();
         ensureEconomy();
         const chosenTeam = live.joinRoomInfo && live.joinRoomInfo.team_mode && live.joinRoomInfo.team_assignment === 'choose' ? Number($('joinTeam').value || 1) : null;
+        if (live.joinRoomInfo?.is_rush) { await joinMathRushRoom(sb,code,name,playerToken,chosenTeam); return; }
         const { data: room, error } = await sb.rpc('mm_join_room_v4', {
             p_code: code, p_token: playerToken, p_nickname: name, p_team_number: chosenTeam,
             p_avatar: data.avatar || '🦊', p_frame_id: data.equippedFrame || 'frame_basic',
@@ -1700,8 +2010,11 @@ async function joinLiveRoom() {
         live.players = [];
         live.host = false; live.hostPlaying = false; live.hostPlayerToken = null;
         live.displayMode = room.display_mode || live.joinRoomInfo.display_mode || 'friends';
+        window.mmLivePreset = live.displayMode;
+        if ($('liveDisplayMode')) $('liveDisplayMode').value = live.displayMode;
         live.token = playerToken;
         localStorage.setItem('mm-live-session-v4', JSON.stringify({kind:'player',code,token:playerToken,name,avatar:data.avatar||'🦊'}));
+        mmClearJoinRoomQuery();
         await subscribeRoom();
         renderLiveRoom();
         showToast(room.team_mode ? (room.team_assignment === 'random' ? 'Du bist dabei! Das Spiel teilt dich einem Team zu.' : `Du bist ${teamName(chosenTeam)} beigetreten!`) : 'Du bist beigetreten!');
@@ -1714,6 +2027,7 @@ async function joinLiveRoom() {
     }
 }
 async function subscribeRoom() {
+    if (live.isRush) return subscribeRushRoom();
     const sb = await getSb();
     if (live.subscription) {
         await sb.removeChannel(live.subscription);
@@ -1734,7 +2048,52 @@ async function subscribeRoom() {
     }, 1000);
 }
 
+
+function saveLivePersonalReview(room, selfState) {
+    if (!room || room.status !== 'review' || !selfState || selfState.removed_from_match || selfState.active === false) return;
+    const key = `${room.code}:${Number(room.question_index)}:${Number(room.q_a)}x${Number(room.q_b)}`;
+    if (live.personalSavedQuestionKey === key) return;
+    let given = selfState.answer;
+    if ((given === null || given === undefined) && room.display_mode === 'classroom' &&
+        live.selectedColorIndex !== null && live.colorQuestionIndex === Number(room.question_index)) {
+        given = Array.isArray(room.options) ? room.options[Number(live.selectedColorIndex)] : null;
+    }
+    if (given === null || given === undefined) return;
+    const correct = Number(given) === Number(room.correct_answer);
+    if (!correct) {
+        const pairKey = `${Number(room.q_a)}x${Number(room.q_b)}`;
+        data.errors = data.errors || {};
+        data.errors[pairKey] = Math.min(99, (Number(data.errors[pairKey]) || 0) + 1);
+    }
+    data.livePersonal = data.livePersonal || { best: 0, rounds: 0, wrongQuestions: [] };
+    data.livePersonal.wrongQuestions = Array.isArray(data.livePersonal.wrongQuestions) ? data.livePersonal.wrongQuestions : [];
+    if (!correct) {
+        data.livePersonal.wrongQuestions.unshift({
+            a: Number(room.q_a), b: Number(room.q_b), answer: Number(room.correct_answer),
+            given: Number(given), date: new Date().toISOString(), roomCode: String(room.code || '')
+        });
+        data.livePersonal.wrongQuestions = data.livePersonal.wrongQuestions.slice(0, 100);
+    }
+    live.personalSavedQuestionKey = key;
+    saveData();
+}
+function saveLivePersonalBest(room, selfState) {
+    if (!room || room.status !== 'finished' || !selfState || selfState.removed_from_match) return;
+    data.livePersonal = data.livePersonal || { best: 0, rounds: 0, wrongQuestions: [] };
+    const score = Math.max(0, Number(selfState.score) || 0);
+    data.livePersonal.best = Math.max(Number(data.livePersonal.best) || 0, score);
+    const finishKey = `${room.code}:finished`;
+    data.livePersonal.savedRounds = Array.isArray(data.livePersonal.savedRounds) ? data.livePersonal.savedRounds : [];
+    if (!data.livePersonal.savedRounds.includes(finishKey)) {
+        data.livePersonal.rounds = (Number(data.livePersonal.rounds) || 0) + 1;
+        data.livePersonal.savedRounds.push(finishKey);
+        data.livePersonal.savedRounds = data.livePersonal.savedRounds.slice(-30);
+    }
+    saveData();
+}
+
 async function refreshLive() {
+    if (live.isRush) return refreshMathRush();
     if (!live.sb || !live.room || !live.token) return;
     const { data, error } = await live.sb.rpc('mm_live_state_v4', { p_code: live.room.code, p_token: live.token });
     if (error) throw error;
@@ -1764,6 +2123,9 @@ async function refreshLive() {
         const own = live.players.find(p=>p.is_self);
         if (own) live.player = {...live.player,...own,token:live.hostPlayerToken};
     }
+    const ownPersonalState = live.players.find(p=>p.is_self) || (live.hostPlaying ? live.player : null);
+    if (live.room?.status === 'review' && (!live.host || live.hostPlaying)) saveLivePersonalReview(live.room, ownPersonalState);
+    if (live.room?.status === 'finished' && (!live.host || live.hostPlaying)) saveLivePersonalBest(live.room, ownPersonalState);
     const signature = JSON.stringify([live.room, live.players, live.playerAhead, live.teamTotals, live.answerCounts, live.chatMessages, live.reactionFeed, live.activityAvailable]);
     if (live.room && live.room.status === 'review' && (!live.host || live.hostPlaying)) rewardLiveQuestion();
     if (signature !== live.renderSignature) {
@@ -1779,6 +2141,15 @@ async function refreshLive() {
 }
 
 function updateLiveTimer() {
+    if (live.isRush) {
+      if (!live.room) return;
+      const left=live.room.ends_at?Math.max(0,Math.ceil((new Date(live.room.ends_at).getTime()-Date.now())/1000)):0;
+      const text=$('rushTimerText'),fill=$('rushTimerFill');
+      if(text)text.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
+      if(fill){const total=Math.max(1,Number(live.room.duration_seconds)||1);fill.style.width=Math.max(0,Math.min(100,left/total*100))+'%';}
+      const qText=$('rushQuestionTimerText');if(qText){const qLeft=live.room.question_ends_at?Math.max(0,Math.ceil((new Date(live.room.question_ends_at).getTime()-Date.now())/1000)):0;qText.textContent=qLeft+'s';}
+      return;
+    }
     if (!live.room || live.room.status !== 'playing' || !live.room.question_ends_at) return;
     const total = Math.max(1, Number(live.room.seconds_per_question) || 15);
     const remaining = Math.max(0, Math.ceil((new Date(live.room.question_ends_at).getTime() - Date.now()) / 1000));
@@ -1797,6 +2168,7 @@ function updateLiveTimer() {
 }
 
 function renderLiveRoom() {
+    if (live.isRush) return renderMathRushRoom();
     const room = live.room;
     if (!room) return;
     const chatInput = $('liveChatInput');
@@ -1943,6 +2315,11 @@ function renderLiveRoom() {
       }
       if (!live.host && selfState && !selfState.is_top_ten) html += `<div class="private-gap-card">Dein Endstand: ${Number(selfState.score)||0} Punkte. Deine genaue Platzierung bleibt privat. Trainiere weiter, um die Top 10 zu knacken!</div>`;
     }
+    if (room.status === 'finished' && (!live.host || live.hostPlaying) && selfState && !selfState.removed_from_match) {
+      const personal = data.livePersonal || {best:0, rounds:0, wrongQuestions:[]};
+      const wrongCount = (personal.wrongQuestions || []).length;
+      html += `<section class="questionbox live-personal-summary"><div class="q-label">NUR FÜR DICH · PERSÖNLICHE AUSWERTUNG</div><h3>Dein persönlicher Rückblick</h3><div class="live-personal-stats"><div><strong>${Number(selfState.score)||0}</strong><span>Punkte in dieser Runde</span></div><div><strong>${Number(personal.best)||0}</strong><span>Bestwert</span></div><div><strong>${wrongCount}</strong><span>Gespeicherte Fehler</span></div></div>${wrongCount?`<button type="button" class="btn secondary full" onclick="leaveLiveRoom();setTimeout(()=>startMistakes(),80)">🎯 Falsche Aufgaben wiederholen</button>`:'<p class="muted">Sehr gut! Es sind keine neuen Fehler zum Wiederholen gespeichert.</p>'}<p class="muted">Dein Bestwert und deine Fehlerliste werden nur auf diesem Gerät und in deinem persönlichen Profil gespeichert. Andere Spieler sehen diese Angaben nicht.</p></section>`;
+    }
     if (room.status === 'playing' || room.status === 'review') {
       html += `<div class="live-activity-area">${renderReactionFeed()}${renderReactions()}${renderLiveChat()}</div>`;
     }
@@ -2074,12 +2451,24 @@ function rewardLiveQuestion(){
 async function restoreLiveSession(){
   if(new URLSearchParams(window.location.search).get('join'))return;
   try{const lastScreen=sessionStorage.getItem(MM_APP_SCREEN_KEY);if(lastScreen&&lastScreen!=='live')return;}catch(_){}
-  let saved;try{saved=JSON.parse(localStorage.getItem('mm-live-session-v4')||'null');}catch(_){saved=null;}
+  let saved;try{saved=JSON.parse(localStorage.getItem('mm-live-rush-session')||'null');}catch(_){saved=null;}
+  if(saved&&saved.isRush&&saved.code&&saved.token){
+    try{
+      const sb=await getSb(); live.isRush=true;live.sb=sb;live.host=saved.kind==='host';live.hostPlaying=Boolean(saved.hostPlaying);
+      live.rushHostToken=live.host?saved.token:null;live.token=saved.token;live.hostPlayerToken=saved.playerToken||null;
+      live.displayMode=saved.displayMode||'friends';live.room={code:saved.code};live.player={room_code:saved.code,token:live.host?live.hostPlayerToken:saved.token,nickname:saved.name||data.name||'Spieler',avatar:saved.avatar||data.avatar||'🦊'};
+      await subscribeRoom();show('live');showToast('Du bist wieder mit deiner Math-Rush-Runde verbunden.');return;
+    }catch(e){showToast('Math Rush konnte noch nicht wieder verbunden werden. Bitte Internet prüfen und erneut laden.');return;}
+  }
+  try{saved=JSON.parse(localStorage.getItem('mm-live-session-v4')||'null');}catch(_){saved=null;}
   if(!saved||!saved.code||!saved.token)return;
   try{
     const sb=await getSb();
     if(saved.kind==='host'){
-      live.host=true;live.token=saved.token;live.hostPlayerToken=saved.playerToken||null;live.hostPlaying=Boolean(saved.hostPlaying);live.displayMode=saved.displayMode||'friends';if($('liveDifficulty'))$('liveDifficulty').value=saved.difficulty||'medium';try{live.customGame=JSON.parse(localStorage.getItem('mm-live-game-'+saved.code)||'null');}catch(_){live.customGame=null;}
+      live.host=true;live.token=saved.token;live.hostPlayerToken=saved.playerToken||null;live.hostPlaying=Boolean(saved.hostPlaying);live.displayMode=saved.displayMode||'friends';
+      window.mmLivePreset=live.displayMode;
+      if($('liveDisplayMode'))$('liveDisplayMode').value=live.displayMode;
+      if($('liveDifficulty'))$('liveDifficulty').value=saved.difficulty||'medium';try{live.customGame=JSON.parse(localStorage.getItem('mm-live-game-'+saved.code)||'null');}catch(_){live.customGame=null;}
       live.player={room_code:saved.code,token:live.hostPlayerToken,nickname:saved.name||data.name,avatar:saved.avatar||data.avatar,frame_id:data.equippedFrame||'frame_basic',profile_title:data.equippedTitle||'title_none',profile_level:currentLevel()};
       live.room={code:saved.code};
     }else{
@@ -2091,6 +2480,9 @@ async function restoreLiveSession(){
       const hostBlocked=Boolean(selfRow&&(selfRow.removed_from_match||selfRow.active===false));
       if(!hostBlocked){const {error:rejoinError}=await sb.rpc('mm_rejoin_room_v4',{p_code:saved.code,p_token:saved.token});if(rejoinError)throw rejoinError;}
       live.host=false;live.token=saved.token;live.player={room_code:saved.code,token:saved.token,nickname:saved.name||data.name,avatar:saved.avatar||data.avatar};live.room={code:saved.code};
+      live.displayMode=initialState?.room?.display_mode||'friends';
+      window.mmLivePreset=live.displayMode;
+      if($('liveDisplayMode'))$('liveDisplayMode').value=live.displayMode;
     }
     live.sb=sb;await subscribeRoom();show('live');showToast('Du bist wieder mit deiner Runde verbunden.');
   }catch(e){
@@ -2126,7 +2518,10 @@ async function copyJoinLink() {
 async function startLiveGame() {
     if (!live.host || !live.room || live.room.status!=='lobby') return;
     const readyPlayers=(live.players||[]).filter(p=>p.active!==false&&!p.removed_from_match&&(!live.hostPlaying||!p.is_self));
-    if(readyPlayers.length<1){showToast('Warte, bis mindestens ein Mitspieler beigetreten ist.');return;}
+    if(readyPlayers.length<1){
+        showToast(live.room.display_mode==='classroom'?'Warte, bis mindestens ein Schüler mit dem Klassen-Code beigetreten ist.':'Warte, bis mindestens ein Mitspieler beigetreten ist.');
+        return;
+    }
     try {
         await setNextLiveQuestion(1);
     } catch (e) {
@@ -2273,6 +2668,20 @@ async function cancelLiveRoom(){
 }
 
 async function leaveLiveRoom(options={}) {
+    if (live.isRush) {
+      document.body.classList.remove('live-room-active','classroom-player','friends-player-lobby','friends-player-playing');
+      if(live.poll)clearInterval(live.poll);if(live.timerInterval)clearInterval(live.timerInterval);
+      if(!options.skipServer&&live.sb&&live.room&&live.token){
+        try{
+          if(live.host&&live.hostPlaying&&live.hostPlayerToken){
+            await live.sb.rpc('mm_rush_leave',{p_code:live.room.code,p_token:live.hostPlayerToken});
+          }
+          await live.sb.rpc('mm_rush_leave',{p_code:live.room.code,p_token:live.host?live.rushHostToken:live.token});
+        }catch(_){}
+      }
+      localStorage.removeItem('mm-live-rush-session');live.isRush=false;live.rushHostToken=null;live.rushSelf=null;live.rushAnswers=[];live.room=null;live.player=null;live.players=[];live.teamTotals=[];live.host=false;live.hostPlaying=false;live.hostPlayerToken=null;live.token=null;live.sb=null;live.renderSignature=null;
+      $('liveRoom').classList.add('hidden');$('liveStart').classList.remove('hidden');['liveBackBtn','liveKicker','liveHeading','liveIntro','liveNotice'].forEach(id=>$(id)?.classList.remove('hidden'));show('home');return;
+    }
     document.body.classList.remove('live-room-active','classroom-player','friends-player-lobby','friends-player-playing');
     live.reactionsOpen = false;
     if (live.timerInterval) { clearInterval(live.timerInterval); live.timerInterval = null; }
@@ -2299,6 +2708,7 @@ async function leaveLiveRoom(options={}) {
     localStorage.removeItem('mm-live-session-v4');
     if (live.room?.code) localStorage.removeItem('mm-live-game-' + live.room.code);
     live.customGame = null;
+    live.personalSavedQuestionKey = null;
     live.chatMessages = []; live.reactionFeed = []; live.chatOpen = false; live.reactionsOpen = false; live.replyTo = null; live.activityAvailable = false;
     live.room = null;
     live.player = null;
@@ -2306,6 +2716,10 @@ async function leaveLiveRoom(options={}) {
     live.hostPlaying = false;
     live.hostPlayerToken = null;
     live.displayMode = 'friends';
+    window.mmLivePreset='friends';
+    window.mmLiveTab='host';
+    if($('liveDisplayMode'))$('liveDisplayMode').value='friends';
+    $('live')?.classList.remove('classroom-live-mode');
     live.token = null;
     live.players = [];
     live.joinRoomInfo = null;
@@ -2339,16 +2753,16 @@ document.addEventListener('keydown', e => {
 const CREATOR_DRAFTS_KEY='mm-game-creator-drafts-v1';
 const CREATOR_CURRENT_KEY='mm-game-creator-current-v1';
 const CREATOR_META={
- quiz:{title:'Quiz mit Auswahl',icon:'🧠',tag:'Einsteiger',desc:'Vier Antwortmöglichkeiten, Punkte und Erklärungen.',help:'Erstelle Fragen und vier Antwortoptionen. Markiere genau eine richtige Antwort.'},
- truefalse:{title:'Richtig oder falsch',icon:'✅',tag:'Schnell',desc:'Kurze Aussagen, die Spieler bewerten müssen.',help:'Schreibe eine klare Aussage und lege fest, ob sie richtig oder falsch ist.'},
- short:{title:'Freie Texteingabe',icon:'⌨️',tag:'Wissen',desc:'Spieler tippen das Wort oder die Lösung ein.',help:'Du kannst mehrere gültige Antworten mit einem | trennen, zum Beispiel Berlin|berlin.'},
- multi:{title:'Mehrere Antworten',icon:'☑️',tag:'Knifflig',desc:'Mehrere Optionen können gleichzeitig richtig sein.',help:'Markiere jede richtige Option. Spieler müssen die vollständige Auswahl finden.'},
- matching:{title:'Paare zuordnen',icon:'🔗',tag:'Logik',desc:'Verbinde zusammengehörige Begriffe, Namen oder Bilderbeschreibungen.',help:'Lege linke und rechte Begriffe als Paare an. Spieler wählen passende Seiten nacheinander.'},
- memory:{title:'Memory',icon:'🃏',tag:'Klassiker',desc:'Decke Karten auf und finde passende Paare.',help:'Jede Zeile ist ein Paar. Verwende zum Beispiel ein Wort und seine Bedeutung oder zwei passende Begriffe.'},
+ quiz:{title:'Quiz mit Auswahl',icon:'🧠',tag:'Einsteiger',desc:'Einmaleins-Aufgaben mit vier Antwortmöglichkeiten.',help:'Schreibe eine Malaufgabe mit vier Ergebnissen und markiere das richtige Produkt.'},
+ truefalse:{title:'Richtig oder falsch',icon:'✅',tag:'Schnell',desc:'Entscheide, ob eine Malaufgabe richtig gelöst wurde.',help:'Schreibe eine Malaufgabe mit einem Ergebnis und lege fest, ob es stimmt.'},
+ short:{title:'Freie Texteingabe',icon:'⌨️',tag:'Wissen',desc:'Spieler tippen das Ergebnis einer Malaufgabe ein.',help:'Die Spieler geben das Ergebnis der angezeigten Multiplikation ein.'},
+ multi:{title:'Mehrere Antworten',icon:'☑️',tag:'Knifflig',desc:'Finde alle richtigen Ergebnisse zu mehreren Malaufgaben.',help:'Markiere jede richtige Option. Spieler müssen die vollständige Auswahl finden.'},
+ matching:{title:'Paare zuordnen',icon:'🔗',tag:'Logik',desc:'Verbinde jede Malaufgabe mit dem passenden Ergebnis.',help:'Lege links Malaufgaben und rechts die passenden Produkte an.'},
+ memory:{title:'Memory',icon:'🃏',tag:'Klassiker',desc:'Decke Karten auf und finde passende Paare.',help:'Jede Zeile verbindet eine Multiplikationsaufgabe mit ihrem Ergebnis.'},
  word:{title:'Wortsalat',icon:'🔤',tag:'Wörter',desc:'Entwirre Buchstaben und finde das gesuchte Wort.',help:'Lege das Zielwort und einen Hinweis an. Beim Spielen werden die Buchstaben gemischt.'},
  story:{title:'Entscheidungs-Story',icon:'🗺️',tag:'Kreativ',desc:'Spieler wählen, wie die Geschichte weitergeht.',help:'Jede Karte ist eine Szene. Jede Antwort kann eine Folge oder einen Ausgang der Geschichte zeigen.'},
- sorting:{title:'Reihenfolge-Puzzle',icon:'🧩',tag:'Puzzle',desc:'Ordne Schritte, Ereignisse oder Wörter in die richtige Reihenfolge.',help:'Schreibe die gewünschte Reihenfolge in die Liste. Im Spiel können Spieler die Elemente verschieben.'},
- reaction:{title:'Reaktions-Challenge',icon:'⚡',tag:'Arcade',desc:'Tippe möglichst oft auf das Ziel, bevor die Zeit endet.',help:'Stelle die Herausforderung ein. In dieser Version zählt jeder Klick auf die Zielschaltfläche.'}
+ sorting:{title:'Reihenfolge-Puzzle',icon:'🧩',tag:'Puzzle',desc:'Ordne die Ergebnisse von klein nach groß.',help:'Trage Multiplikationsergebnisse ein, die anschließend aufsteigend sortiert werden.'},
+ reaction:{title:'Reaktions-Challenge',icon:'⚡',tag:'Arcade',desc:'Tippe möglichst schnell auf das richtige Ergebnis.',help:'Trainiere Reaktion und Kopfrechnen mit schnellen Multiplikationsaufgaben.'}
 };
 let creatorDraft=null;
 let creatorRun=null;
@@ -2446,7 +2860,7 @@ function creatorSanitizeConfig(c){
 }
 function creatorRenderTemplateGrid(){
  const grid=$('creatorTemplateGrid');if(!grid)return;
- grid.innerHTML=Object.entries(CREATOR_META).map(([type,m])=>`<button type="button" class="creator-template" onclick="creatorStartNew('${type}')"><span class="template-label">${m.tag}</span><span class="template-icon">${m.icon}</span><strong>${m.title}</strong><small>${m.desc}</small></button>`).join('');
+ grid.innerHTML=Object.entries(CREATOR_META).filter(([type])=>!['word','story'].includes(type)).map(([type,m])=>`<button type="button" class="creator-template" onclick="creatorStartNew('${type}')"><span class="template-label">${m.tag}</span><span class="template-icon">${m.icon}</span><strong>${m.title}</strong><small>${m.desc}</small></button>`).join('');
 }
 function creatorRenderLibrary(){
  const root=$('creatorDraftLibrary');if(!root)return;const drafts=creatorGetDrafts();
@@ -2455,38 +2869,19 @@ function creatorRenderLibrary(){
 }
 function creatorStartNew(type){creatorAutoSaveNow();creatorDraft=creatorStarter(type);creatorCurrentStep=1;$('creatorHomePanel').classList.add('hidden');$('creatorEditorPanel').classList.remove('hidden');$('creatorPlayPanel').classList.add('hidden');creatorBindDraftToInputs();creatorGoStep(1);creatorAutoSaveNow();creatorRenderLibrary();}
 function creatorIdeaTopic(text){
- const t=text.toLocaleLowerCase('de');
- const banks=[
-  {key:/fußball|fussball|soccer|bundesliga|ball/,name:'Fußball',questions:[
-   ['Wie viele Spieler einer Mannschaft stehen normalerweise zu Beginn auf dem Feld?',['9','10','11','12'],2,'Eine Mannschaft spielt normalerweise mit elf Spielern.'],
-   ['Wie heißt der Spieler, der das Tor verteidigt?',['Stürmer','Torwart','Schiedsrichter','Trainer'],1,'Der Torwart schützt das Tor.'],
-   ['Wie lange dauert ein reguläres Fußballspiel ohne Nachspielzeit?',['60 Minuten','90 Minuten','100 Minuten','120 Minuten'],1,'Ein reguläres Spiel dauert 90 Minuten.'] ]},
-  {key:/tier|tiere|hund|katze|natur|zoo/,name:'Tiere',questions:[
-   ['Welches Tier sagt „Miau“?',['Hund','Katze','Pferd','Kuh'],1,'Eine Katze miaut.'],
-   ['Welches Tier hat einen sehr langen Hals?',['Elefant','Giraffe','Fuchs','Pinguin'],1,'Die Giraffe hat einen langen Hals.'],
-   ['Wo lebt ein Fisch?',['Im Wasser','Im Baum','In der Wüste','Im Schnee'],0,'Fische leben im Wasser.'] ]},
-  {key:/weltraum|planeten|planet|sonne|mond|universum|all/,name:'Weltraum',questions:[
-   ['Welcher Planet ist unser Zuhause?',['Mars','Erde','Jupiter','Venus'],1,'Wir leben auf der Erde.'],
-   ['Was gibt uns am Tag Licht und Wärme?',['Der Mond','Die Sonne','Der Mars','Ein Sternbild'],1,'Die Sonne gibt uns Licht und Wärme.'],
-   ['Welcher Planet ist als roter Planet bekannt?',['Mars','Saturn','Neptun','Merkur'],0,'Der Mars wird roter Planet genannt.'] ]},
-  {key:/mathe|mathematik|einmaleins|rechnen|zahlen|multipli|malnehmen/,name:'Mathe',questions:[
-   ['Was ist 5 × 5?',['10','20','25','30'],2,'5 mal 5 ist 25.'],
-   ['Was ist 8 × 3?',['21','24','27','32'],1,'8 mal 3 ist 24.'],
-   ['Was ist 9 + 6?',['14','15','16','17'],1,'9 plus 6 ist 15.'] ]},
-  {key:/geografie|geographie|länder|land|hauptstadt|welt/,name:'Geografie',questions:[
-   ['Wie heißt die Hauptstadt von Deutschland?',['Berlin','München','Hamburg','Köln'],0,'Berlin ist die Hauptstadt von Deutschland.'],
-   ['In welchem Land steht der Eiffelturm?',['Italien','Frankreich','Spanien','Deutschland'],1,'Der Eiffelturm steht in Paris.'],
-   ['Welcher ist der größte Ozean?',['Atlantik','Indischer Ozean','Pazifik','Arktischer Ozean'],2,'Der Pazifik ist der größte Ozean.'] ]},
-  {key:/dinosaur|dino/,name:'Dinosaurier',questions:[
-   ['Wie heißt der berühmte Dinosaurier mit den kleinen Armen?',['T-Rex','Triceratops','Stegosaurus','Brachiosaurus'],0,'Der Tyrannosaurus Rex hatte kurze Arme.'],
-   ['Was bedeutet „Dinosaurier“ ungefähr?',['Riesenechse','Schneller Vogel','Meeresfisch','Fliegender Hund'],0,'Das Wort kommt aus dem Griechischen und bedeutet schreckliche Echse.'],
-   ['Wann lebten Dinosaurier?',['Vor langer Zeit','Im Mittelalter','Vor 100 Jahren','Heute überall'],0,'Dinosaurier lebten vor Millionen Jahren.'] ]}
- ];
- return banks.find(x=>x.key.test(t))||null;
+ const t=String(text||'').toLocaleLowerCase('de');
+ if(!/(einmaleins|malaufgab|multipli|multipliz|malreihe|rechenaufgab|rechnen|faktoren|produkt|\d+\s*[x×*]\s*\d+|\d{1,2}er[- ]?reihe)/.test(t))return null;
+ return {key:/einmaleins|malaufgab|multipli|multipliz|malreihe|rechenaufgab|rechnen|faktoren|produkt|\d+\s*[x×*]\s*\d+|\d{1,2}er[- ]?reihe/,name:'Einmaleins',questions:[
+  ['Was ist 7 × 8?',['54','56','58','64'],1,'7 mal 8 ist 56.'],
+  ['Was ist 9 × 6?',['45','48','54','56'],2,'9 mal 6 ist 54.'],
+  ['Was ist 12 × 12?',['124','132','144','154'],2,'12 mal 12 ist 144.']
+ ]};
 }
 function creatorUseIdea(){
- const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Schreibe kurz, worum es in deinem Spiel gehen soll.');return;}
- const t=idea.toLocaleLowerCase('de');let type='quiz',reason='Quiz';
+ const idea=$('creatorIdeaInput').value.trim();if(!idea){showToast('Beschreibe kurz dein Einmaleins-Spiel.');return;}
+ const t=idea.toLocaleLowerCase('de');
+ if(!/(einmaleins|malaufgab|multipli|multipliz|malreihe|rechenaufgab|rechnen|faktoren|produkt|\d+\s*[x×*]\s*\d+|\d{1,2}er[- ]?reihe)/.test(t)){showToast('Der Game Creator ist derzeit auf das Einmaleins und Multiplikationsaufgaben ausgerichtet.');return;}
+ let type='quiz',reason='Einmaleins-Quiz';
  if(/memory|gedächtnis|paare finden|karten aufdecken/.test(t)){type='memory';reason='Memory'}
  else if(/zuordnen|verbinden|matching|paar|zusammengehören/.test(t)){type='matching';reason='Paare finden'}
  else if(/wortsalat|buchstaben|wort erraten|wortspiel|word/.test(t)){type='word';reason='Wortspiel'}
@@ -2496,6 +2891,7 @@ function creatorUseIdea(){
  else if(/mehrere richtige|alle richtigen|mehrfach/.test(t)){type='multi';reason='Mehrfachauswahl'}
  else if(/richtig oder falsch|wahr oder falsch|true.?false/.test(t)){type='truefalse';reason='Richtig oder falsch'}
  else if(/tippe|schreib|texteingabe|antwort eintippen|freie antwort/.test(t)){type='short';reason='Antwort eintippen'}
+ if(['word','story'].includes(type)){type='quiz';reason='Einmaleins-Quiz';}
  const topic=creatorIdeaTopic(idea);creatorStartNew(type);
  const cleanTitle=(topic?topic.name+'-Quiz':idea.replace(/^(ich möchte|ich will|erstelle|mach(e)? mir|ein(e)?s? )/i,'').trim()).slice(0,70);
  creatorDraft.title=cleanTitle||'Mein Spiel';creatorDraft.description=idea.slice(0,500);
@@ -2634,14 +3030,26 @@ function privateShowAuth(){
 }
 let mmAdminPrivateRows = [];
 function feedbackChooseMode(mode){
-  const anon=$('feedbackAnonymousPanel'),priv=$('feedbackPrivatePanel');
+  const anon=$('feedbackAnonymousPanel'),priv=$('feedbackPrivatePanel'),chooser=$('feedbackChooser');
+  const selected=mode==='anonymous'||mode==='private';
+  chooser?.classList.toggle('hidden',selected);
   anon?.classList.toggle('hidden',mode!=='anonymous');
   priv?.classList.toggle('hidden',mode!=='private');
-  if(mode!=='private')return;
-  mmPrivateAuthExpanded=false;
-  $('privateAuthGate')?.classList.remove('hidden');
-  $('privateAuthPanel')?.classList.add('hidden');
-  privateRefreshSession();
+  if(mode==='choose'){
+    requestAnimationFrame(()=>$('feedbackScreen')?.scrollIntoView({behavior:'smooth',block:'start'}));
+    return;
+  }
+  if(mode==='anonymous'){
+    requestAnimationFrame(()=>anon?.scrollIntoView({behavior:'smooth',block:'start'}));
+    return;
+  }
+  if(mode==='private'){
+    mmPrivateAuthExpanded=false;
+    $('privateAuthGate')?.classList.remove('hidden');
+    $('privateAuthPanel')?.classList.add('hidden');
+    requestAnimationFrame(()=>priv?.scrollIntoView({behavior:'smooth',block:'start'}));
+    privateRefreshSession();
+  }
 }
 async function privateRefreshSession(){
   try{const sb=await getSb();const {data,error}=await sb.auth.getSession();if(error)throw error;mmPrivateUser=data.session?.user||null;privateSetView();if(mmPrivateUser)await privateLoadMessages();}
@@ -2720,11 +3128,15 @@ function adminRenderOverview(){
  const conversations=Array.isArray(mmAdminPrivateRows)?mmAdminPrivateRows:[];
  const count=status=>feedback.filter(row=>row.status===status).length;
  const unread=conversations.reduce((sum,row)=>sum+(Number(row.unread_count)||0),0);
- const values={adminMetricNewFeedback:count('new'),adminMetricNewMessages:unread};
+ const withMessages=conversations.filter(row=>String(row.last_message||'').trim()).length;
+ const newFeedback=count('new');
+ const allFeedback=feedback.length;
+ const values={adminMetricNewFeedback:newFeedback,adminMetricNewMessages:unread};
  Object.entries(values).forEach(([id,value])=>{const el=$(id);if(el)el.textContent=String(value);});
- const feedbackBadge=$('adminNavFeedbackBadge');if(feedbackBadge)feedbackBadge.textContent=String(count('new'));
- const messageBadge=$('adminNavMessagesBadge');if(messageBadge)messageBadge.textContent=String(unread);
- const dot=$('adminTopUnreadDot');if(dot)dot.classList.toggle('hidden',unread===0);
+ /* Sidebar badges show all existing items; dashboard metrics show only unread/new items. */
+ const feedbackBadge=$('adminNavFeedbackBadge');if(feedbackBadge)feedbackBadge.textContent=String(allFeedback);
+ const messageBadge=$('adminNavMessagesBadge');if(messageBadge)messageBadge.textContent=String(withMessages);
+ const dot=$('adminTopUnreadDot');if(dot)dot.classList.toggle('hidden',unread===0&&newFeedback===0);
  const recentFeedback=$('adminRecentFeedback');
  if(recentFeedback){
   const rows=[...feedback].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,4);
@@ -2903,6 +3315,107 @@ async function adminUpdateFeedback(id,statusValue){try{const sb=await getSb();co
 async function adminDeleteFeedback(id){if(!await customConfirm({title:'Meldung löschen?',message:'Diese Meldung wird dauerhaft gelöscht. Möchtest du fortfahren?',confirmText:'Endgültig löschen',cancelText:'Abbrechen',icon:'🗑️',tone:'danger'}))return;try{const sb=await getSb();const {data,error}=await sb.rpc('mm_admin_delete_feedback',{p_id:id});if(error)throw error;if(!data)throw new Error('Meldung nicht gefunden.');showToast('Meldung gelöscht.');await adminLoadFeedback();}catch(e){showToast('Löschen fehlgeschlagen: '+(e.message||''));}}
 async function adminSignOut(){try{const sb=await getSb();await sb.auth.signOut();try{sessionStorage.removeItem('mm-admin-screen-open-v1');localStorage.removeItem('mm-admin-screen-open-v1');}catch(_){}mmAdminSession=null;mmAdminFeedbackRows=[];adminSetView(false);$('adminFeedbackList').innerHTML='';$('adminLoginStatus').textContent='Du wurdest abgemeldet.';}catch(e){showToast(e.message||'Abmeldung fehlgeschlagen.');}}
 
+
+/* V10.9.23 – clear live routes and branded secondary buttons */
+function mmSetPlayTab(tab){
+  const allowed=['online','create','quick'];if(!allowed.includes(tab))return;
+  window.mmPlayTab=tab;
+  document.querySelectorAll('[data-mm-play-tab]').forEach(b=>{const active=b.dataset.mmPlayTab===tab;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+  document.querySelectorAll('[data-mm-play-panel]').forEach(p=>p.hidden=p.dataset.mmPlayPanel!==tab);
+}
+function mmSetShopTab(tab){
+  const allowed=['avatars','frames','titles','effects','collection','missions'];if(!allowed.includes(tab))return;
+  window.mmShopTab=tab;
+  document.querySelectorAll('[data-mm-shop-tab]').forEach(b=>{const active=b.dataset.mmShopTab===tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});
+  document.querySelectorAll('[data-mm-shop-panel]').forEach(p=>p.hidden=p.dataset.mmShopPanel!==tab);
+  if(tab==='collection')mmRenderShopCollection();
+}
+function mmRenderShopCollection(){
+  const root=$('shopCollectionGrid');if(!root)return;
+  const owned=SHOP_ITEMS.filter(item=>(data.inventory||[]).includes(item.id));
+  if(!owned.length){root.innerHTML=`<div class="mm-empty-collection"><span style="font-size:28px">🎒</span><strong>Deine Sammlung ist noch leer</strong>Schau dich im Shop um und schalte deinen ersten Avatar oder ein Profil-Extra frei.<br><button type="button" class="btn primary" style="margin-top:12px" onclick="mmSetShopTab('avatars')">Avatare ansehen →</button></div>`;return;}
+  root.innerHTML=owned.map(item=>{
+    let equipped=false;
+    if(item.kind==='frame')equipped=data.equippedFrame===item.id;
+    else if(item.kind==='title')equipped=data.equippedTitle===item.id;
+    else if(item.kind==='avatar')equipped=data.avatar===item.emoji;
+    else if(item.kind==='effect')equipped=data.equippedEffect===item.id;
+    return `<div class="shop-item"><div class="shop-item-preview ${item.kind==='frame'?item.css:''}">${item.kind==='frame'?esc(data.avatar||'🦊'):esc(item.preview)}</div><strong>${esc(item.name)} ${equipped?'✓':''}</strong><small>${esc(item.desc)}</small><button class="btn ${equipped?'secondary':'primary'}" onclick="handleShopItem('${item.id}')">${equipped?'Ausgerüstet':'Ausrüsten'}</button></div>`;
+  }).join('');
+}
+
+function mmSetStatsTab(tab){
+  const allowed=['history','errors','data'];if(!allowed.includes(tab))return;
+  window.mmStatsTab=tab;
+  document.querySelectorAll('[data-mm-stats-tab]').forEach(b=>{const active=b.dataset.mmStatsTab===tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});
+  document.querySelectorAll('[data-mm-stats-panel]').forEach(p=>p.hidden=p.dataset.mmStatsPanel!==tab);
+}
+
+function mmSetCompetitionTab(tab){
+  const allowed=['community','performance','class'];if(!allowed.includes(tab))return;
+  window.mmCompetitionTab=tab;
+  document.querySelectorAll('[data-mm-comp-tab]').forEach(b=>{const active=b.dataset.mmCompTab===tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});
+  document.querySelectorAll('[data-mm-comp-panel]').forEach(p=>p.hidden=p.dataset.mmCompPanel!==tab);
+}
+
+function mmSyncLiveModeCopy(){
+  const classroom=mmIsClassroomPreset();
+  window.mmLivePreset=classroom?'classroom':'friends';
+  const display=$('liveDisplayMode');if(display)display.value=classroom?'classroom':'friends';
+  $('live')?.classList.toggle('classroom-live-mode',classroom);
+  const kicker=$('liveKicker'),heading=$('liveHeading'),intro=$('liveIntro'),notice=$('liveNotice');
+  if(kicker)kicker.textContent=classroom?'KLASSEN-ARENA':'MULTIPLAYER ARENA';
+  if(heading)heading.textContent=classroom?'Klassenraum erstellen':'Live-Modus: Wer ist der Mathe-Champion?';
+  if(intro)intro.textContent=classroom?'Du steuerst die Quiz-Runde am Lehrerbildschirm. Die Schüler antworten auf ihren Geräten mit den Farbfeldern.':'Erstelle einen Spielraum, teile den Code und spiele mit Freunden auf getrennten Geräten.';
+  if(notice)notice.textContent=classroom?'🏫 Klassenmodus ist aktiv: Die Frage wird am Lehrerbildschirm angezeigt; auf den Schülergeräten erscheinen die Antwort-Farben.':'🎮 Live-Modus: Erstelle einen Spielraum oder tritt mit einem fünfstelligen Spielcode bei.';
+  if(classroom)mmSetLiveTab('host');
+}
+function mmOpenTeacherSetup(){
+  // Set the class preset before opening the settings page. The value must survive
+  // the route from teacher settings to the actual Live classroom host screen.
+  window.mmLivePreset='classroom';
+  const display=$('liveDisplayMode');if(display)display.value='classroom';
+  const hostToggle=$('hostPlayToggle');if(hostToggle)hostToggle.checked=false;
+  updateLiveOptionsUI();
+  show('teacher');
+  return true;
+}
+function mmOpenLiveMode(mode='friends',tab='host'){
+  const classroom=mode==='classroom';
+  window.mmLivePreset=classroom?'classroom':'friends';
+  const display=$('liveDisplayMode');if(display)display.value=classroom?'classroom':'friends';
+  const hostToggle=$('hostPlayToggle');if(classroom&&hostToggle)hostToggle.checked=false;
+  updateLiveOptionsUI();
+  show('live');
+  // Apply the route again after show(), because show() also restores the previous tab.
+  mmSetLiveTab(classroom?'host':(tab==='join'?'join':'host'));
+  mmSyncLiveModeCopy();
+  return true;
+}
+function mmIsClassroomPreset(){
+  const selected=$('liveDisplayMode')?.value;
+  if(selected==='classroom')return true;
+  if(selected==='friends')return false;
+  return window.mmLivePreset==='classroom';
+}
+function mmSetLiveTab(tab){
+  const classroom=mmIsClassroomPreset();
+  const allowed=['host','join'];if(!allowed.includes(tab))return false;
+  window.mmLivePreset=classroom?'classroom':'friends';
+  window.mmLiveTab=tab;
+  document.querySelectorAll('[data-mm-live-tab]').forEach(b=>{const active=b.dataset.mmLiveTab===tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});
+  document.querySelectorAll('[data-mm-live-panel]').forEach(p=>{const visible=p.dataset.mmLivePanel===tab;p.hidden=!visible;p.style.display=visible?'block':'none';});
+  $('live')?.classList.toggle('classroom-live-mode',classroom);
+  return true;
+}
+
+function mmSetCreatorTab(tab){
+  const allowed=['new','drafts'];if(!allowed.includes(tab))return;
+  window.mmCreatorTab=tab;
+  document.querySelectorAll('[data-mm-creator-tab]').forEach(b=>{const active=b.dataset.mmCreatorTab===tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});
+  document.querySelectorAll('[data-mm-creator-part]').forEach(el=>el.classList.toggle('hidden',el.dataset.mmCreatorPart!==tab));
+}
+
 const menuToggle=$('siteMenuToggle');if(menuToggle)menuToggle.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleSiteMenu();});
 $('joinCode').addEventListener('input',
 e=>e.target.value=e.target.value.replace(/\D/g,
@@ -2913,11 +3426,13 @@ if (joinFromQr && /^\d{5}$/.test(joinFromQr)) {
     $('joinCode').value = joinFromQr;
     $('joinName').value = data.name || '';
     show('live');
+    mmSetLiveTab('join');
     checkJoinRoomSettings();
     setTimeout(() => $('joinCode').scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
 }
 ensureEconomy();
 updateLiveOptionsUI();
+mmUpdateLiveGameTypeUI();
 renderAll();
 creatorPreviewInit();
 loadStudioFromLink();
