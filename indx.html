@@ -8,7 +8,7 @@
 <script>
 (function(){try{var root=document.documentElement;var joinRoute=new URLSearchParams(window.location.search).has('join');var s=sessionStorage.getItem('mm-app-screen-v1');var valid=['modes','progress','stats','teacher','settings','shop','studio','creator','profile','leaderboard','feedbackScreen','siteInfo','result'];var gameOk=s==='game'&&!!sessionStorage.getItem('mm-app-game-v1');if(!joinRoute&&(valid.includes(s)||gameOk)&&s!=='live')root.classList.add('app-restoring');var adminRequested=sessionStorage.getItem('mm-admin-screen-open-v1')==='1'||localStorage.getItem('mm-admin-screen-open-v1')==='1';if(!joinRoute&&adminRequested)root.classList.add('admin-restoring');}catch(e){}})();
 </script>
-<title>MatheMeister · V10.9.139</title>
+<title>MatheMeister · V10.9.138</title>
 
 <style>
 :root {
@@ -1636,8 +1636,8 @@ body.admin-mode .mobile-tabbar,body.mobile-game-screen .mobile-tabbar,body.live-
 .screen.profile-page{display:none;gap:15px}.screen.profile-page.active{display:grid}
 .profile-hero-card{display:grid;grid-template-columns:116px minmax(0,1fr);gap:18px;align-items:center;padding:20px;border:1px solid #a47aff55;border-radius:22px;background:radial-gradient(ellipse at 10% 0%,#8b4dff22,transparent 55%),linear-gradient(145deg,#171c35,#0c1121);box-shadow:0 15px 42px #0004}
 .profile-photo-wrap{position:relative;width:108px;height:108px;border-radius:50%;padding:3px;background:linear-gradient(145deg,#f4c8ff,#914cff 55%,#40306c);box-shadow:0 0 0 4px #9e65ff18,0 8px 24px #8548ff35}
-.profile-photo-face{width:100%;height:100%;display:grid;place-items:center;border:3px solid #11152a;border-radius:50%;background:linear-gradient(145deg,#3b315b,#171d33);font-size:47px;overflow:hidden}
-.profile-photo-face img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-photo-face{width:100%;height:100%;display:grid;place-items:center;border:3px solid #11152a;border-radius:50%;background:linear-gradient(145deg,#3b315b,#171d33);font-size:47px;overflow:visible;position:relative}
+.profile-photo-face img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;box-sizing:border-box}
 .profile-photo-edit{position:absolute;right:-2px;bottom:1px;width:34px;height:34px;border:2px solid #15172b;border-radius:50%;background:#803cf0;color:white;font-size:15px;box-shadow:0 4px 12px #0007}
 .profile-identity{min-width:0}.profile-identity h2{font-size:clamp(21px,4vw,27px);margin:0 0 8px;overflow-wrap:anywhere}.profile-level-pill{display:inline-flex;align-items:center;border:1px solid #a866ff70;border-radius:999px;padding:5px 11px;background:#762de43b;color:#eadcff;font-size:12px;font-weight:850}.profile-xp-text{display:flex;justify-content:space-between;gap:8px;margin:10px 0 6px;color:#c7cce0;font-size:12px;font-weight:700}.profile-xp-track{height:10px;border-radius:999px;background:#292d49;overflow:hidden}.profile-xp-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#923dff,#e2a5ff);box-shadow:0 0 13px #a64cff75;transition:width .35s ease}
 .profile-metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.profile-metric{min-width:0;padding:15px 9px;border:1px solid #ffffff16;border-radius:17px;background:linear-gradient(145deg,#1b223a,#11172a);text-align:center}.profile-metric .metric-icon{display:block;font-size:24px;margin-bottom:6px}.profile-metric strong{display:block;font-size:22px;line-height:1.1}.profile-metric small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
@@ -9254,7 +9254,7 @@ window.MM_REFERENCE_HABITATS = {"raccoon":"data:image/jpeg;base64,/9j/4AAQSkZJRg
 #profile .mm-profile-avatar-column{order:0!important;display:flex!important;align-items:center!important;justify-content:center!important;width:auto!important}
 #profile .mm-profile-avatar-column .profile-photo-wrap{width:170px!important;height:170px!important;flex-basis:170px!important;padding:4px!important;border-radius:50%!important;background:transparent!important}
 #profile .mm-profile-avatar-column .profile-photo-face{width:100%!important;height:100%!important;border-radius:50%!important;border:5px solid #56f19b!important;box-shadow:0 0 12px #56f19b,0 0 30px #56f19b,0 0 65px #2fd67c99!important}
-#profile .mm-profile-avatar-column .profile-photo-face img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important}
+#profile .mm-profile-avatar-column .profile-photo-face img{width:100%!important;height:100%!important;object-fit:contain!important;border-radius:50%!important;padding:8%!important;box-sizing:border-box!important}
 #profile .mm-profile-member-label{display:none!important}
 #profile .mm-profile-main-identity{order:1!important;width:min(100%,520px)!important;text-align:center!important}
 #profile .mm-profile-name-line{justify-content:center!important;gap:9px!important}
@@ -9373,7 +9373,7 @@ window.MM_REFERENCE_HABITATS = {"raccoon":"data:image/jpeg;base64,/9j/4AAQSkZJRg
 #profile .mm-reference-part-card>b{color:#6ef2a2!important;font-size:12px!important}
 #profile .mm-reference-part-card>b:not(.is-active){color:#9fb2cb!important}
 #profile .mm-reference-part-image{height:132px!important;border-radius:12px!important;background-color:#07172b!important}
-#profile .mm-reference-part-image.avatar img{object-fit:contain!important;padding:5px!important}
+#profile .mm-reference-part-image.avatar img{object-fit:contain!important;padding:12%!important;box-sizing:border-box!important}
 #profile .mm-reference-part-image.frame:before{width:76px!important;height:76px!important;border-width:5px!important}
 #profile .mm-reference-profile-set{min-height:86px!important;padding:10px 13px!important;gap:12px!important;border-radius:16px!important}
 #profile .mm-reference-profile-set img{width:62px!important;height:62px!important;flex:0 0 62px!important}
@@ -9984,7 +9984,7 @@ window.MM_ANIMAL_LAYER_ASSETS = {
 .mm112-frame>em{position:absolute;left:-5px;bottom:2px;width:9px;height:9px;border-radius:50%;background:var(--mm112-frame);box-shadow:0 0 9px var(--mm112-frame-glow)}
 .mm112-frame.large{width:96px;height:96px;border-width:5px}
 .mm112-frame.large>b{width:27px;height:27px;font-size:16px}
-.mm112-frame>img{position:absolute;inset:7%;width:86%;height:86%;object-fit:contain;padding:5%;box-sizing:border-box;border-radius:50%;background:transparent}
+.mm112-frame>img{position:absolute;inset:14%;width:72%;height:72%;object-fit:contain;padding:0;box-sizing:border-box;border-radius:50%;background:transparent}
 .mm112-frame-raccoon{--mm112-frame:#51ed90;--mm112-frame-glow:#23ca73;--mm112-mark:"🍃";border-style:solid}
 .mm112-frame-wolf{--mm112-frame:#bf86ff;--mm112-frame-glow:#8e43ff;--mm112-mark:"☾";border-style:double;border-width:6px}
 .mm112-frame-owl{--mm112-frame:#c39aff;--mm112-frame-glow:#9554ff;--mm112-mark:"✦";border-style:dotted;border-width:5px}
@@ -10017,7 +10017,7 @@ window.MM_ANIMAL_LAYER_ASSETS = {
 #frameShop .mm112-frame-product-art .mm112-frame{width:100px;height:100px}
 #frameShop .mm112-frame-product-art .mm112-frame>b{width:28px;height:28px;font-size:16px}
 #backgroundShop .mm-item-background-art.mm112-background-product-art{display:block!important;min-height:145px!important;background-size:cover!important;background-position:center!important;border-radius:15px!important}
-#mmReferenceProducts .mm-reference-product-thumb.avatar img{object-fit:contain!important;padding:5%!important}
+#mmReferenceProducts .mm-reference-product-thumb.avatar img{object-fit:contain!important;padding:10%!important}
 #mmReferenceProducts .mm-reference-product-thumb.background img{object-fit:cover!important;width:100%!important;height:100%!important}
 .mm-reference-frame-thumb{display:block!important;position:relative!important;width:76px!important;height:76px!important;border-radius:50%!important;margin:auto!important;background:radial-gradient(circle,#132b45 57%,transparent 59%)!important}
 .mm-reference-frame-thumb:before{content:"";position:absolute;inset:6px;border:4px solid var(--mm112-frame);border-radius:50%;box-shadow:0 0 12px var(--mm112-frame-glow),inset 0 0 10px var(--mm112-frame-glow)}
@@ -10509,23 +10509,23 @@ window.MM_ANIMAL_FRAME_ASSETS = Object.assign(window.MM_ANIMAL_FRAME_ASSETS || {
 #shop.mm12-active .mm12-hero-copy h3{margin:0 0 4px;font-size:clamp(19px,4vw,29px);line-height:1.05;font-weight:950;text-shadow:0 2px 9px #000}
 #shop.mm12-active .mm12-hero-copy p{margin:0;color:#e1eafa;font-size:11px;line-height:1.35;max-width:95%;text-shadow:0 2px 7px #000}
 #shop.mm12-active .mm12-hero-art{position:absolute;z-index:2;right:3%;top:0;bottom:0;width:56%;display:grid;place-items:center;isolation:isolate}
-#shop.mm12-active .mm12-hero-animal{position:absolute;z-index:1;width:76%;height:98%;max-height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 8px 10px #000b)}
-#shop.mm12-active .mm12-hero-frame{position:absolute;z-index:2;width:88%;height:98%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 0 12px #a64dff88)}
+#shop.mm12-active .mm12-hero-animal{position:absolute;z-index:1;width:64%;height:82%;max-height:100%;object-fit:contain;object-position:center 52%;filter:drop-shadow(0 8px 10px #000b)}
+#shop.mm12-active .mm12-hero-frame{position:absolute;z-index:2;width:92%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 0 12px #a64dff88)}
 #shop.mm12-active .mm12-crown{position:absolute;right:10px;top:10px;z-index:4;width:34px;height:34px;border-radius:12px;background:#0c1b34dd;border:1px solid #ac83ff;color:#ffd66a;display:grid;place-items:center;font-size:20px}
 #shop.mm12-active .mm12-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:0 0 14px}
 #shop.mm12-active .mm12-animal-card{border:1px solid #294c74;border-radius:15px;background:linear-gradient(155deg,#0c1c33,#061326);padding:5px 4px 7px;min-width:0;color:#fff;position:relative;box-shadow:0 5px 12px #0003;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:transform .15s,border-color .15s}
 #shop.mm12-active .mm12-animal-card:active{transform:scale(.98)}
 #shop.mm12-active .mm12-animal-card.selected{border:2px solid #c477ff;box-shadow:0 0 15px #a23aff99,inset 0 0 15px #7e27d833;background:linear-gradient(155deg,#171039,#0a1830)}
-#shop.mm12-active .mm12-card-art{position:relative;width:100%;aspect-ratio:1/1;display:grid;place-items:center;border-radius:11px;overflow:hidden;background:radial-gradient(circle at 50% 45%,#183650,#071429 72%)}
-#shop.mm12-active .mm12-card-animal{position:absolute;inset:7%;width:86%;height:86%;object-fit:contain;object-position:center center;z-index:1;filter:drop-shadow(0 5px 6px #0009)}
-#shop.mm12-active .mm12-card-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2;pointer-events:none}
+#shop.mm12-active .mm12-card-art{position:relative;width:100%;aspect-ratio:1/1;display:grid;place-items:center;border-radius:11px;overflow:visible;background:radial-gradient(circle at 50% 45%,#183650,#071429 72%)}
+#shop.mm12-active .mm12-card-animal{position:absolute;inset:15%;width:70%;height:70%;object-fit:contain;object-position:center center;z-index:1;filter:drop-shadow(0 5px 6px #0009)}
+#shop.mm12-active .mm12-card-frame{position:absolute;inset:-2%;width:104%;height:104%;object-fit:contain;z-index:2;pointer-events:none}
 #shop.mm12-active .mm12-animal-name{font-size:clamp(9px,2.4vw,12px);font-weight:900;line-height:1.15;text-align:center;white-space:normal;overflow-wrap:anywhere}
 #shop.mm12-active .mm12-card-check{position:absolute;right:4px;top:4px;z-index:3;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#a126ff;color:#fff;border:1px solid #e6c7ff;font-size:12px;font-weight:950}
 #shop.mm12-active .mm12-section-title{display:flex;align-items:center;gap:9px;margin:14px 0 9px;font-size:16px;font-weight:950;color:#f3f7ff}
 #shop.mm12-active .mm12-product-list{display:grid;gap:8px;margin-bottom:9px}
 #shop.mm12-active .mm12-product-row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:9px;align-items:center;padding:8px;border:1px solid #294b70;border-radius:15px;background:linear-gradient(110deg,#0e223b,#08162a);min-width:0;box-shadow:0 4px 12px #0003}
 #shop.mm12-active .mm12-product-thumb{width:58px;height:58px;border-radius:12px;overflow:hidden;border:1px solid #345779;background:#07172b;display:grid;place-items:center;position:relative}
-#shop.mm12-active .mm12-product-thumb img{width:100%;height:100%;object-fit:contain;padding:2px}
+#shop.mm12-active .mm12-product-thumb img{width:100%;height:100%;object-fit:contain;padding:6px;box-sizing:border-box}
 #shop.mm12-active .mm12-product-thumb .mm12-frame-thumb{width:100%;height:100%;object-fit:contain;padding:0}
 #shop.mm12-active .mm12-product-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
 #shop.mm12-active .mm12-product-copy strong{font-size:12px;line-height:1.18;font-weight:950;white-space:normal}
@@ -10546,10 +10546,10 @@ window.MM_ANIMAL_FRAME_ASSETS = Object.assign(window.MM_ANIMAL_FRAME_ASSETS || {
 #shop.mm12-active .mm12-discount{position:absolute;right:96px;top:-11px;border-radius:999px;background:linear-gradient(120deg,#ae2cff,#6618bc);color:#fff;padding:3px 8px;font-size:10px;font-weight:950;box-shadow:0 0 12px #a13aff88}
 #shop.mm12-active .mm12-preview-card{padding:12px;border:1px solid #31547c;border-radius:19px;background:linear-gradient(145deg,#102743,#09182c);box-shadow:0 8px 18px #0003;margin:12px 0}
 #shop.mm12-active .mm12-preview-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:950;margin:0 0 10px}
-#shop.mm12-active .mm12-preview-stage{height:160px;position:relative;overflow:hidden;border-radius:15px;border:1px solid #3c6188;background:#091a30;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:flex-start}
+#shop.mm12-active .mm12-preview-stage{height:160px;position:relative;overflow:visible;border-radius:15px;border:1px solid #3c6188;background:#091a30;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:flex-start}
 #shop.mm12-active .mm12-preview-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,12,27,.08),rgba(3,12,27,.0) 55%,rgba(3,12,27,.18));z-index:0}
 #shop.mm12-active .mm12-preview-avatar{position:relative;z-index:1;width:42%;height:100%;display:grid;place-items:center;isolation:isolate}
-#shop.mm12-active .mm12-preview-animal{position:absolute;z-index:1;width:78%;height:94%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 8px 9px #000c)}
+#shop.mm12-active .mm12-preview-animal{position:absolute;z-index:1;width:66%;height:80%;object-fit:contain;object-position:center center;filter:drop-shadow(0 8px 9px #000c)}
 #shop.mm12-active .mm12-preview-frame{position:absolute;z-index:2;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 0 10px #ab55ff77)}
 #shop.mm12-active .mm12-preview-scene-label{position:absolute;right:9px;bottom:8px;z-index:2;color:#fff;font-size:10px;font-weight:800;text-shadow:0 1px 5px #000}
 #shop.mm12-active .mm12-preview-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:9px 0}
@@ -10598,17 +10598,88 @@ body.mm12-tierwelten-active.mm12-tierwelten-extras #shop .mm-shop-tabs{display:g
 body.mm12-tierwelten-active.mm12-tierwelten-extras #shop .mm-reference-shop-heading,body.mm12-tierwelten-active.mm12-tierwelten-extras #shop #mmReferenceShop,body.mm12-tierwelten-active.mm12-tierwelten-extras #shop #mmReferenceMoreShop,body.mm12-tierwelten-active.mm12-tierwelten-extras #shop .mm-shop-panel,body.mm12-tierwelten-active.mm12-tierwelten-extras #shop>.notice{display:block!important}
 </style>
 
+
+<style id="mm138-animal-fit-fix">
+/* V10.9.138 fix: animals sit cleanly inside ornamental frames (match reference design) */
+#profile .profile-photo-face,
+#profile .mm-profile-avatar-column .profile-photo-face{
+  overflow:visible!important;
+  position:relative!important;
+}
+#profile .profile-photo-face img.mm135-preview-animal,
+#profile .profile-photo-face img.mm136-layer-avatar,
+#profile .mm-profile-avatar-column .profile-photo-face > img{
+  object-fit:contain!important;
+  object-position:center center!important;
+  padding:12%!important;
+  box-sizing:border-box!important;
+  border-radius:50%!important;
+}
+#profile .profile-photo-face img.mm135-preview-frame,
+#profile .profile-photo-face img.mm113-frame-overlay{
+  position:absolute!important;
+  left:-8%!important;
+  top:-8%!important;
+  width:116%!important;
+  height:116%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  pointer-events:none!important;
+  z-index:5!important;
+}
+#shop.mm12-active .mm12-card-art{
+  overflow:visible!important;
+}
+#shop.mm12-active .mm12-card-animal{
+  inset:15%!important;
+  width:70%!important;
+  height:70%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+#shop.mm12-active .mm12-card-frame{
+  inset:-3%!important;
+  width:106%!important;
+  height:106%!important;
+  object-fit:contain!important;
+}
+#shop.mm12-active .mm12-hero-animal{
+  width:64%!important;
+  height:82%!important;
+  object-position:center 52%!important;
+}
+#shop.mm12-active .mm12-preview-animal{
+  width:66%!important;
+  height:80%!important;
+  object-position:center center!important;
+}
+#profile .mm-reference-part-image.avatar img,
+#profile .mm-reference-part-image.frame img{
+  object-fit:contain!important;
+  width:100%!important;
+  height:100%!important;
+  padding:8%!important;
+  box-sizing:border-box!important;
+}
+#profile .mm-reference-part-image.frame img{
+  padding:0!important;
+}
+</style>
+
 <style id="mm134-tierwelten-mobile-fit">
-/* V10.9.139: layered animal portraits, clean animal-free ornamental frames and scenic habitats for all twelve profiles. */
+/* V10.9.138: layered animal portraits, clean animal-free ornamental frames and scenic habitats for all twelve profiles. */
 #shop.mm12-active .mm12-card-art,
 #shop.mm12-active .mm12-hero-art,
 #shop.mm12-active .mm12-preview-avatar{overflow:visible!important}
-#shop.mm12-active .mm12-card-animal{inset:8%!important;width:84%!important;height:84%!important;object-fit:contain!important;object-position:center center!important}
-#shop.mm12-active .mm12-hero-animal{width:76%!important;height:94%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center center!important}
-#shop.mm12-active .mm12-preview-animal{width:78%!important;height:92%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center center!important}
+#shop.mm12-active .mm12-card-animal{inset:15%!important;width:70%!important;height:70%!important;object-fit:contain!important;object-position:center center!important}
+#shop.mm12-active .mm12-hero-animal{width:64%!important;height:82%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center 52%!important}
+#shop.mm12-active .mm12-preview-animal{width:66%!important;height:80%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center center!important}
 #shop.mm12-active .mm12-card-frame,
 #shop.mm12-active .mm12-hero-frame,
 #shop.mm12-active .mm12-preview-frame{object-fit:contain!important;object-position:center center!important;pointer-events:none!important}
+#shop.mm12-active .mm12-card-frame{inset:-2%!important;width:104%!important;height:104%!important}
+#shop.mm12-active .mm12-hero-frame{width:92%!important;height:100%!important}
 #shop.mm12-active{padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px))!important}
 #shop.mm12-active .mm12-preview-card{margin-bottom:18px!important}
 #shop.mm12-active .mm12-animal-card:focus-visible,
@@ -10767,13 +10838,13 @@ body.mm12-tierwelten-active.mm12-tierwelten-extras #shop .mm-reference-shop-head
         img.setAttribute('aria-label','Temporäre Tier-Vorschau');
         face.insertBefore(img,face.querySelector('.mm113-frame-overlay')||null);
       }
-      img.src=portrait;img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;padding:5%;box-sizing:border-box;border:0;background:transparent;border-radius:50%;z-index:2;';
+      img.src=portrait;img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;padding:12%;box-sizing:border-box;border:0;background:transparent;border-radius:50%;z-index:2;';
       face.dataset.animal=key;face.classList.add('mm135-previewing');
       if(frame){
         let overlay=face.querySelector('img.mm135-preview-frame');
         if(!overlay){overlay=document.createElement('img');overlay.className='mm135-preview-frame';overlay.alt='';overlay.setAttribute('aria-hidden','true');face.appendChild(overlay);}
         overlay.src=frame;
-        overlay.style.cssText='position:absolute;left:-17%;top:-17%;width:134%;height:134%;max-width:none;max-height:none;object-fit:contain;pointer-events:none;z-index:5;';
+        overlay.style.cssText='position:absolute;left:-8%;top:-8%;width:116%;height:116%;max-width:none;max-height:none;object-fit:contain;pointer-events:none;z-index:5;';
       }
     }
     const showcase=root.querySelector('.mm-profile-showcase');
@@ -10782,7 +10853,7 @@ body.mm12-tierwelten-active.mm12-tierwelten-extras #shop .mm-reference-shop-head
     if(parts){
       const cards=[...parts.querySelectorAll('.mm-reference-part-card')];
       const avatarTile=cards[0]?.querySelector('.mm-reference-part-image.avatar');
-      if(avatarTile&&portrait){avatarTile.innerHTML=`<img class="mm135-preview-layer" src="${portrait}" alt="${key}" style="width:100%;height:100%;object-fit:contain;object-position:center;padding:5%;box-sizing:border-box">`;}
+      if(avatarTile&&portrait){avatarTile.innerHTML=`<img class="mm135-preview-layer" src="${portrait}" alt="${key}" style="width:100%;height:100%;object-fit:contain;object-position:center;padding:12%;box-sizing:border-box">`;}
       const frameTile=cards[1]?.querySelector('.mm-reference-part-image.frame');
       if(frameTile){frameTile.className='mm-reference-part-image frame mm-ref-frame-'+String(frameId).replace(/^frame_/,'');frameTile.innerHTML=frame?`<img class="mm135-preview-layer" src="${frame}" alt="" style="width:100%;height:100%;object-fit:contain">`:'';}
       const bgTile=cards[2]?.querySelector('.mm-reference-part-image.background');
@@ -14699,7 +14770,7 @@ window.MM_ANIMAL_PORTRAITS = {
 #profile .mm-reference-profile-set img,
 #mmReferenceLiveAvatar{isolation:isolate}
 #profile .mm-profile-avatar-column .profile-photo-face{position:relative!important;overflow:hidden!important;border-radius:50%!important;background:radial-gradient(circle at 50% 38%,#233b5a,#09172b 75%)!important}
-#profile .mm-profile-avatar-column .profile-photo-face img{position:relative!important;z-index:1!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;padding:5%!important;box-sizing:border-box!important;background:transparent!important;border-radius:50%!important;transform:none!important}
+#profile .mm-profile-avatar-column .profile-photo-face img{position:relative!important;z-index:1!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;padding:12%!important;box-sizing:border-box!important;background:transparent!important;border-radius:50%!important;transform:none!important}
 #profile .mm-reference-part-image.avatar{display:grid!important;place-items:center!important;overflow:hidden!important;background:radial-gradient(circle at 50% 42%,#1b3554,#07172c 78%)!important}
 #profile .mm-reference-part-image.avatar img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;padding:5px!important;box-sizing:border-box!important;background:transparent!important;transform:none!important}
 #profile .mm-reference-profile-set img{object-fit:contain!important;object-position:center!important;padding:3px!important;background:radial-gradient(circle,#1a3554,#07172b)!important}
@@ -15910,7 +15981,7 @@ html,body{max-width:100%!important;overflow-x:hidden!important}
 #shop.mm126-shop-active .mm-reference-product-copy strong{font-size:11px!important;line-height:1.12!important;color:#f1f6ff!important;font-weight:950!important;overflow-wrap:anywhere!important}
 #shop.mm126-shop-active .mm-reference-product-copy small{font-size:9px!important;line-height:1.15!important;color:#acbfd5!important}
 #shop.mm126-shop-active .mm-reference-product-state{font-size:9px!important;line-height:1.1!important;color:#80e7aa!important;font-weight:850!important}
-#profile .mm-reference-part-image.avatar .mm126-profile-preview-animal{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;padding:5%!important;box-sizing:border-box!important;filter:drop-shadow(0 5px 6px #0007)!important;background:transparent!important}
+#profile .mm-reference-part-image.avatar .mm126-profile-preview-animal{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center 52%!important;padding:12%!important;box-sizing:border-box!important;filter:drop-shadow(0 5px 6px #0007)!important;background:transparent!important}
 #profile .mm-reference-part-image.frame{position:relative!important;overflow:hidden!important}
 #profile .mm-reference-part-image.background{position:relative!important;overflow:hidden!important}
 #profile .mm-reference-part-image.background .mm126-profile-preview-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;border:0!important;border-radius:inherit!important;padding:0!important}
@@ -16011,7 +16082,7 @@ body:has(#shop.active) footer.foot{display:none!important}
   #shop.mm126-shop-active .mm-reference-cart{width:42px!important;height:40px!important;min-width:42px!important;font-size:18px!important}
 }
 </style>
-\n\n<!-- V10.9.139 — 12 complete animal profiles with independent portrait, animal-free ornate frame, and scenic habitat. -->
+\n\n<!-- V10.9.138 — 12 complete animal profiles with independent portrait, animal-free ornate frame, and scenic habitat. -->
 <style id="mm-v109137-full-animal-profile">
 /* The profile hero uses three independent layers. Keep the animal clipped to a true medallion. */
 #profile .mm-profile-showcase{
@@ -16070,7 +16141,7 @@ body:has(#shop.active) footer.foot{display:none!important}
 #profile .mm-reference-profile-parts{gap:9px!important}
 #profile .mm-reference-part-image{height:112px!important;min-height:112px!important;overflow:hidden!important;background:linear-gradient(145deg,#102a47,#08182c)!important;border:1px solid #294d73!important;border-radius:13px!important}
 #profile .mm-reference-part-image.avatar{display:grid!important;place-items:center!important;background:radial-gradient(circle at 50% 38%,#203d5c,#07172b 78%)!important}
-#profile .mm-reference-part-image.avatar img.mm137-part-avatar{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;padding:5%!important;border-radius:50%!important;box-sizing:border-box!important;background:transparent!important}
+#profile .mm-reference-part-image.avatar img.mm137-part-avatar{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;padding:12%!important;border-radius:50%!important;box-sizing:border-box!important;background:transparent!important}
 #profile .mm-reference-part-image.frame{display:grid!important;place-items:center!important;background:radial-gradient(circle,#17314d,#07172b 74%)!important}
 #profile .mm-reference-part-image.frame img.mm137-part-frame{width:100%!important;height:100%!important;object-fit:contain!important;padding:0!important;background:transparent!important}
 #profile .mm-reference-part-image.background{display:block!important;background-size:cover!important;background-position:center!important}
@@ -16147,7 +16218,7 @@ body:has(#shop.active) footer.foot{display:none!important}
     if(face){
       face.classList.add('mm137-layered-face');face.classList.remove('mm135-previewing');
       face.dataset.animal=key;face.style.setProperty('position','absolute','important');
-      face.style.setProperty('overflow','visible','important');face.style.setProperty('background','radial-gradient(circle at 50% 36%,#253f5e,#091a30 72%)','important');
+      face.style.setProperty('overflow','hidden','important');face.style.setProperty('background','radial-gradient(circle at 50% 36%,#253f5e,#091a30 72%)','important');
       face.querySelectorAll('img').forEach(x=>x.remove());
       const img=document.createElement('img');img.className='mm137-profile-animal';img.src=animal;img.alt=ANIMALS[key];face.appendChild(img);
       const wrap=face.closest('.profile-photo-wrap');
@@ -16189,69 +16260,5 @@ body:has(#shop.active) footer.foot{display:none!important}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
 })();
 </script>
-
-
-<!-- V10.9.139: preserve the complete animal silhouette in the profile, Shop hero and previews. -->
-<style id="mm-v109139-no-animal-cropping">
-/* PROFILE: the face element is a positioning layer, not a circular clipping mask.
-   The transparent animal file keeps its natural silhouette; the separate frame stays above it. */
-#profile .mm-profile-avatar-column .profile-photo-wrap{
-  overflow:visible!important;isolation:isolate!important;
-}
-#profile .mm-profile-avatar-column .profile-photo-face.mm137-layered-face{
-  overflow:visible!important;clip-path:none!important;mask:none!important;
-  border-radius:50%!important;
-  background:radial-gradient(circle at 50% 38%,rgba(38,63,94,.46),rgba(9,26,48,.22) 66%,transparent 78%)!important;
-  box-shadow:none!important;
-}
-/* Higher specificity than the legacy mm113 circular-avatar rule. */
-#profile .mm-profile-avatar-column .profile-photo-face.mm137-layered-face.mm113-has-frame-image>img.mm137-profile-animal,
-#profile .mm-profile-avatar-column .profile-photo-face.mm137-layered-face>img.mm137-profile-animal{
-  position:absolute!important;left:-7%!important;top:-7%!important;right:auto!important;bottom:auto!important;
-  width:114%!important;height:114%!important;max-width:none!important;max-height:none!important;
-  object-fit:contain!important;object-position:center 55%!important;
-  padding:0!important;margin:0!important;border:0!important;border-radius:0!important;
-  clip-path:none!important;mask:none!important;background:transparent!important;
-  transform:none!important;filter:drop-shadow(0 7px 7px rgba(0,0,0,.42))!important;z-index:2!important;
-}
-#profile .mm-profile-avatar-column .profile-photo-wrap>img.mm137-profile-frame{
-  overflow:visible!important;clip-path:none!important;mask:none!important;
-}
-/* Shop detail: remove the circular clip that was cutting shoulders, tails and fins. */
-#shop.mm126-shop-active .mm126-hero-art{overflow:visible!important;clip-path:none!important;}
-#shop.mm126-shop-active .mm126-hero-art>img.mm126-hero-animal{
-  clip-path:none!important;mask:none!important;border-radius:0!important;
-  object-fit:contain!important;object-position:center bottom!important;
-  padding:0!important;background:transparent!important;
-}
-#shop.mm126-shop-active .mm126-hero-art>img.mm126-hero-frame{
-  clip-path:none!important;mask:none!important;border-radius:0!important;
-  object-fit:contain!important;padding:0!important;background:transparent!important;
-}
-/* The live fitting-room composite follows the same rule: never crop the animal to a circle. */
-#shop.mm126-shop-active #mmReferenceLiveAvatar .mm126-live-animal{
-  clip-path:none!important;mask:none!important;border-radius:0!important;
-  object-fit:contain!important;object-position:center!important;padding:0!important;
-  background:transparent!important;
-}
-#shop.mm126-shop-active #mmReferenceLiveAvatar .mm126-live-frame{
-  clip-path:none!important;mask:none!important;border-radius:0!important;
-  object-fit:contain!important;padding:0!important;background:transparent!important;
-}
-/* Profile preview tiles and collection thumbnails show the complete transparent portrait. */
-#profile .mm-reference-part-image.avatar img.mm137-part-avatar,
-#profile .mm-reference-part-image.avatar img.mm126-profile-preview-animal,
-#profile .mm122-set-thumb img.mm122-thumb-animal{
-  object-fit:contain!important;object-position:center!important;
-  border-radius:0!important;clip-path:none!important;mask:none!important;
-  padding:0!important;background:transparent!important;
-}
-#profile .mm-reference-part-image.avatar img.mm137-part-avatar{width:100%!important;height:100%!important;}
-#profile .mm-reference-part-image.avatar{overflow:hidden!important;}
-#shop.mm126-shop-active .mm126-animal-thumb img{
-  object-fit:contain!important;object-position:center!important;
-  border-radius:0!important;clip-path:none!important;padding:0!important;
-}
-</style>
 
 </html>
